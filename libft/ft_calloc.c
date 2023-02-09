@@ -1,21 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   defined_types.h                                    :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: obednaou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/09 16:29:48 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/09 18:47:13 by obednaou         ###   ########.fr       */
+/*   Created: 2022/10/08 17:04:43 by obednaou          #+#    #+#             */
+/*   Updated: 2022/10/17 20:37:17 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DEFINED_TYPES_H
-# define DEFINED_TYPES_H
+#include "libft.h"
 
-# include "../libft/libft.h"
+void	*ft_calloc(size_t count, size_t size)
+{
+	void	*ret;
 
-# define SUCCESS 0
-# define ERROR 1
-
-#endif
+	if (size)
+		if (SIZE_MAX / size < count)
+			return (0);
+	ret = malloc(count * size);
+	if (ret)
+		ft_bzero(ret, count * size);
+	return (ret);
+}

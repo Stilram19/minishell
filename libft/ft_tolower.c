@@ -1,21 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   defined_types.h                                    :+:      :+:    :+:   */
+/*   ft_tolower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: obednaou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/09 16:29:48 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/09 18:47:13 by obednaou         ###   ########.fr       */
+/*   Created: 2022/10/06 18:36:50 by obednaou          #+#    #+#             */
+/*   Updated: 2022/11/03 20:18:41 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DEFINED_TYPES_H
-# define DEFINED_TYPES_H
-
-# include "../libft/libft.h"
-
-# define SUCCESS 0
-# define ERROR 1
-
-#endif
+int	ft_tolower(int c)
+{
+	if (c >= 65 && c <= 90)
+		return (c | 0x20);
+	return (c);
+}

@@ -1,21 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   defined_types.h                                    :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: obednaou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/09 16:29:48 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/09 18:47:13 by obednaou         ###   ########.fr       */
+/*   Created: 2022/10/08 17:58:33 by obednaou          #+#    #+#             */
+/*   Updated: 2022/10/19 19:31:23 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DEFINED_TYPES_H
-# define DEFINED_TYPES_H
+#include "libft.h"
 
-# include "../libft/libft.h"
+char	*ft_strdup(const char *s1)
+{
+	size_t	i;
+	char	*copy;
 
-# define SUCCESS 0
-# define ERROR 1
-
-#endif
+	i = ft_strlen(s1);
+	copy = malloc((i + 1) * sizeof(char));
+	if (!copy)
+		return (0);
+	*(copy + i) = 0;
+	while (i--)
+		*(copy + i) = *(s1 + i);
+	return (copy);
+}

@@ -1,21 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   defined_types.h                                    :+:      :+:    :+:   */
+/*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: obednaou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/09 16:29:48 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/09 18:47:13 by obednaou         ###   ########.fr       */
+/*   Created: 2022/10/09 16:16:03 by obednaou          #+#    #+#             */
+/*   Updated: 2022/10/12 14:52:00 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DEFINED_TYPES_H
-# define DEFINED_TYPES_H
+#include "libft.h"
 
-# include "../libft/libft.h"
+void	ft_striteri(char *s, void (*f)(unsigned int, char*))
+{
+	size_t	i;
 
-# define SUCCESS 0
-# define ERROR 1
-
-#endif
+	i = 0;
+	if (!(s && f))
+		return ;
+	while (*(s + i))
+	{
+		(*f)(i, s + i);
+		i++;
+	}
+}
