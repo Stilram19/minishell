@@ -1,24 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_execvp.h                                        :+:      :+:    :+:   */
+/*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/31 18:15:45 by okhiar            #+#    #+#             */
-/*   Updated: 2023/01/31 19:55:55 by okhiar           ###   ########.fr       */
+/*   Created: 2023/02/10 15:06:28 by okhiar            #+#    #+#             */
+/*   Updated: 2023/02/10 16:04:32 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_EXECVP_H
-# define FT_EXECVP_H
+#include "minishell.h"
 
-# include <unistd.h>
-# include <stdio.h>
-# include <stdlib.h>
+int	execute(t_cmds *cmds)
+{
+	// int	status;
 
-char	*ft_strjoin(char *str1, char *str2);
-char	**ft_split(char *str, char c);
-char	*ft_strdup(char *str);
-
-#endif
+	if (is_buildin(cmds->cmd))
+		printf("%s\n", cmds->cmd);
+	else
+		printf("not buildin\n");
+	return (0);
+}

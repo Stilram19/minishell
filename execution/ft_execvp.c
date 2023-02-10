@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_execvp.h"
+#include "minishell.h"
 
 char	*ft_pathjoin(char *file, char *path)
 {
@@ -93,7 +93,7 @@ int	ft_execvp(char *file, char **args, char **env)
 	char	*cmd;
 	char	*path;
 
-	path = getenv("PATH");
+	path = get_env_var("PATH");
 	cmd = valid_cmd(file, path);
 	if (!cmd)
 		return (-1);

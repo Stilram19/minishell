@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 18:30:09 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/10 14:48:44 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/02/10 15:34:36 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	**env_dup(char **env)
 
 	i = 0;
 	var_count = envlen(env) + 1;
-	my_env = ft_garbage_collector(ALLOCATE, var_count * sizeof(char *));
+	my_env = ft_garbage_collector(ALLOCATE, var_count * sizeof(char *), NULL);
 	while (*(env + i))
 	{
 		*(my_env + i) = ft_strdup(*(env + i));
@@ -57,7 +57,7 @@ void	set_env(char **my_env, char *name, char *value)
 
 	i = 0;
 	var_count = envlen(my_env) + 2;
-	new_env = ft_garbage_collector(ALLOCATE, var_count * sizeof(char *));
+	new_env = ft_garbage_collector(ALLOCATE, var_count * sizeof(char *), NULL);
 	get_env(new_env);
 	while (*(my_env + i))
 	{
@@ -81,4 +81,27 @@ char	**get_env(char **env)
 	if (env)
 		my_env = env;
 	return (my_env);
+}
+
+/**
+ * @brief Get the value of a variable on the environment variables
+ * by its key (name)
+ * 
+ * @param key name of the variable
+ * @return char* the value of the variable
+ */
+char	*get_env_var(char *key)
+{
+	int		i;
+	char	**env;
+
+	i = 0;
+	env = get_env(NULL);
+	while (env[i])
+	{
+		if (!ft_strncmp(env[i], key, ft_strlen(key)))
+			return (ft_strdup(env[i] + (ft_strlen(key) + 1)));
+		i++;
+	}
+	return (NULL);
 }

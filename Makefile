@@ -1,23 +1,19 @@
 NAME = minishell
-LIBFT = libft.a
-LIBSRCS = $(wildcard libft/*.c)
-SRCS = garbage_collector.c main.c utils.c
-LIBOBJS = ${LIBSRCS:.c=.o}
+SRCS = ./main.c ./garbage_collector.c ./utils.c
+LIBSRCS = ${wildcard libft/*.c}
 OBJS = ${SRCS:.c=.o}
+LIBOBJS = ${LIBSRCS:.c=.o}
 CFLAGS = -Wall -Wextra -Werror
 
 all: ${NAME}
 
-${NAME}: ${LIBFT} ${OBJS}
-	gcc ${CFLAGS} ${OBJS} -lft -Llibft -o ${NAME}
-
-${LIBFT}: ${LIBOBJS}
-	ar rc ${LIBFT} ${LIBSRCS}
+${NAME}: ${OBJS} ${LIBOBJS}
+	gcc ${CFLAGS} ${OBJS} ${LIBOBJS} -o ${NAME}
 
 clean:
 	rm -rf ${OBJS} ${LIBOBJS}
 
-fclean:	clean
-	rm -rf ${NAME} ${LIBFT}
+fclean: clean
+	rm -rf ${NAME}
 
 re: fclean all
