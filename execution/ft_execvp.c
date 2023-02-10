@@ -12,6 +12,8 @@
 
 #include "minishell.h"
 
+int	ft_env(void);
+
 char	*ft_pathjoin(char *file, char *path)
 {
 	char	*tmp;
@@ -88,7 +90,7 @@ char	*valid_cmd(char *file, char *path)
  * @param env 
  * @return int 
  */
-int	ft_execvp(char *file, char **args, char **env)
+int	ft_execvp(char *file, char **args)
 {
 	char	*cmd;
 	char	*path;
@@ -97,7 +99,8 @@ int	ft_execvp(char *file, char **args, char **env)
 	cmd = valid_cmd(file, path);
 	if (!cmd)
 		return (-1);
-	if (execve(cmd, args, env))
+	// dprintf(2, "%s\n", args[1]);
+	if (execve(cmd, args, NULL))
 		return (-1);
 	return (0);
 }

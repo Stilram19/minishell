@@ -1,37 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   buildsin_check.c                                   :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/10 16:04:16 by okhiar            #+#    #+#             */
-/*   Updated: 2023/02/10 21:54:06 by okhiar           ###   ########.fr       */
+/*   Created: 2023/02/10 17:37:40 by okhiar            #+#    #+#             */
+/*   Updated: 2023/02/10 17:39:07 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	in_array(char **arr, char *key)
+void	_ft_putstr_fd(char *str, int fd, int ext)
 {
 	int	i;
 
 	i = 0;
-	while (arr[i])
+	while (str[i])
 	{
-		if (ft_strcmp(arr[i], key) == 0)
-			return (1);
+		write(fd, &str[i], 1);
 		i++;
 	}
-	return (0);
-}
-
-int	is_buildin(char *cmd)
-{
-	static char	*buildin[8] = {"cd", "echo", "pwd", "export", \
-								"unset", "exit", "env", NULL};
-
-	if (in_array(buildin, cmd))
-		return (1);
-	return (0);
+	exit(ext);
 }
