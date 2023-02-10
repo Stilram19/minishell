@@ -6,38 +6,40 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 10:37:00 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/10 11:48:27 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/10 13:35:11 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /**
- * @brief releases the mentioned address in the collection.
+ * @brief releases the given address in the collection.
 */
 void	single_release(t_list **ptr_to_head, void *to_free)
 {
-	t_list	*temp;
 	t_list	*temp1;
+	t_list	*temp2;
 
-	temp = *ptr_to_head;
-	if (*ptr_to_head && (*ptr_to_head)->content == to_free)
+	temp1 = *ptr_to_head;
+	if (!temp1)
+		return ;
+	if ((*ptr_to_head)->content == to_free)
 	{
-		temp = (*ptr_to_head)->next;
+		temp1 = (*ptr_to_head)->next;
 		ft_lstdelone(*ptr_to_head, free);
-		*ptr_to_head = temp;
+		*ptr_to_head = temp1;
 		return ;
 	}
-	while (temp->next)
+	while (temp1->next)
 	{
-		if (temp->next->content == to_free)
+		if (temp1->next->content == to_free)
 		{
-			temp1 = temp->next->next;
-			ft_lstdelone(temp->next, free);
-			temp->next = temp1;
+			temp2 = temp1->next->next;
+			ft_lstdelone(temp1->next, free);
+			temp1->next = temp2;
 			return ;
 		}
-		temp = temp->next;
+		temp1 = temp1->next;
 	}
 }
 
@@ -58,6 +60,7 @@ void	*ft_garbage_collector(int option, int size, void *to_free)
 	void			*ptr;
 	static t_list	*head;
 
+	ptr = NULL;
 	if (option == ALLOCATE)
 	{
 		ptr = malloc(size);
@@ -67,8 +70,8 @@ void	*ft_garbage_collector(int option, int size, void *to_free)
 	if (option == SINGLE_RELEASE)
 	{
 		single_release(&head, to_free);
-		return (NULL);
+		return (ptr);
 	}
 	ft_lstclear(&head, free);
-	return (NULL);
+	return (ptr);
 }

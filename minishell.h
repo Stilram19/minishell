@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 15:49:24 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/10 11:49:47 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/10 13:01:03 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,5 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>
-
-enum gc_operations
-{
-	ALLOCATE, SINGLE_RELEASE, GLOBAL_RELEASE
-};
-
 
 #endif
