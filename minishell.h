@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 15:49:24 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/10 15:42:25 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/02/10 16:39:02 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,12 @@ typedef struct s_redc
 
 typedef struct s_cmds
 {
-	char	*cmd;
-	char	**args;
 	int		fdin;
 	int		fdout;
+	int		ncmds;
+	int		id;
+	char	*cmd;
+	char	**args;
 	t_cmds	*next;
 }	t_cmds;
 

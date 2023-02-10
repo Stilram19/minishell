@@ -1,37 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   buildsin_check.c                                   :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/10 16:04:16 by okhiar            #+#    #+#             */
-/*   Updated: 2023/02/10 16:26:17 by okhiar           ###   ########.fr       */
+/*   Created: 2023/02/10 16:25:27 by okhiar            #+#    #+#             */
+/*   Updated: 2023/02/10 16:25:44 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	in_array(char **arr, char *key)
+int	ft_strcmp(char *str1, char *str2)
 {
 	int	i;
 
 	i = 0;
-	while (arr[i])
+	while (str1[i] || str2[i])
 	{
-		if (ft_strcmp(arr[i], key) == 0)
+		if (str1[i] != str2[i])
 			return (1);
 		i++;
 	}
-	return (0);
-}
-
-int	is_buildin(char *cmd)
-{
-	static char	*buildin[8] = {"cd", "echo", "pwd", "export", \
-								"unset", "exit", "env", NULL};
-
-	if (in_array(buildin, cmd))
-		return (1);
 	return (0);
 }
