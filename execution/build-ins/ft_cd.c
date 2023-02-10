@@ -1,25 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   defined_types.h                                    :+:      :+:    :+:   */
+/*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/09 16:29:48 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/09 17:41:07 by obednaou         ###   ########.fr       */
+/*   Created: 2023/02/10 10:30:31 by okhiar            #+#    #+#             */
+/*   Updated: 2023/02/10 10:39:57 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DEFINED_TYPES_H
-# define DEFINED_TYPES_H
+#include "buildins.h"
 
-# define SUCCESS 0
-# define ERROR 1
-
-typedef struct s_list
+int	ft_cd(char *dir)
 {
-	void			*data;
-	struct s_list	*next;
-}					t_list;
-
-#endif
+	if (chdir(dir))
+	{
+		ft_putstr_fd(2, "cd: no such file or directory\n");
+		return (1);
+	}
+	return (0);
+}

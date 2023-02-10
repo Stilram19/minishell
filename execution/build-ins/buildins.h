@@ -1,27 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   buildins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/09 15:49:06 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/09 18:17:27 by obednaou         ###   ########.fr       */
+/*   Created: 2023/02/10 10:31:04 by okhiar            #+#    #+#             */
+/*   Updated: 2023/02/10 12:57:10 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef BUILDINS_H
+# define BUILDINS_H
 
-t_list	*build_env()
+# include <unistd.h>
+# include <stdio.h>
 
-t_list	*get_env(t_list *ptr)
-{
-	static t_list	*env
-}
+int	ft_cd(char *dir);
+int	ft_pwd(void);
+int	ft_env(void);
 
-t_list	*set_env()
-
-int	main(int argc, char **argv, char **env)
-{
-	
-}
+#endif
