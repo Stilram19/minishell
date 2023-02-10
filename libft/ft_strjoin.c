@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 08:54:21 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/10 10:29:37 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/10 14:57:47 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		return (0);
 	i = ft_strlen(s1);
 	j = ft_strlen(s2);
-	join = ft_garbage_collector(ALLOCATE, (i + j + 1) * sizeof(char));
+	join = ft_garbage_collector(ALLOCATE, (i + j + 1) * sizeof(char), NULL);
 	if (!join)
 		return (0);
 	ft_strlcpy(join, s1, i + 1);

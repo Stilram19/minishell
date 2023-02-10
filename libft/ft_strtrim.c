@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 09:25:49 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/10 10:31:01 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/10 15:14:44 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,9 @@ char	*ft_strtrim(char const *s1, char const *set)
 	start = ft_first_proper_char(s1, set);
 	end = ft_last_proper_char(s1, set);
 	if (start <= end && *s1)
-		ret = ft_garbage_collector(ALLOCATE, (end - start + 2) * sizeof(char));
+		ret = ft_garbage_collector(ALLOCATE, (end - start + 2) * sizeof(char), NULL);
 	else
-		ret = ft_garbage_collector(ALLOCATE, sizeof(char));
+		ret = ft_garbage_collector(ALLOCATE, sizeof(char), NULL);
 	if (!ret)
 		return (0);
 	while (++i + start <= end)

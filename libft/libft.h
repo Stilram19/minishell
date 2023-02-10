@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 16:21:59 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/10 11:03:05 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/10 15:18:18 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,6 @@ void	ft_lstdelone(t_list *lst, void (*del)(void *));
 void	ft_lstclear(t_list **lst, void (*del)(void *));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
-void	*ft_garbage_collector(int option, int size);
+void	*ft_garbage_collector(int option, int size, void *to_free);
 
 #endif

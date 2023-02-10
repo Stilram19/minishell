@@ -6,11 +6,12 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 10:37:00 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/10 13:35:11 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/10 16:07:31 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <stdio.h>
 
 /**
  * @brief releases the given address in the collection.
@@ -35,7 +36,7 @@ void	single_release(t_list **ptr_to_head, void *to_free)
 		if (temp1->next->content == to_free)
 		{
 			temp2 = temp1->next->next;
-			ft_lstdelone(temp1->next, free);
+			ft_lstdelone(temp1->next, free); 
 			temp1->next = temp2;
 			return ;
 		}

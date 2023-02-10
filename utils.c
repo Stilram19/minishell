@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 18:30:09 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/10 13:38:19 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/10 14:20:28 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,13 +74,11 @@ void	set_env(char **my_env, char *name, char *value)
  * and updates it if the flag is set, and returns its value.
  * @return the value of the static pointer {my_env}
 */
-char	**get_env(char **env, int flag)
+char	**get_env(char **env)
 {
 	static char	**my_env;
 
-	if (!my_env)
-		my_env = env_dup(env);
-	if (flag)
+	if (env)
 		my_env = env;
 	return (my_env);
 }

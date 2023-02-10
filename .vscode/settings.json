@@ -4,6 +4,7 @@
 		"defined_types.h": "c",
 		"libft.h": "c",
 		"stdio.h": "c",
-		"unistd.h": "c"
+		"unistd.h": "c",
+		"_types.h": "c"
 	}
 }
