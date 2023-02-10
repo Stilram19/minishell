@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 16:44:11 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/10 18:47:53 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/10 19:55:01 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	ft_strlen(char *str)
 	return (i);
 }
 
-int	is_special_char(char c, char *special_char, int *ignore)
+int	is_special_char(char c, char *special_char, char *ignore)
 {
 	int	ret;
 
@@ -31,7 +31,7 @@ int	is_special_char(char c, char *special_char, int *ignore)
 	{
 		if (*ignore == c)
 			*ignore = 0;
-		if (!(*ignore))
+		else if (!(*ignore))
 			*ignore = c;
 		return (0);
 	}
@@ -54,18 +54,17 @@ int	is_escape_seq(char c)
 char	*mask_generation(char *line)
 {
 	int		i;
-	int		ignore;
+	char	ignore;
 	char	*mask;
 	char	*special_char;
 
-	//mask = garbage_collector(ALLOCATE, ft_strlen(line) + 1, NULL);
 	i = 0;
 	ignore = 0;
 	special_char = "[|<>&]";
 	mask = malloc(sizeof(char) * (ft_strlen(line) + 1));
+	//mask = garbage_collector(ALLOCATE, ft_strlen(line) + 1, NULL);
 	while (*(line + i))
 	{
-		printf("|%d|", ignore);
 		if (!ignore && is_escape_seq(*(line + i)))
 			*(mask + i) = '1';
 		else if (is_special_char(*(line + i), special_char, &ignore))
