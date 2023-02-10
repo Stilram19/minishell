@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obednaou <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 18:30:03 by obednaou          #+#    #+#             */
-/*   Updated: 2022/10/19 19:30:31 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/10 10:31:51 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		len = 0;
 	else if (len > s_len - start)
 		len = s_len - start;
-	substr = malloc((len + 1) * sizeof(char));
+	substr = ft_garbage_collector(ALLOCATE, (len + 1) * sizeof(char));
 	if (!substr)
 		return (0);
 	while (i < len && *(s + i + start))

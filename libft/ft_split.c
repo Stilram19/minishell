@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obednaou <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 11:07:47 by obednaou          #+#    #+#             */
-/*   Updated: 2022/10/18 14:57:18 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/10 10:30:27 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static char	*ft_allocate_word(char **arr, const char **s, char c, int j)
 	while (*(s1 + i) && *(s1 + i) != c)
 		i++;
 	*s = s1 + i;
-	str = malloc((i + 1) * sizeof(char));
+	str = ft_garbage_collector(ALLOCATE, (i + 1) * sizeof(char));
 	if (!str)
 	{
 		free_the_heap(arr, j);
@@ -72,7 +72,8 @@ char	**ft_split(char const *s, char c)
 	j = 0;
 	if (!s)
 		return (0);
-	arr = malloc((ft_arrlen(s, c) + 1) * sizeof(char *));
+	arr = ft_garbage_collector(ALLOCATE,
+			(ft_arrlen(s, c) + 1) * sizeof(char *));
 	if (!arr)
 		return (0);
 	while (*s)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obednaou <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 14:14:34 by obednaou          #+#    #+#             */
-/*   Updated: 2022/10/12 14:49:55 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/10 10:27:57 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	*ft_itoa(int n)
 	int		i;
 
 	i = ft_digits_count(n);
-	ret = malloc((i + 1) * sizeof(char));
+	ret = ft_garbage_collector(ALLOCATE, (i + 1) * sizeof(char));
 	if (!ret)
 		return (0);
 	if (n < 0)
