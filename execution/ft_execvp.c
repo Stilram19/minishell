@@ -83,7 +83,9 @@ char	*valid_cmd(char *file, char *path)
 }
 
 /**
- * @brief execute the specified command
+ * @brief will duplicate the actions of the shell in searching for an executable file,
+ *  if the specified file name does not contain a slash "/" character. ft_execvp(@file, @args),
+ * search path is the path specified in the environment by "PATH" variable.
  * 
  * @param file 
  * @param args 
@@ -99,7 +101,6 @@ int	ft_execvp(char *file, char **args)
 	cmd = valid_cmd(file, path);
 	if (!cmd)
 		return (-1);
-	// dprintf(2, "%s\n", args[1]);
 	if (execve(cmd, args, get_env(NULL)))
 		return (-1);
 	return (0);

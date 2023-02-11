@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 17:37:40 by okhiar            #+#    #+#             */
-/*   Updated: 2023/02/11 14:06:39 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/02/11 18:23:32 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_dup2(int f1, int f2)
 {
-	dprintf(2, "%d %d\n", f1, f2);
+	//dprintf(2, "%d %d\n", f1, f2);
 	if (f1 != f2)
 	{
 		if (dup2(f1, f2) == -1)
@@ -25,13 +25,18 @@ void	ft_dup2(int f1, int f2)
 
 void	redirect_out(t_cmds *cmds, t_redc *red)
 {
+	if (cmds->token == HD_TOKEN)
+		return ;
 	if (cmds->id == cmds->ncmds)
 	{
-		dprintf(2, "here\n");
+		// dprintf(2, "here\n");
 		if (cmds->fdout != STDOUT_FILENO)
 			red->fdout = cmds->fdout;
 		else
+		{
 			red->fdout = dup(red->dup_out);
+			// sleep(50);
+		}
 		return ;
 	}
 	if (pipe(red->fds))

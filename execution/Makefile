@@ -1,11 +1,14 @@
 NAME = test
-SRCS = ${wildcard ../libft/*.c} ${wildcard build-ins/*.c} ./utils.c ./ft_execvp.c ./execute.c ./buildsin_check.c ../utils.c ../garbage_collector.c
+SRCS = ${wildcard ../libft/*.c} ${wildcard build-ins/*.c} \
+				./utils.c ./ft_execvp.c ./execute.c \
+				./buildsin_check.c ../utils.c ../garbage_collector.c \
+				./here_doc.c
 OBJS = ${SRCS:.c=.o}
-CFLAGS = -I../
+CFLAGS = -I../ 
 all: ${NAME}
 
 ${NAME}: ${OBJS}
-	gcc ${OBJS} ${CFLAGS} -o ${NAME}
+	gcc ${OBJS} ${CFLAGS} -lreadline -o ${NAME}
 
 clean:
 	rm -rf ${OBJS}
