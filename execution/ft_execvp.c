@@ -100,7 +100,7 @@ int	ft_execvp(char *file, char **args)
 	if (!cmd)
 		return (-1);
 	// dprintf(2, "%s\n", args[1]);
-	if (execve(cmd, args, NULL))
+	if (execve(cmd, args, get_env(NULL)))
 		return (-1);
 	return (0);
 }
