@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 15:49:06 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/10 19:56:24 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/11 18:17:01 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,12 @@ int	main(int argc, char **argv, char **env)
 		add_hisory(line);
 		free(line);
 	}*/
-	line = "ls>>>a | echo \'ls > a |\" hhhh\' '||| ls < a' ";
-	//mask = "00222012100001000000000000000012221001210";
-	//tokens = produce_tokens(line, mask);
-	//ft_display_tokens(tokens);
+	line = "ls>>a | echo \'ls > a\' &&\" hhhh\' || ls < a\"|\"";
 	printf("%s\n", line);
-	printf("%s\n", mask_generation(line));
+	mask = mask_generation(line);
+	printf("%s\n", mask);
+	tokens = produce_tokens(line, mask);
+	ft_display_tokens(tokens);
+	printf("%d\n", check_syntax(tokens));
 	return (0);
 }

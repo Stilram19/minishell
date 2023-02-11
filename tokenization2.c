@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 16:44:11 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/10 19:55:01 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/11 17:59:05 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char	*mask_generation(char *line)
 
 	i = 0;
 	ignore = 0;
-	special_char = "[|<>&]";
+	special_char = "|<>&";
 	mask = malloc(sizeof(char) * (ft_strlen(line) + 1));
 	//mask = garbage_collector(ALLOCATE, ft_strlen(line) + 1, NULL);
 	while (*(line + i))
@@ -73,6 +73,6 @@ char	*mask_generation(char *line)
 			*(mask + i) = '0';
 		i++;
 	}
-	*(mask + i) = 0;
+	*(mask + i) = '\0';
 	return (mask);
 }
