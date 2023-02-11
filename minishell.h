@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 15:49:24 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/10 20:14:06 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/02/11 17:17:30 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,10 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>
+# include <readline/readline.h>
 
 # define CMN_NF "\e[1;31mMinishell\e[0m: Command not found\n"
+# define HD_MSG "here_doc> "
 
 typedef struct s_cmds t_cmds;
 
@@ -27,6 +29,13 @@ enum gar_col
 {
 	ALLOCATE,
 	SINGLE_RELEASE
+};
+
+enum token
+{
+	HD_TOKEN,
+	I_REDCT,
+	O_REDCT
 };
 
 typedef struct s_redc
@@ -44,6 +53,8 @@ typedef struct s_cmds
 	int		fdout;
 	int		ncmds;
 	int		id;
+	int		token;
+	char	*delimiter;
 	char	*cmd;
 	char	**args;
 	t_cmds	*next;
