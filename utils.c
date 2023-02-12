@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 18:30:09 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/10 15:34:36 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/02/12 13:22:14 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,8 @@ char	*get_env_var(char *key)
 	env = get_env(NULL);
 	while (env[i])
 	{
-		if (!ft_strncmp(env[i], key, ft_strlen(key)))
+		if (!ft_strncmp(env[i], key, ft_strlen(key)) \
+					&& env[i][ft_strlen(key)] == '=')
 			return (ft_strdup(env[i] + (ft_strlen(key) + 1)));
 		i++;
 	}

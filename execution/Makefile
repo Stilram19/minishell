@@ -4,7 +4,7 @@ SRCS = ${wildcard ../libft/*.c} ${wildcard build-ins/*.c} \
 				./buildsin_check.c ../utils.c ../garbage_collector.c \
 				./here_doc.c
 OBJS = ${SRCS:.c=.o}
-CFLAGS = -I../ 
+CFLAGS = -I../
 all: ${NAME}
 
 ${NAME}: ${OBJS}

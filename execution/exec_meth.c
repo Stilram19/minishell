@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 12:37:46 by okhiar            #+#    #+#             */
-/*   Updated: 2023/02/11 12:38:33 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/02/12 14:53:01 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,3 +106,31 @@ int	execute(t_cmds *cmds)
 	set_env(get_env(NULL), "?", ft_itoa(status));
 	return (0);
 }
+
+
+/*
+int	exec_cmds(t_cmds *cmds, t_redc *redct)
+{
+	int	pid;
+
+	pid = -1;
+	if (cmds->fdin != STDIN_FILENO)
+		redct->fdin = cmds->fdin;
+	while (cmds)
+	{
+		ft_dup2(redct->fdin, 0);
+		redirect_out(cmds, redct);
+		ft_dup2(redct->fdout, 1);
+		if (is_buildin(cmds->cmd))
+			execute_buildin(cmds);
+		else
+		{
+			pid = fork();
+			if (!pid)
+				if (ft_execvp(cmds->cmd, cmds->args))
+					_ft_putstr_fd(CMN_NF, 2, 127);
+		}
+		cmds = cmds->next;
+	}
+	return (pid);
+}*/

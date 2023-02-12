@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 15:21:46 by okhiar            #+#    #+#             */
-/*   Updated: 2023/02/11 17:19:23 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/02/12 11:17:08 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,13 @@ int	here_doc(t_cmds *cmds)
 	line = readline(HD_MSG);
 	while (line && ft_strcmp(line, cmds->delimiter))
 	{
-		write(cmds->fdout, line, ft_strlen(line));
-		write(cmds->fdout, "\n", 1);
+		write(cmds->hd_fd, line, ft_strlen(line));
+		write(cmds->hd_fd, "\n", 1);
+		free(line);
 		line = readline(HD_MSG);
 	}
-	// dup2(cmds->fdout, 0);
-	return (cmds->fdout);
+	if (line)
+		free(line);
+	close(cmds->hd_fd);
+	return (0);
 }

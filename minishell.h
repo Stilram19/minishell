@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 15:49:24 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/11 17:17:30 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/02/12 17:59:30 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,13 @@ enum token
 	O_REDCT
 };
 
+enum separator
+{
+	PIPE = 1,
+	AND_AND,
+	OR_OR
+};
+
 typedef struct s_redc
 {
 	int	dup_in;
@@ -45,6 +52,7 @@ typedef struct s_redc
 	int	fdout;
 	int	fdin;
 	int	fds[2];
+	int	prev_pipe[2];
 }	t_redc;
 
 typedef struct s_cmds
@@ -54,16 +62,20 @@ typedef struct s_cmds
 	int		ncmds;
 	int		id;
 	int		token;
+	int		sep;
+	int		hd_fd;
 	char	*delimiter;
 	char	*cmd;
 	char	**args;
 	t_cmds	*next;
+	t_cmds	*prev;
 }	t_cmds;
 
 /*Parsing*/
 char	**get_env(char **env);
 char	**env_dup(char **env);
 char	*get_env_var(char *key);
+int		envlen(char **env);
 void	set_env(char **my_env, char *name, char *value);
 void	*ft_garbage_collector(int option, int size, void *to_free);
 
