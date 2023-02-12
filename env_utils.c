@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 12:54:03 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/12 13:41:52 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/12 16:12:36 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char	**env_dup(char **env)
  * @param key name of the variable
  * @return char* the value of the variable
  */
-char	*get_env_var(char *key)
+char	*get_var_value(char *key)
 {
 	int		i;
 	int		key_len;
@@ -59,14 +59,15 @@ char	*get_env_var(char *key)
 
 	i = 0;
 	env = get_env(NULL);
+	key_len = ft_strlen(key);
 	while (env[i])
 	{
-        if (!ft_strncmp(env[i], key, key_len)
+        	if (!ft_strncmp(env[i], key, key_len)
 			&& env[i][key_len] == '=')
         return (ft_strdup(env[i] + (key_len + 1)));
         i++;
     }
-	return (NULL);
+    return (NULL);
 }
 
 /**
@@ -90,7 +91,6 @@ void	set_env(char **my_env, char *name, char *value)
 		i++;
 	}
 	ft_garbage_collector(SINGLE_RELEASE, 0, my_env);
-	//free(my_env);
 	*(new_env + i++) = ft_strjoin(name, ft_strjoin("=", value));
 	*(new_env + i) = NULL;
 }

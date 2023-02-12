@@ -4,7 +4,8 @@ SRCS=		main.c \
 			garbage_collector.c \
 			tokenization1.c \
 			tokenization2.c \
-			check_syntax.c
+			check_syntax.c \
+			expanding.c
 
 OBJS=		${SRCS:.c=.o}
 LIBFT_OBJS=	${LIBFT_SRCS:.c=.o}
