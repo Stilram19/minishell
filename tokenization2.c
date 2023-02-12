@@ -6,21 +6,11 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 16:44:11 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/11 17:59:05 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/12 13:17:38 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	ft_strlen(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (*(str + i))
-		i++;
-	return (i);
-}
 
 int	is_special_char(char c, char *special_char, char *ignore)
 {
@@ -61,8 +51,7 @@ char	*mask_generation(char *line)
 	i = 0;
 	ignore = 0;
 	special_char = "|<>&";
-	mask = malloc(sizeof(char) * (ft_strlen(line) + 1));
-	//mask = garbage_collector(ALLOCATE, ft_strlen(line) + 1, NULL);
+	mask = garbage_collector(ALLOCATE, ft_strlen(line) + 1, NULL);
 	while (*(line + i))
 	{
 		if (!ignore && is_escape_seq(*(line + i)))

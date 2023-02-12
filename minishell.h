@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 15:49:24 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/11 17:58:20 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/12 12:54:35 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,13 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>
+# include <string.h>
 # include "defined_types.h"
 
-int		ft_strlen(char *str);
-void	*ft_garbage_collector(int option, int size, char *to_free);
+char	**get_env(char **env);
+char	**env_dup(char **env);
+void	set_env(char **my_env, char *name, char *value);
+void	*ft_garbage_collector(int option, int size, void *to_free);
 char	**produce_tokens(char *line, char *mask);
 char	*mask_generation(char *line);
 int		check_syntax(char **tokens);

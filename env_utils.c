@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/09 18:30:09 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/10 14:20:28 by obednaou         ###   ########.fr       */
+/*   Created: 2023/02/12 12:54:03 by obednaou          #+#    #+#             */
+/*   Updated: 2023/02/12 13:41:52 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	**env_dup(char **env)
 
 	i = 0;
 	var_count = envlen(env) + 1;
-	my_env = ft_garbage_collector(ALLOCATE, var_count * sizeof(char *));
+	my_env = ft_garbage_collector(ALLOCATE, var_count * sizeof(char *), NULL);
 	while (*(env + i))
 	{
 		*(my_env + i) = ft_strdup(*(env + i));
@@ -42,6 +42,31 @@ char	**env_dup(char **env)
 	}
 	*(env + i) = NULL;
 	return (my_env);
+}
+
+/**
+ * @brief Get the value of a variable on the environment variables
+ * by its key (name)
+ * 
+ * @param key name of the variable
+ * @return char* the value of the variable
+ */
+char	*get_env_var(char *key)
+{
+	int		i;
+	int		key_len;
+	char	**env;
+
+	i = 0;
+	env = get_env(NULL);
+	while (env[i])
+	{
+        if (!ft_strncmp(env[i], key, key_len)
+			&& env[i][key_len] == '=')
+        return (ft_strdup(env[i] + (key_len + 1)));
+        i++;
+    }
+	return (NULL);
 }
 
 /**
@@ -57,14 +82,15 @@ void	set_env(char **my_env, char *name, char *value)
 
 	i = 0;
 	var_count = envlen(my_env) + 2;
-	new_env = ft_garbage_collector(ALLOCATE, var_count * sizeof(char *));
-	get_env(new_env, UPDATE);
+	new_env = ft_garbage_collector(ALLOCATE, var_count * sizeof(char *), NULL);
+	get_env(new_env);
 	while (*(my_env + i))
 	{
 		*(new_env + i) = *(my_env + i);
 		i++;
 	}
 	ft_garbage_collector(SINGLE_RELEASE, 0, my_env);
+	//free(my_env);
 	*(new_env + i++) = ft_strjoin(name, ft_strjoin("=", value));
 	*(new_env + i) = NULL;
 }
