@@ -6,12 +6,11 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 12:54:29 by okhiar            #+#    #+#             */
-/*   Updated: 2023/02/12 22:16:40 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/02/13 13:49:27 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "buildins.h"
-
 
 int	is_exist(char **env, char *identifier)
 {
@@ -30,6 +29,20 @@ int	is_exist(char **env, char *identifier)
 	return (-1);
 }
 
+void	check_append(char **env_v, char *v, char *val, int app)
+{
+	if (!val[0] && !app)
+		return ;
+	if (app)
+	{
+		if (!ft_strchr(*env_v, '='))
+			*env_v = ft_strjoin(*env_v, "=");
+		*env_v = ft_strjoin(*env_v, val);
+	}
+	else
+		*env_v = ft_strdup(v);
+}
+
 void	ft_set_var(char **env, char *var, int append)
 {
 	int		i;
@@ -44,10 +57,7 @@ void	ft_set_var(char **env, char *var, int append)
 	index = is_exist(env, var_name);
 	if (index != -1)
 	{
-		if (append)
-			env[index] = ft_strjoin(env[index], var_value);
-		else
-			env[index] = ft_strdup(var);
+		check_append(&env[index], var, var_value, append);
 		return ;
 	}
 	new_env = (char **)malloc(sizeof(char *) * (envlen(env) + 2));
@@ -57,6 +67,7 @@ void	ft_set_var(char **env, char *var, int append)
 		new_env[i] = ft_strjoin(var_name, ft_strjoin("=", var_value));
 	else
 		new_env[i] = ft_strdup(var);
+	new_env[i + 1] = NULL;
 	get_env(new_env);
 }
 
@@ -88,10 +99,8 @@ int	ft_export(char **args)
 		if (valid_arg(args[i], &append))
 			ft_set_var(get_env(NULL), args[i], append);
 		else
-		{
-			ft_putstr_fd("invalid identifier\n", 2);
-			status = 1;
-		}
+			(status = (ft_putstr_fd("\e[1;31mexport:\e[0m invalid identifier\n", \
+								2), 1));
 		i++;
 	}
 	return (status);

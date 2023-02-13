@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 18:30:09 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/12 13:22:14 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/02/13 12:37:15 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	**env_dup(char **env)
 		*(my_env + i) = ft_strdup(*(env + i));
 		i++;
 	}
-	*(env + i) = NULL;
+	*(my_env + i) = NULL;
 	return (my_env);
 }
 

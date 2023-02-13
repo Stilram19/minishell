@@ -8,7 +8,7 @@ CFLAGS = -I../
 all: ${NAME}
 
 ${NAME}: ${OBJS}
-	gcc ${OBJS} ${CFLAGS} -lreadline -o ${NAME}
+	gcc ${OBJS} ${CFLAGS} -lreadline -fsanitize=address -o ${NAME}
 
 clean:
 	rm -rf ${OBJS}

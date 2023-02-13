@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 15:06:28 by okhiar            #+#    #+#             */
-/*   Updated: 2023/02/12 22:12:44 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/02/13 13:48:34 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,11 +191,12 @@ int	main(int ac, char **av, char **env)
 	cmds3 = (t_cmds *)malloc(sizeof(t_cmds));
 	cmds->ncmds = 1;
 	cmds->cmd = ft_strdup("export");
-	cmds->args = (char **)malloc(sizeof(char *) * 2);
+	cmds->args = (char **)malloc(sizeof(char *) * 3);
 	cmds->id = 1;
-	cmds->args[0] = ft_strdup("blah+=");
+	cmds->args[0] = ft_strdup("empty");
+	cmds->args[1] = ft_strdup("empty");
 	// cmds->args[1] = ft_strdup("LESS=50");
-	cmds->args[1] = NULL;
+	cmds->args[2] = NULL;
 	cmds->fdin = 0;
 	cmds->fdout = 1;
 	// cmds->hd_fd = hd_fd;

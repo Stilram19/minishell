@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 21:53:02 by okhiar            #+#    #+#             */
-/*   Updated: 2023/02/12 22:08:50 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/02/13 12:44:34 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ static char	*set_mask(char *name, int len)
 		flag = 0;
 		i++;
 	}
+	mask[i] = '\0';
 	return (mask);
 }
 
