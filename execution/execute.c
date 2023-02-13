@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 15:06:28 by okhiar            #+#    #+#             */
-/*   Updated: 2023/02/13 15:57:08 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/02/13 16:15:52 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,16 +185,16 @@ int	main(int ac, char **av, char **env)
 	unsigned int	x = -15;
 
 	get_env(env_dup(env));
-	// ft_env(); 
+	ft_env(); 
 	printf("----------------------------------------------------------------\n");
 	cmds = (t_cmds *)malloc(sizeof(t_cmds));
 	cmds2 = (t_cmds *)malloc(sizeof(t_cmds));
 	cmds3 = (t_cmds *)malloc(sizeof(t_cmds));
 	cmds->ncmds = 1;
-	cmds->cmd = ft_strdup("exit");
+	cmds->cmd = ft_strdup("export");
 	cmds->args = (char **)malloc(sizeof(char *) * 2);
 	cmds->id = 1;
-	cmds->args[0] = ft_strdup("  -15  ");
+	cmds->args[0] = ft_strdup("45488");
 	// cmds->args[1] = ft_strdup("15");
 	// cmds->args[1] = ft_strdup("LESS=50");
 	cmds->args[1] = NULL;
@@ -239,6 +239,6 @@ int	main(int ac, char **av, char **env)
 	// cmds3->prev = cmds2;
 	execute(cmds);
 	// sleep(20);
-	// ft_env();
+	ft_env();
 	return (0);
 }

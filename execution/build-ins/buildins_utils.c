@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 21:53:02 by okhiar            #+#    #+#             */
-/*   Updated: 2023/02/13 14:24:33 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/02/13 16:15:26 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ int	valid_arg(char *arg, int *append)
 
 	len = name_len(arg);
 	i = 0;
+	if (!ft_isalpha(arg[0]))
+		return (0);
 	if (arg[len] == '=')
 		len++;
 	name = ft_substr(arg, 0, len);
