@@ -6,53 +6,25 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 18:21:19 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/13 11:50:26 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/13 18:02:09 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// first encountered character in the list {', ", $}
-// if ' is the first encountered character, then no expanding happens.
-// if " or $ is the first encountered character, then it may expand.
-// skip every charcter before $
-// go through characters after $, until you find a non-apha-numeric character{'\0', $, "} are included.
-// if '\0' is directely after $, don't expand, let things as it is.
-// otherwise look for the variable found between $ and the first encountered non-alpha-numeric character.
-// Reallocate for this token, and keep every character before $, and here:
-// if you find the variable then substitute it with its value.
-// otherwise skip it (as if nothing existed before).
-
-char first_encountered(char *token)
-{
-	char ret;
-
-	ret = 0;
-	while (*token)
-	{
-		if (*token == '\'' || *token == '\"' || *token == '$')
-		{
-			ret = *token;
-			break ;
-		}
-		token++;
-	}
-	return (ret);
-}
 
 int	var_name_len(char *var)
 {
 	int	i;
 
 	i = 0;
-	while (ft_isalnum(*(var + i)))
+	while (ft_isalnum(*(var + i)) || *(var + i) == '_')
 		i++;
 	if (!i && *var == '?')
 		i++;
 	return (i);
 }
 
-char	*var_expand(char **ptr_to_token, int *ptr_to_i, int name_len)
+char	*var_expansion(char **ptr_to_token, int *ptr_to_i, int name_len)
 {
 	int		new_len;
 	int		value_len;
@@ -72,63 +44,98 @@ char	*var_expand(char **ptr_to_token, int *ptr_to_i, int name_len)
 	ft_strlcpy(*ptr_to_token, to_free, *ptr_to_i);
 	if (var_value)
 		ft_strlcpy(*ptr_to_token + *ptr_to_i - 1, var_value, value_len + 1);
-	//printf("%s\n", *(tokens + index));
-	ft_strlcpy(*ptr_to_token + *ptr_to_i - 1 + value_len, to_free + *ptr_to_i + name_len,
-		new_len - value_len - *ptr_to_i + 2);
-	//printf("%s\n", *ptr_to_token);
+	ft_strlcpy(*ptr_to_token + *ptr_to_i - 1 + value_len, to_free
+		+ *ptr_to_i + name_len, new_len - value_len - *ptr_to_i + 2);
 	ft_garbage_collector(SINGLE_RELEASE, 0, to_free);
 	ft_garbage_collector(SINGLE_RELEASE, 0, var_name);
 	*ptr_to_i += value_len - 1;
 	return (*ptr_to_token);
 }
-//<$HOME$HOME>
-//</Users/obednaou$HOME
-//i = 1
-//name_len = 4
-//var_name = <HOME>;
 
-int	skip_single_quotes(char *add)
+// void	expand_if(char **tokens)
+// {
+// 	int		i;
+// 	char	open_quote;
+// 	char	*token;
+
+// 	i = 0;
+// 	open_quote = 0;
+// 	token = *tokens;
+// 	while (*(token + i))
+// 	{
+// 		if (*(token + i) == '\'' || *(token + i) == '\"')
+// 		{
+// 			if (*(token + i) == open_quote)
+// 				open_quote = 0;
+// 			else if (*(token + i) == open_quote)
+// 				open_quote = *(token + i);
+// 		}
+// 		while (!open_quote && *(token + i) && *(token + i) != '$')
+// 			i++;
+// 		if (!(*(token + i)))
+// 			break ;
+// 		if ((++i && *(token + i) != '?'
+// 				&& !ft_isalnum(*(token + i))) || open_quote)
+// 			continue ;
+// 		token = var_expand(tokens, &i, var_name_len(token + i));
+// 	}
+// }
+
+// $' or $" -> $ should be removed from the string
+// but there must be no open quote before $ 
+
+int	remove_dollar_if(char *add, int open_quote)
 {
-	int	i;
-	int	ret;
-
-	ret = 0;
-	whiel ()
+	if (!(*add) || (*add != '\'' && *add != '\"')
+		|| open_quote)
+		return (0);
+	while (*(add - 1))
+	{
+		*(add - 1) = *add;
+		add++;
+	}
+	return (1);
 }
 
-void expand_if(char **tokens, int index)
+void	expand_if(char **tokens)
 {
 	int		i;
+	char	open_quote;
 	char	*token;
 
 	i = 0;
-	token = *(tokens + index);
-	if (first_encountered(token) == '\'')
-		return ;
+	open_quote = 0;
+	token = *tokens;
 	while (*(token + i))
 	{
-		i += skip_single_quotes(token + i);
-		while (*(token + i) && *(token + i) != '$')
-			i++;
-		if (!(*(token + i)))
-			break ;
-		if (++i && *(token + i) != '?' && !ft_isalnum(*(token + i)))
+		if (*(token + i) == '\'' || *(token + i) == '\"')
+		{
+			if (open_quote == *(token + i++))
+				open_quote = 0;
+			else if (!open_quote)
+				open_quote = *(token + i - 1);
 			continue ;
-		token = var_expand(tokens + index, &i, var_name_len(token + i));
+		}
+		if (((*(token + i) != '$' || open_quote == '\'') && ++i)
+			|| remove_dollar_if(token + i + 1, open_quote))
+			continue ;
+		if (++i && !ft_isalnum(*(token + i)) && *(token + i) != '?')
+			continue ;
+		token = var_expansion(tokens, &i, var_name_len(token + i));
 	}
 }
 
-void expanding(char **tokens)
+void	expanding(char **tokens)
 {
-	int i;
-	char **my_env;
+	int		i;
+	char	**my_env;
 
 	i = 0;
 	my_env = get_env(NULL);
 	while (*(tokens + i))
 	{
 		if (ft_strchr(*(tokens + i), '$'))
-			expand_if(tokens, i);
+			expand_if(tokens + i);
 		i++;
 	}
 }
