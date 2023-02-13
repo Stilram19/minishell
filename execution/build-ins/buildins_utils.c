@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 21:53:02 by okhiar            #+#    #+#             */
-/*   Updated: 2023/02/13 12:44:34 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/02/13 14:24:33 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	valid_arg(char *arg, int *append)
 	mask = set_mask(name, len);
 	while (mask[i])
 	{
-		if (mask[i] == 49 || (mask[i] == 50 && mask[i + 1] != 51) 
+		if (mask[i] == 49 || (mask[i] == 50 && mask[i + 1] != 51) \
 			|| (mask[0] != 48))
 			return (0);
 		i++;

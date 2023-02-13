@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 10:43:29 by okhiar            #+#    #+#             */
-/*   Updated: 2023/02/10 10:47:29 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/02/13 15:07:39 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_pwd(void)
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
 	{
-		ft_putstr_fd(2, "Error occurred while getting the current working directory\n");
+		ft_putstr_fd("Error occurred while getting the CWD\n", 2);
 		return (1);
 	}
 	printf("%s\n", cwd);
