@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 18:21:19 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/12 18:36:54 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/13 11:50:26 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,16 @@ char	*var_expand(char **ptr_to_token, int *ptr_to_i, int name_len)
 //i = 1
 //name_len = 4
 //var_name = <HOME>;
+
+int	skip_single_quotes(char *add)
+{
+	int	i;
+	int	ret;
+
+	ret = 0;
+	whiel ()
+}
+
 void expand_if(char **tokens, int index)
 {
 	int		i;
@@ -97,6 +107,7 @@ void expand_if(char **tokens, int index)
 		return ;
 	while (*(token + i))
 	{
+		i += skip_single_quotes(token + i);
 		while (*(token + i) && *(token + i) != '$')
 			i++;
 		if (!(*(token + i)))
