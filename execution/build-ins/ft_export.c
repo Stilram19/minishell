@@ -6,28 +6,11 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 12:54:29 by okhiar            #+#    #+#             */
-/*   Updated: 2023/02/13 13:49:27 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/02/13 18:06:25 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "buildins.h"
-
-int	is_exist(char **env, char *identifier)
-{
-	int	i;
-	int	len;
-
-	i = 0;
-	len = ft_strlen(identifier);
-	while (env[i])
-	{
-		if (!ft_strncmp(identifier, env[i], len) \
-			&& (!env[i][len] || env[i][len] == '='))
-			return (i);
-		i++;
-	}
-	return (-1);
-}
 
 void	check_append(char **env_v, char *v, char *val, int app)
 {
@@ -52,8 +35,8 @@ void	ft_set_var(char **env, char *var, int append)
 	char	*var_value;
 
 	i = -1;
-	var_name = ft_substr(var, 0, name_len(var) - append);
-	var_value = ft_substr(var, name_len(var) + 1, ft_strlen(var));
+	var_name = ft_substr(var, 0, name_len(var, &append) - append);
+	var_value = ft_substr(var, name_len(var, &append) + 1, ft_strlen(var));
 	index = is_exist(env, var_name);
 	if (index != -1)
 	{
@@ -84,7 +67,7 @@ void	ft_print_set(char **env)
 	}
 }
 
-int	ft_export(char **args)
+int	ft_export(char **args)// !  export "x=gh"=10
 {
 	int	i;
 	int	status;

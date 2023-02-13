@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 21:53:02 by okhiar            #+#    #+#             */
-/*   Updated: 2023/02/13 16:15:26 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/02/13 18:08:44 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ static char	*set_mask(char *name, int len)
 	mask = (char *)malloc(sizeof(char) * (len + 1));
 	while (name[i])
 	{
-		if (!ft_isalnum(name[i]) && name[i] != '=')
+		if (!ft_isalnum(name[i]) && name[i] != '_')
 			flag = 1;
-		mask[i] = ((ft_isalnum(name[i])) * 48) + \
-					(flag * 49 + (name[i] == '+')) + ((name[i] == '=') * 51);
+		mask[i] = ((ft_isalnum(name[i]) || name[i] == '_') * 48) + \
+					(flag * 49 + (name[i] == '+'));
 		flag = 0;
 		i++;
 	}
@@ -34,13 +34,34 @@ static char	*set_mask(char *name, int len)
 	return (mask);
 }
 
-int	name_len(char *name)
+int	is_exist(char **env, char *identifier)
+{
+	int	i;
+	int	len;
+
+	i = 0;
+	len = ft_strlen(identifier);
+	while (env[i])
+	{
+		if (!ft_strncmp(identifier, env[i], len) \
+			&& (!env[i][len] || env[i][len] == '='))
+			return (i);
+		i++;
+	}
+	return (-1);
+}
+
+int	name_len(char *name, int *append)
 {
 	int	i;
 
 	i = 0;
-	while (name[i] && name[i] != '=')
+	while (name[i])
+	{
+		if (append && name[i] == '=')
+			break ;
 		i++;
+	}
 	return (i);
 }
 
@@ -51,23 +72,24 @@ int	valid_arg(char *arg, int *append)
 	char	*mask;
 	char	*name;
 
-	len = name_len(arg);
 	i = 0;
-	if (!ft_isalpha(arg[0]))
+	len = name_len(arg, append);
+	if (!ft_isalpha(arg[0]) && arg[0] != '_')
 		return (0);
-	if (arg[len] == '=')
-		len++;
 	name = ft_substr(arg, 0, len);
 	mask = set_mask(name, len);
 	while (mask[i])
 	{
-		if (mask[i] == 49 || (mask[i] == 50 && mask[i + 1] != 51) \
-			|| (mask[0] != 48))
+		if (mask[i] == 49 || (!append && mask[i] != 48) || (mask[0] != 48) \
+			|| (append && mask[i] == 50 && arg[i + 1] != '='))
 			return (0);
 		i++;
 	}
-	*append = 0;
-	if (mask[i - 2] == 50 && mask[i - 1] == 51)
-		*append = 1;
+	if (append)
+	{
+		*append = 0;
+		if (mask[i - 1] == 50)
+			*append = 1;
+	}
 	return (1);
 }

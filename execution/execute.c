@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 15:06:28 by okhiar            #+#    #+#             */
-/*   Updated: 2023/02/13 16:15:52 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/02/13 18:10:13 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ int	execute_buildin(t_cmds *cmds)
 		status = ft_echo(cmds->args);
 	else if (!ft_strcmp(cmds->cmd, "export"))
 		status = ft_export(cmds->args);
+	else if (!ft_strcmp(cmds->cmd, "unset"))
+		status = ft_unset(cmds->args);
 	else if (!ft_strcmp(cmds->cmd, "exit"))
 		status = ft_exit(cmds->args);
 	return (status);
@@ -191,10 +193,10 @@ int	main(int ac, char **av, char **env)
 	cmds2 = (t_cmds *)malloc(sizeof(t_cmds));
 	cmds3 = (t_cmds *)malloc(sizeof(t_cmds));
 	cmds->ncmds = 1;
-	cmds->cmd = ft_strdup("export");
+	cmds->cmd = ft_strdup("unset");
 	cmds->args = (char **)malloc(sizeof(char *) * 2);
 	cmds->id = 1;
-	cmds->args[0] = ft_strdup("45488");
+	cmds->args[0] = ft_strdup("x");
 	// cmds->args[1] = ft_strdup("15");
 	// cmds->args[1] = ft_strdup("LESS=50");
 	cmds->args[1] = NULL;
