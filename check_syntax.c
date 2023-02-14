@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 13:04:46 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/13 18:11:29 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/14 11:15:33 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,26 @@ int	check_unclosed_quotes(char *token)
 	return (ret);
 }
 
+int	check_invalid_redirections(char **tokens)
+{
+	char	*token;
+
+	while (*tokens)
+	{
+		token = *tokens;
+		if (ft_strncmp(token, "<", 1)
+			&& ft_strncmp(token, ">", 1) && tokens++)
+			continue ;
+		token = *(tokens + 1);
+		if (!token || !(*token) || *token == '&'
+			|| *token == '(' || *token == ')'
+			|| *token == '#')
+			return (1);
+		tokens++;
+	}
+	return (0);
+}
+
 int	check_syntax(char **tokens)
 {
 	int	i;
@@ -73,5 +93,6 @@ int	check_syntax(char **tokens)
 		(stop || (stop = check_unclosed_quotes(*(tokens + i))));
 		i++;
 	}
+	(stop || (stop = check_invalid_redirections(tokens)));
 	return (stop);
 }
