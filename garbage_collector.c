@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 10:37:00 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/12 12:42:45 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/15 18:38:38 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ void	*ft_garbage_collector(int option, int size, void *to_free)
 	if (option == ALLOCATE)
 	{
 		ptr = malloc(size);
+		if (!ptr)
+			exit(EXIT_FAILURE);
 		ft_lstadd_front(&head, ft_lstnew(ptr));
 		return (ptr);
 	}
