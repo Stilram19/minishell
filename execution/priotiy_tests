@@ -1,0 +1,17 @@
+false || (sleedfp 3 && ls)
+ls || pwd && ls
+ls && (false || pwd | wc)
+(ls && (lfhsg || pwd | wc)) | wc
+
+************
+(ls && exit)
+ls && exit
+
+************
+(ls && (pwdfs || sleep 3 && pwd)) | (ls) ---> wait
+(ls && (pwdfs || sleep 3 && pwd)) | ls   ---> Does not wait
+
+************
+(pwd && (sleep 3 || pwd | wc)) | pwd   --> waiting
+(pwd && (sleep 3 || pwd | wc)) | ls    --> waiting
+(ls && (sleep 3 || pwd | wc)) | ls     --> Does not wait

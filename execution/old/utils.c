@@ -5,25 +5,43 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/15 16:23:18 by okhiar            #+#    #+#             */
-/*   Updated: 2023/02/15 17:56:50 by okhiar           ###   ########.fr       */
+/*   Created: 2023/02/10 17:37:40 by okhiar            #+#    #+#             */
+/*   Updated: 2023/02/14 21:41:22 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
-t_cmds	*command_fill(char *cmd, int fd_in, int fd_out)
+void	ft_dup2(int f1, int f2)
 {
-	t_cmds	*cmd_s;
+	dprintf(2, "%d %d\n", f1, f2);
+	if (f1 != f2)
+	{
+		if (dup2(f1, f2) == -1)
+			perror("dup2");
+		// close(f1);
+	}
+}
 
-	cmd_s = (t_cmds *)malloc(sizeof(t_cmds));
-	cmd_s->cmd = ft_strdup(cmd);
-	cmd_s->args = (char **)malloc(sizeof(char *) * 2);
-	cmd_s->args[0] = ft_strdup(cmd);
-	cmd_s->args[1] = NULL;
-	cmd_s->fd_in = fd_in;
-	cmd_s->fd_out = fd_out;
-	return (cmd_s);
+void	redirect_out(t_cmds *cmds, t_redc *red)
+{
+	// if (cmds->token == HD_TOKEN)
+	// 	return ;
+	if (cmds->id == cmds->ncmds)
+	{
+		if (cmds->fdout != STDOUT_FILENO)
+			red->fdout = cmds->fdout;
+		else
+			red->fdout = dup(red->dup_out);
+		return ;
+	}
+	if (pipe(red->fds))
+		_ft_putstr_fd("Error on pipe\n", 2, 1);
+	red->fdout = red->fds[1];
+	// if (cmds->token == HD_TOKEN)
+	// 	red->fdin = dup(red->dup_in);
+	// else
+		red->fdin = red->fds[0];
 }
 
 void	_ft_putstr_fd(char *str, int fd, int ext)

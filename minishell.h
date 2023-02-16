@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 15:49:24 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/12 17:59:30 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/02/15 16:23:56 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@
 # define CMN_NF "\e[1;31mMinishell\e[0m: Command not found\n"
 # define HD_MSG "here_doc> "
 
-typedef struct s_cmds t_cmds;
+// typedef struct s_cmds t_cmds;
+typedef struct s_tree t_tree;
 
 enum gar_col
 {
@@ -31,45 +32,46 @@ enum gar_col
 	SINGLE_RELEASE
 };
 
-enum token
-{
-	HD_TOKEN,
-	I_REDCT,
-	O_REDCT
-};
-
-enum separator
+enum operation
 {
 	PIPE = 1,
 	AND_AND,
 	OR_OR
 };
 
-typedef struct s_redc
-{
-	int	dup_in;
-	int	dup_out;
-	int	fdout;
-	int	fdin;
-	int	fds[2];
-	int	prev_pipe[2];
-}	t_redc;
+// enum node_type
+// {
+// 	OPERATION = 1,
+// 	CMD
+// };
 
-typedef struct s_cmds
+typedef struct	s_cmds
 {
-	int		fdin;
-	int		fdout;
-	int		ncmds;
-	int		id;
-	int		token;
-	int		sep;
-	int		hd_fd;
-	char	*delimiter;
+	int		fd_in;
+	int		fd_out;
 	char	*cmd;
 	char	**args;
-	t_cmds	*next;
-	t_cmds	*prev;
 }	t_cmds;
+
+// typedef union	s_op_cmd
+// {
+// 	t_cmds	cmd;
+// 	int		operation;
+// }	t_op_cmd;
+
+typedef struct	s_tree
+{
+	// ! required data
+	t_cmds	*cmd;
+	int		operation;
+	// ! pointers to childs
+	t_tree	*left;
+	t_tree	*right;
+}	t_tree;
+
+
+/*Binary Tree*/
+t_tree	*new_node(int op_type, t_cmds *cmds);
 
 /*Parsing*/
 char	**get_env(char **env);
@@ -84,5 +86,8 @@ int		ft_execvp(char *file, char **args);
 void	_ft_putstr_fd(char *str, int fd, int ext);
 int		is_buildin(char *cmd);
 int		ft_strcmp(char *str1, char *str2);
+
+/*UTILS*/
+t_cmds	*command_fill(char *cmd, int fd_in, int fd_out);
 
 #endif
