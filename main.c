@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 15:49:06 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/13 13:06:46 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/16 18:04:28 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,19 @@ void task(char *line)
 	ft_display_tokens(tokens);
 }
 
+void	syntax(char *line)
+{
+	char	*str;
+
+	str = ft_strdup(line);
+	if (first_production_rule(str))
+	{
+		printf("Syntax error!\n");
+		return ;
+	}
+	printf("Valid syntax\n");
+}
+
 int	main(int argc, char **argv, char **env)
 {
 	char	*line;
@@ -62,7 +75,8 @@ int	main(int argc, char **argv, char **env)
 	while (1)
 	{
 		line = readline("minishell> ");
-		task(line);
+		//task(line);
+		syntax(line);
 		add_history(line);
 		free(line);
 		//system("leaks minishell");
