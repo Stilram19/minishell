@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 15:22:12 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/16 18:49:41 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/16 20:10:58 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,24 +76,25 @@ int	check_brackets_balance(char *str)
 	int			a;
 	t_balance	b;
 
-	i = 0;
+	i = -1;
 	c = 0;
 	a = 0;
 	b.top_i = -1;
 	b.stack = ft_garbage_collector(ALLOCATE, ft_strlen(str), NULL);
-	while (*(str + i))
+	while (*(str + ++i))
 	{
 		open_close_quotes(*(str + i), &c);
 		if (!c)
 			update_balance(*(str + i), &b);
 		(!a && (b.top_i != -1) && (a = 1));
-		if (a && b.top_i == -1)
-			
-		i++;
+		if (a && b.top_i == -1 && ++i)
+			break ;
 	}
 	while (*(str + i) && *(str + i) != '(' && *(str + i) != ')')
+		i++;
+	return (!(*(str + i)));
 }
-
+//((asdf)(asdfa))&&((asdf))
 int	is_between_brackets(char *str)
 {
 	int	i;
@@ -120,7 +121,7 @@ int	is_between_brackets(char *str)
 		return (check_brackets_balance(str));
 	return (ret);
 }
-// (ls || ls)
+// ((ls || ls) && (ls || ls))
 int	is_command(char *str)
 {
 	int	c;
@@ -155,7 +156,8 @@ int	is_there_middle_operator(char *str)
 	while (*str)
 	{
 		open_close_quotes(*str, &c);
-		update_balance(*str, &b);
+		if (!c)
+			update_balance(*str, &b);
 		if (!c && b.top_i == -1 && is_operator(str))
 			return (1);
 		str++;
@@ -247,7 +249,7 @@ int	second_production_rule(char *str)
 	if (is_between_brackets(str))
 	{
 		remove_outer_brackets(&str);
-		printf("%s\n", str);
+		// printf("%s\n", str);
 		return (second_production_rule(str));
 	}
 	if (is_there_middle_operator(str))
