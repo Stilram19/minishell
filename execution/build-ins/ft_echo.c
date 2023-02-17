@@ -6,28 +6,35 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 15:18:17 by okhiar            #+#    #+#             */
-/*   Updated: 2023/02/14 10:43:28 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/02/17 18:26:11 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "buildins.h"
 
-int	check_option(char *option, int *start)
+int	check_option(char *option)
+{
+	int	i;
+
+	i = 2;
+	while (option[i] && option[i] == 'n')
+		i++;
+	if (!option[i])
+		return (1);
+	return (0);
+}
+
+int	is_all_question_mark(char *str)
 {
 	int	i;
 
 	i = 0;
-	if (!ft_strncmp(option, "-n", 2))
-	{
-		i += 2;
-		while (option[i] && option[i] == 'n')
-			i++;
-		if (!option[i])
-		{
-			(*start)++;
-			return (1);
-		}
-	}
+	if (!str[i])
+		return (0);
+	while (str[i] && str[i] == '?')
+		i++;
+	if (!str[i])
+		return (1);
 	return (0);
 }
 
@@ -37,9 +44,16 @@ int	ft_echo(char **args)
 	int	flag;
 
 	i = 0;
-	flag = check_option(args[0], &i);
+	flag = 0;
+	while (args[i] && !ft_strncmp(args[i], "-n", 2) && check_option(args[i]))
+	{
+		flag = 1;
+		i++;
+	}
 	while (args[i])
 	{
+		// if (is_all_question_mark(args[i]))
+		// 	print_files_dirs(ft_strlen(args[i]));
 		ft_putstr_fd(args[i], 1);
 		if (args[i + 1])
 			write(1, " ", 1);

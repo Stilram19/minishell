@@ -15,3 +15,10 @@ ls && exit
 (pwd && (sleep 3 || pwd | wc)) | pwd   --> waiting
 (pwd && (sleep 3 || pwd | wc)) | ls    --> waiting
 (ls && (sleep 3 || pwd | wc)) | ls     --> Does not wait
+
+
+
+
+/***************REDIRECTIONS******************/
+< infile cat << lim ---> Will read from the heredoc
+<< lim cat < infile ---> Will read from the infile

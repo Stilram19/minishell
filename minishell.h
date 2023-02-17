@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 15:49:24 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/15 16:23:56 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/02/17 17:28:43 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>
+# include <dirent.h>
 # include <readline/readline.h>
 
 # define CMN_NF "\e[1;31mMinishell\e[0m: Command not found\n"
@@ -39,25 +40,29 @@ enum operation
 	OR_OR
 };
 
-// enum node_type
-// {
-// 	OPERATION = 1,
-// 	CMD
-// };
+enum file_type
+{
+	IN_FILE,
+	OUT_FILE,
+	HEREDOC
+};
+
+typedef struct	s_files
+{
+	char	*name;
+	int		type;
+	int		fd; // ? in case of heredoc
+}	t_files;
 
 typedef struct	s_cmds
 {
-	int		fd_in;
-	int		fd_out;
+	// int		fd_in;
+	// int		fd_out;
+	// int		pid;
 	char	*cmd;
 	char	**args;
+	t_files	**files;
 }	t_cmds;
-
-// typedef union	s_op_cmd
-// {
-// 	t_cmds	cmd;
-// 	int		operation;
-// }	t_op_cmd;
 
 typedef struct	s_tree
 {
@@ -82,6 +87,7 @@ void	set_env(char **my_env, char *name, char *value);
 void	*ft_garbage_collector(int option, int size, void *to_free);
 
 /*Execution*/
+int		execute(t_tree *root, int in, int out);
 int		ft_execvp(char *file, char **args);
 void	_ft_putstr_fd(char *str, int fd, int ext);
 int		is_buildin(char *cmd);
