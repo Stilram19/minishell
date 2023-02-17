@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 15:41:14 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/17 18:48:08 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/17 20:45:23 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,16 @@ void	operand_construction(t_item *item, char **ptr_to_line)
 	
 }
 
-void	*item_construction(void **ptr_to_line, int item_type)
+void	*item_construction(char **ptr_to_line, int item_type)
 {
 	t_item	*item;
 
 	item = ft_garbage_collector(ALLOCATE, sizeof(t_item), NULL);
 	item->type = item_type;
 	item->operand = NULL;
+	if (item_type == OPERATOR && (**ptr_to_line == '&'
+		|| (**ptr_to_line == '|' && *(*ptr_to_line + 1) == '|')))
+		(*ptr_to_line)++;
 	if (item_type != OPERAND && (*ptr_to_line)++)
 		return (item);
 	operand_construction(item, ptr_to_line);

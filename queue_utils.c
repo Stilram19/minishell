@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 16:31:29 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/17 17:34:46 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/17 19:36:34 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,15 +54,5 @@ void	*queue_pop(t_queue *q)
 		q->first = q->first->next;
 		free(temp);
 	}
-	return (ret);
-}
-
-void	*queue_first(t_queue *q)
-{
-	void	*ret;
-
-	ret = NULL;
-	if (q->first)
-		return (q->first->data);
 	return (ret);
 }

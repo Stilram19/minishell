@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 16:29:48 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/17 18:22:06 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/17 20:31:03 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,24 +24,35 @@ enum	e_item_type
 	L_PARENTH, R_PARENTH, OPERAND, OPERATOR
 };
 
+enum	e_file_type
+{
+	IN, OUT
+};
+
 typedef struct s_balance
 {
 	char	*stack;
 	int		top_i;
 }t_balance;
 
+typedef struct s_file
+{
+	char	*name;
+	int		file_type;
+}t_file;
+
 typedef struct s_cmd
 {
-	int		*heredoc_fds;
+	int		heredoc_fd;
 	char	*cmd;
 	char	**args;
-	char	**files;
+	t_file	*files;
 }t_cmd;
 
 typedef struct s_item
 {
 	int			type;
-	t_cmd		*operand;
+	t_cmd		operand;
 }t_item;
 
 typedef struct s_node{
