@@ -7,7 +7,9 @@ SRCS=		main.c \
 			check_syntax.c \
 			expanding.c \
 			removing_quotes.c \
-			production_rules.c
+			production_rules1.c \
+			production_rules2.c \
+			production_rules3.c
 
 OBJS=		${SRCS:.c=.o}
 LIBFT_OBJS=	${LIBFT_SRCS:.c=.o}

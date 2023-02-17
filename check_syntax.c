@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 13:04:46 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/17 12:39:01 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/17 14:51:46 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	check_meta_char(char *token)
 	int		count;
 	char	reference;
 
-	if (!is_special_char1(*token))
+	if (!is_redirect(*token))
 		return (0);
 	count = 0;
 	reference = *token;
@@ -47,7 +47,8 @@ int	check_unclosed_quotes(char *token)
 	}
 	return (ret);
 }
->, >>, <<, < 
+
+//TODO regex of expected name after a redirection
 int	check_invalid_redirections(char **tokens)
 {
 	char	*token;
@@ -71,7 +72,6 @@ int	check_invalid_redirections(char **tokens)
 int	check_syntax(char **tokens)
 {
 	int	i;
-	int	b;
 	int	stop;
 
 	i = 0;
@@ -82,6 +82,6 @@ int	check_syntax(char **tokens)
 		(stop || (stop = check_unclosed_quotes(*(tokens + i))));
 		i++;
 	}
-	(stop || (stop = check_invalid_redirections(tokens)));
+	//(stop || (stop = check_invalid_redirections(tokens)));
 	return (stop);
 }

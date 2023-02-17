@@ -6,13 +6,13 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 10:25:24 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/17 11:59:00 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/17 14:42:54 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	update_balance(char c, t_balance *b)
+void	update_brackets(char c, t_balance *b)
 {
 	if (c == '(' || c == ')')
 	{

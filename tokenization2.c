@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 16:44:11 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/17 11:53:40 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/17 14:50:57 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,8 @@ int	is_blank(char c)
 char	*mask_generation(char *line)
 {
 	int		i;
-	char	ignore;
+	int		ignore;
 	char	*mask;
-	char	*special_char;
 
 	i = 0;
 	ignore = 0;
