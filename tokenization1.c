@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 17:36:59 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/12 16:13:05 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/17 15:13:16 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ char	*assign_token(char **ptr_to_line, char **ptr_to_mask)
 
 	i = 0;
 	token_len = ft_token_len(*ptr_to_mask);
-	token = ft_garbage_collector(ALLOCATE, (token_len + 1) * sizeof(char), NULL);
+	token = ft_garbage_collector(ALLOCATE,
+			(token_len + 1) * sizeof(char), NULL);
 	while (i < token_len)
 	{
 		*(token + i) = *(*ptr_to_line + i);

@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 16:29:48 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/15 17:28:39 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/17 18:22:06 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,40 @@
 # define ERROR 1
 # define UPDATE 0
 
+enum	e_item_type
+{
+	L_PARENTH, R_PARENTH, OPERAND, OPERATOR
+};
+
 typedef struct s_balance
 {
 	char	*stack;
 	int		top_i;
 }t_balance;
+
+typedef struct s_cmd
+{
+	int		*heredoc_fds;
+	char	*cmd;
+	char	**args;
+	char	**files;
+}t_cmd;
+
+typedef struct s_item
+{
+	int			type;
+	t_cmd		*operand;
+}t_item;
+
+typedef struct s_node{
+	void			*data;
+	struct s_node	*next;
+}t_node;
+
+typedef struct s_queue{
+	int		len;
+	t_node	*first;
+	t_node	*last;
+}t_queue;
 
 #endif

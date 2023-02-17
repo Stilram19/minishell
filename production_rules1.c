@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 15:22:12 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/17 14:40:56 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/17 15:17:20 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	third_production_rule(char *str)
 	c = 0;
 	while (*str)
 	{
-		(!ret && is_blank(*str) && (ret = 1));
+		(!ret && !is_blank(*str) && (ret = 1));
 		open_close_quotes(*str, &c);
 		if (!c && (*str == '&' || *str == '|'
 				|| *str == '(' || *str == ')'))

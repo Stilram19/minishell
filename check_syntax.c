@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 13:04:46 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/17 14:51:46 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/17 15:34:41 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,9 @@ int	check_syntax(char **tokens)
 	while (!stop && *(tokens + i))
 	{
 		(stop || (stop = check_meta_char(*(tokens + i))));
+		//printf("%d ", stop);
 		(stop || (stop = check_unclosed_quotes(*(tokens + i))));
+		//printf("%d\n", stop);
 		i++;
 	}
 	//(stop || (stop = check_invalid_redirections(tokens)));

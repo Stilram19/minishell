@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 18:21:19 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/14 12:03:52 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/17 18:40:38 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,26 +129,11 @@ void	expanding(char **tokens)
 {
 	int		ambig_redir;
 	char	*token;
-	char	**tokens_temp;
 
-	ambig_redir = 0; 
-	tokens_temp = tokens;
-	while (*tokens_temp)
-	{
-		if (ft_strchr(*tokens_temp, '$'))
-			expand_if(tokens_temp);
-		tokens_temp++;
-	}
 	while (*tokens)
 	{
-		token = *tokens;
-		if (ft_strncmp(token, ">", 1)
-			&& ft_strncmp(token, "<", 1) && ++tokens)
-			continue ;
-		token = *(++tokens);
-		if (!token || !(*token))
-			ambig_redir = 1;
+		if (ft_strchr(*tokens, '$'))
+			expand_if(tokens);
+		tokens++;
 	}
-	if (ambig_redir)
-		printf("ambiguous redirect\n");
 }

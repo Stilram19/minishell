@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 15:49:24 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/17 14:53:26 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/17 15:10:51 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@
 # include "defined_types.h"
 
 int		is_blank(char c);
-
 char	**get_env(char **env);
 char	**env_dup(char **env);
 char	*get_var_value(char *key);
@@ -36,11 +35,13 @@ int		check_syntax(char **tokens);
 int		first_production_rule(char *str);
 int		third_production_rule(char *str);
 int		fourth_production_rule(char *str);
-void	update_brackets(char c, t_balance *b);
+void	update_balance(char c, t_balance *b);
 void	open_close_quotes(char ch, int *c);
 char	*first_operand(char *str);
 char	*second_operand(char *str);
 void	remove_outer_brackets(char **ptr_to_str);
+int		is_between_brackets(char *str);
 int		check_command_syntax(char *str);
+int		is_there_middle_operator(char *str);
 
 #endif

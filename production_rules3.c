@@ -6,9 +6,11 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 10:27:12 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/17 11:39:16 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/17 16:48:28 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+//TODO: GLOBAL RELEASE AFTER CHECKING THE SYNTAX
 
 #include "minishell.h"
 
@@ -102,7 +104,7 @@ char	*second_operand(char *str)
 		open_close_quotes(*str, &c);
 		if (!c)
 			update_balance(*str, &b);
-		if (!c && b.top_i == -1 && frouth_production_rule(str))
+		if (!c && b.top_i == -1 && fourth_production_rule(str))
 		{
 			if (*str == '&' || (*str == '|' && *(str + 1) == '|'))
 				str++;
@@ -111,4 +113,31 @@ char	*second_operand(char *str)
 		str++;
 	}
 	return (str + 1);
+}
+
+int	is_between_brackets(char *str)
+{
+	int	i;
+	int	c;
+	int	ret;
+
+	i = 0;
+	c = 0;
+	ret = 0;
+	while (*(str + i) == ' ' || *(str + i) == '\t')
+		i++;
+	if (*(str + i) != '(')
+		return (0);
+	while (*(str + i))
+	{
+		open_close_quotes(*(str + i), &c);
+		if (!c && *(str + i) == ')')
+			ret = 1;
+		else if (!c && *(str + i) != ' ' && *(str + i) != '\t')
+			ret = 0;
+		i++;
+	}
+	if (ret)
+		return (check_brackets_balance(str));
+	return (ret);
 }
