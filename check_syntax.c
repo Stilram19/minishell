@@ -6,21 +6,20 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 13:04:46 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/17 12:01:52 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/17 12:39:01 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	is_special_char1(char c)
+int	is_redirect(char c)
 {
-	if (c == '|' || c == '&'
-		|| c == '<' || c == '>')
+	if (c == '<' || c == '>')
 		return (1);
 	return (0);
 }
 
-int	check_special_char(char *token, int boolean)
+int	check_meta_char(char *token)
 {
 	int		count;
 	char	reference;
@@ -31,10 +30,7 @@ int	check_special_char(char *token, int boolean)
 	reference = *token;
 	while (*(token + count) == reference)
 		count++;
-	if (count >= 3 || is_special_char1(*(token + count))
-		|| (reference == '&' && count != 2))
-		return (1);
-	if (boolean && (reference != '<' && reference != '>'))
+	if (count >= 3 || is_redirect(*(token + count)))
 		return (1);
 	return (0);
 }
@@ -46,18 +42,12 @@ int	check_unclosed_quotes(char *token)
 	ret = 0;
 	while (*token)
 	{
-		if (*token == '\'' || *token == '\"')
-		{
-			if (!ret)
-				ret = *token;
-			else if (ret == *token)
-				ret = 0;
-		}
+		open_close_quotes(*token, &ret);
 		token++;
 	}
 	return (ret);
 }
-
+>, >>, <<, < 
 int	check_invalid_redirections(char **tokens)
 {
 	char	*token;
@@ -88,8 +78,7 @@ int	check_syntax(char **tokens)
 	stop = 0;
 	while (!stop && *(tokens + i))
 	{
-		b = (i == 0 || !(*(tokens + i + 1)));
-		(stop || (stop = check_meta_char(*(tokens + i), b)));
+		(stop || (stop = check_meta_char(*(tokens + i))));
 		(stop || (stop = check_unclosed_quotes(*(tokens + i))));
 		i++;
 	}
