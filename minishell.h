@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 15:49:24 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/17 15:10:51 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/18 17:53:33 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	**get_env(char **env);
 char	**env_dup(char **env);
 char	*get_var_value(char *key);
 void	expanding(char **tokens);
-void	remove_quotes(char **tokens);
+char	*remove_quotes(char *token);
 void	set_env(char **my_env, char *name, char *value);
 void	*ft_garbage_collector(int option, int size, void *to_free);
 char	**produce_tokens(char *line, char *mask);

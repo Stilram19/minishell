@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 10:35:28 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/18 14:59:28 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/18 17:47:23 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,23 +25,21 @@ void	delete_or_update(char *add, char *open_quote_ptr)
 	}
 }
 
-void	remove_quotes(char **tokens)
+char	*remove_quotes(char *token)
 {
 	int		i;
+	char	*new_token;
 	char	open_quote;
 
-	while (*tokens)
+	open_quote = 0;
+	new_token = ft_strdup(token);
+	while (*(new_token + i))
 	{
-		i = 0;
-		open_quote = 0;
-		while (*(*tokens + i))
-		{
-			if ((*(*tokens + i) == '\'' || *(*tokens + i) == '\"')
-				&& (open_quote == *(*tokens + i) || !open_quote))
-				delete_or_update(*tokens + i, &open_quote);
-			else
-				i++;
-		}
-		tokens++;
+		if ((*(new_token + i) == '\'' || *(new_token + i) == '\"')
+			&& (open_quote == *(new_token + i) || !open_quote))
+			delete_or_update(new_token + i, &open_quote);
+		else
+			i++;
 	}
+	return (new_token);
 }

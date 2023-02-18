@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 16:29:48 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/18 15:16:15 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/18 16:18:51 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,11 @@ typedef struct s_file
 
 typedef struct s_operand
 {
+	int		files_count;
 	int		status;
 	char	*cmd;
 	char	**args;
-	t_file	**files;
+	t_file	*files;
 }t_operand;
 
 typedef struct s_item

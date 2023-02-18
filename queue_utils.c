@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 16:31:29 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/18 14:00:44 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/18 15:30:04 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	*queue_pop(t_queue *q)
 		temp = q->first;
 		ret = temp->data;
 		q->first = q->first->next;
-		free(temp);
+		ft_garbage_collector(SINGLE_RELEASE, 0, temp);
 	}
 	return (ret);
 }

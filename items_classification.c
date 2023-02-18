@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 15:41:14 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/18 15:08:30 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/18 17:46:35 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	get_operator_type(char *str)
 	return (AND);
 }
 
-char	*prepare_construction(char **ptr_to_line)
+char	*prepare_construct(char **ptr_to_line)
 {
 	int		i;
 	int		ignore;
@@ -43,40 +43,39 @@ char	*prepare_construction(char **ptr_to_line)
 	return (operand);
 }
 
-void	operand_construction(t_item *item, char **ptr_to_line, int inside_parenth)
+void	operand_construct(t_item *item, char **ptr_to_line, int status)
 {
 	char	**tokens;
 	char	*operand;
 	t_queue	args;
 
-	operand = prepare_construction(ptr_to_line);
+	operand = prepare_construct(ptr_to_line);
 	tokens = produce_tokens(operand, mask_generation(operand));
 	expanding(tokens);
 	item->operand = ft_garbage_collector(ALLOCATE, sizeof(t_operand), NULL);
-	item->operand->status = inside_parenth;
-	item->operand->ambig_redirect = check_ambiguous_redirect(tokens);
-	remove_quotes(tokens);
-	item->operand->cmd = get_command(tokens);
-	item->operand->args = get_args(tokens);
+	item->operand->status = status;
 	item->operand->files = get_files(tokens);
+	item->operand->cmd = get_command(tokens);
+	queue_push(&args, item->operand->cmd);
+	item->operand->args = get_args(tokens, &args);
 }
 
-void	*item_construction(char **ptr_to_line, int item_type, int *inside_parenth)
+void	*item_construct(char **ptr_to_line, int item_type, int *status)
 {
 	t_item	*item;
 
 	item = ft_garbage_collector(ALLOCATE, sizeof(t_item), NULL);
 	item->type = item_type;
 	item->operand = NULL;
-	if ((item_type = OR || item_type == AND))
+	if (item_type == OR || item_type == AND)
 		(*ptr_to_line)++;
-	if (item_type == L_PARENTH)
-		(*inside_parenth)++;
-	if (item_type == R_PARENTH)
-		(*inside_parenth)--;
+	else if (item_type == L_PARENTH)
+		(*status)++;
+	else if (item_type == R_PARENTH)
+		(*status)--;
 	if (item_type != OPERAND && (*ptr_to_line)++)
 		return (item);
-	operand_construction(item, ptr_to_line, *inside_parenth);
+	operand_construct(item, ptr_to_line, *status);
 	return (*ptr_to_line);
 }
 
@@ -91,13 +90,13 @@ void	items_classification(char *line)
 	while (*line)
 	{
 		if (*line == '(')
-			item = item_construction(&line, L_PARENTH, &inside_parenth);
+			item = item_construct(&line, L_PARENTH, &inside_parenth);
 		else if (*line == ')')
-			item = item_construction(&line, R_PARENTH, &inside_parenth);
+			item = item_construct(&line, R_PARENTH, &inside_parenth);
 		else if (fourth_production_rule(*line))
-			item = item_construction(&line, get_operator(line), &inside_parenth);
+			item = item_construct(&line, get_operator(line), &inside_parenth);
 		else
-			item = item_construction(&line, OPERAND, &inside_parenth);
+			item = item_construct(&line, OPERAND, &inside_parenth);
 		queue_push(&q, item);
 	}
 }
