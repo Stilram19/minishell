@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 18:30:09 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/13 13:54:15 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/02/18 20:09:26 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ char	**get_env(char **env)
  * @param key name of the variable
  * @return char* the value of the variable
  */
-char	*get_env_var(char *key)
+char	*get_var_value(char *key)
 {
 	int		i;
 	char	**env;

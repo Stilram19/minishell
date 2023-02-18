@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 15:49:24 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/17 17:28:43 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/02/18 20:09:59 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,9 @@ enum file_type
 {
 	IN_FILE,
 	OUT_FILE,
-	HEREDOC
+	HEREDOC,
+	APPEND,
+	AMBIG
 };
 
 typedef struct	s_files
@@ -81,7 +83,7 @@ t_tree	*new_node(int op_type, t_cmds *cmds);
 /*Parsing*/
 char	**get_env(char **env);
 char	**env_dup(char **env);
-char	*get_env_var(char *key);
+char	*get_var_value(char *key);
 int		envlen(char **env);
 void	set_env(char **my_env, char *name, char *value);
 void	*ft_garbage_collector(int option, int size, void *to_free);
@@ -92,6 +94,9 @@ int		ft_execvp(char *file, char **args);
 void	_ft_putstr_fd(char *str, int fd, int ext);
 int		is_buildin(char *cmd);
 int		ft_strcmp(char *str1, char *str2);
+int		redirect_io(t_cmds *cmds, int in, int out);
+int		redirect_error(int error_key, int ext);
+void	ft_dup2(int f1, int f2);
 
 /*UTILS*/
 t_cmds	*command_fill(char *cmd, int fd_in, int fd_out);

@@ -97,7 +97,7 @@ int	ft_execvp(char *file, char **args)
 	char	*cmd;
 	char	*path;
 
-	path = get_env_var("PATH");
+	path = get_var_value("PATH");
 	cmd = valid_cmd(file, path);
 	if (!cmd)
 		return (-1);

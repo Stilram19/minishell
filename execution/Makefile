@@ -2,6 +2,7 @@ NAME = test
 SRCS = ${wildcard ../libft/*.c} ${wildcard build-ins/*.c} \
 				./ft_execvp.c ./execute.c ./utils.c ./b_tree.c \
 				./buildsin_check.c ../utils.c ../garbage_collector.c \
+				./redirections.c
 
 OBJS = ${SRCS:.c=.o}
 CFLAGS = -I../

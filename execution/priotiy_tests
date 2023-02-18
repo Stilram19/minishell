@@ -16,9 +16,13 @@ ls && exit
 (pwd && (sleep 3 || pwd | wc)) | ls    --> waiting
 (ls && (sleep 3 || pwd | wc)) | ls     --> Does not wait
 
+ls | (skdgj || wc && wc)     ---> second wc cannot read from the pipe (input consumption or input exhaustion.)
+
 
 
 
 /***************REDIRECTIONS******************/
-< infile cat << lim ---> Will read from the heredoc
-<< lim cat < infile ---> Will read from the infile
+< infile cat << lim             ---> Will read from the heredoc
+<< lim cat < infile             ---> Will read from the infile
+echo hello>$EMPTY>file          ---> when we find an ambiguous Will not continue check redirection 
+echo hello > a > b > c > $EMPTY ---> Will create {a, b, c} and when find an ambiguous redict will not execute command
