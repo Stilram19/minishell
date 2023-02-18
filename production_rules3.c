@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 10:27:12 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/17 16:48:28 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/18 14:49:47 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	is_there_middle_operator(char *str)
 	return (0);
 }
 
-int	check_brackets_balance(char *str)
+int	check_parenth_balance(char *str)
 {
 	int			i;
 	int			c;
@@ -115,7 +115,7 @@ char	*second_operand(char *str)
 	return (str + 1);
 }
 
-int	is_between_brackets(char *str)
+int	is_between_parenth(char *str)
 {
 	int	i;
 	int	c;
@@ -138,6 +138,6 @@ int	is_between_brackets(char *str)
 		i++;
 	}
 	if (ret)
-		return (check_brackets_balance(str));
+		return (check_parenth_balance(str));
 	return (ret);
 }

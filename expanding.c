@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 18:21:19 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/17 18:40:38 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/18 14:38:04 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,10 @@ char	*var_expansion(char **ptr_to_token, int *ptr_to_i, int name_len)
 	char	*var_name;
 	char	*to_free;
 
-	value_len = 0;
 	var_name = ft_strdup(*ptr_to_token + *ptr_to_i);
 	*(var_name + name_len) = '\0';
 	var_value = get_var_value(var_name);
-	if (var_value)
-		value_len = ft_strlen(var_value);
+	value_len = ft_strlen(var_value);
 	to_free = *ptr_to_token;
 	new_len = ft_strlen(to_free) + value_len - (name_len + 1);
 	*ptr_to_token = ft_garbage_collector(ALLOCATE, new_len + 1, NULL);
@@ -119,7 +117,8 @@ void	expand_if(char **tokens)
 		if (((*(token + i) != '$' || open_quote == '\'') && ++i)
 			|| remove_dollar_if(token + i + 1, open_quote))
 			continue ;
-		if (++i && !ft_isalnum(*(token + i)) && *(token + i) != '?')
+		if (++i && !ft_isalnum(*(token + i)) && *(token + i) != '?'
+			&& *(token + i) != '_')
 			continue ;
 		token = var_expansion(tokens, &i, var_name_len(token + i));
 	}

@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 10:25:24 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/17 15:34:57 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/18 14:48:47 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	open_close_quotes(char ch, int *c)
 	}
 }
 
-void	remove_outer_brackets(char **ptr_to_str)
+void	remove_outer_parenth(char **ptr_to_str)
 {
 	char	*str;
 

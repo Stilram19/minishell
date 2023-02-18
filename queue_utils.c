@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 16:31:29 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/17 19:36:34 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/18 14:00:44 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	queue_push(t_queue *q, void *data)
 	new = ft_garbage_collector(ALLOCATE, sizeof(t_node), NULL);
 	new->data = data;
 	new->next = NULL;
+	q->len++;
 	if (q->first)
 	{
 		q->last->next = new;
@@ -49,6 +50,7 @@ void	*queue_pop(t_queue *q)
 	ret = NULL;
 	if (q->first)
 	{
+		q->len--;
 		temp = q->first;
 		ret = temp->data;
 		q->first = q->first->next;

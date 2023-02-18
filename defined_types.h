@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 16:29:48 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/17 20:31:03 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/18 15:00:47 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@
 
 enum	e_item_type
 {
-	L_PARENTH, R_PARENTH, OPERAND, OPERATOR
+	L_PARENTH, R_PARENTH, OR, AND, PIPE, OPERAND
 };
 
 enum	e_file_type
 {
-	IN, OUT
+	IN, OUT, HEREDOC, APPEND
 };
 
 typedef struct s_balance
@@ -39,20 +39,23 @@ typedef struct s_file
 {
 	char	*name;
 	int		file_type;
+	int		heredoc_fd;
 }t_file;
 
-typedef struct s_cmd
+typedef struct s_operand
 {
 	int		heredoc_fd;
+	int		ambig_redirect;
+	int		status;
 	char	*cmd;
 	char	**args;
-	t_file	*files;
-}t_cmd;
+	t_file	**files;
+}t_operand;
 
 typedef struct s_item
 {
 	int			type;
-	t_cmd		operand;
+	t_operand	*operand;
 }t_item;
 
 typedef struct s_node{

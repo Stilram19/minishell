@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 15:22:12 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/17 15:17:20 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/18 14:50:05 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	second_production_rule(char *str)
 		return (check_command_syntax(str));
 	if (is_between_brackets(str))
 	{
-		remove_outer_brackets(&str);
+		remove_outer_parenth(&str);
 		return (second_production_rule(str));
 	}
 	if (is_there_middle_operator(str))
