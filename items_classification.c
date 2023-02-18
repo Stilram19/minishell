@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   items_classifications.c                            :+:      :+:    :+:   */
+/*   items_classification.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 15:41:14 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/18 14:59:42 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/18 15:08:30 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,12 @@ void	operand_construction(t_item *item, char **ptr_to_line, int inside_parenth)
 	tokens = produce_tokens(operand, mask_generation(operand));
 	expanding(tokens);
 	item->operand = ft_garbage_collector(ALLOCATE, sizeof(t_operand), NULL);
-	check_ambiguous_redirect(item->operand);
+	item->operand->status = inside_parenth;
+	item->operand->ambig_redirect = check_ambiguous_redirect(tokens);
 	remove_quotes(tokens);
-	get_command(item->operand);
-	
+	item->operand->cmd = get_command(tokens);
+	item->operand->args = get_args(tokens);
+	item->operand->files = get_files(tokens);
 }
 
 void	*item_construction(char **ptr_to_line, int item_type, int *inside_parenth)

@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 16:29:48 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/18 15:00:47 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/18 15:16:15 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ enum	e_item_type
 
 enum	e_file_type
 {
-	IN, OUT, HEREDOC, APPEND
+	IN, OUT, HEREDOC, APPEND, AMBIG_REDIREC
 };
 
 typedef struct s_balance
@@ -37,15 +37,13 @@ typedef struct s_balance
 
 typedef struct s_file
 {
-	char	*name;
 	int		file_type;
 	int		heredoc_fd;
+	char	*name;
 }t_file;
 
 typedef struct s_operand
 {
-	int		heredoc_fd;
-	int		ambig_redirect;
 	int		status;
 	char	*cmd;
 	char	**args;
