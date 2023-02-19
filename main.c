@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 15:49:06 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/19 16:37:46 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/19 20:19:53 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,22 +65,23 @@ void	syntax(char *line)
 	printf("Valid syntax\n");
 }
 
+
 int	main(int argc, char **argv, char **env)
 {
-	char	*line;
+	/*char	*line;
 
 	(void)argc;
 	(void)argv;
 	get_env(env_dup(env));
 	while (1)
 	{
-		signals();
-		line = readline("minishell> ");
+		//signals();
+		//line = readline("minishell> ");
 		if (!line)
 			return (0);
 		add_history(line);
 		free(line);
 		//system("leaks minishell");
-	}
+	}*/
 	return (0);
 }

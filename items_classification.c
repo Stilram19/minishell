@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 15:41:14 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/19 11:18:22 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/19 20:54:48 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,3 +100,7 @@ void	items_classification(char *line)
 		queue_push(&items, item);
 	}
 }
+//(, ), |, ||, &&, cmd
+//(ls -l | cat) || (la | wc -l) && grep 123
+//{(, ls -l, |, cat, ), ||, (, la, |, wc -l, ), &&, grep 123}
+// --> && || | "ls -l" "cat" | "la" "wc -l" "grep 123"

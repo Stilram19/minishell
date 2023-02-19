@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:08:45 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/19 16:42:49 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/19 20:08:59 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ void	give_files_names(char **tokens, t_file *files)
 		files->name = NULL;
 	}
 }
+
+
 
 t_file	*get_files(char **tokens, t_operand *op)
 {
