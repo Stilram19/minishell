@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:08:45 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/18 20:12:14 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/19 16:42:49 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,9 @@ t_file	*get_files(char **tokens, t_operand *op)
 	give_files_types(tokens, files, len);
 	give_files_names(tokens, files);
 	heredoc = get_here_doc(files);
-	if (heredoc)
-		heredoc->heredoc_fd = open_heredoc(tokens);
+	if (!heredoc)
+		return (files);
+	heredoc->heredoc_fd = open("heredoc", O_CREAT | O_RDWR | O_TRUNC, 0666);//TODO IMPLEMENT A METHOD FOR RANDOM FILENAME GENERATION
+	open_heredoc(tokens, heredoc->heredoc_fd);
 	return (files);
 }

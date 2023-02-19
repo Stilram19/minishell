@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 15:41:14 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/18 17:46:35 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/19 11:18:22 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,17 +76,17 @@ void	*item_construct(char **ptr_to_line, int item_type, int *status)
 	if (item_type != OPERAND && (*ptr_to_line)++)
 		return (item);
 	operand_construct(item, ptr_to_line, *status);
-	return (*ptr_to_line);
+	return (item);
 }
 
 void	items_classification(char *line)
 {
 	int		inside_parenth;
 	void	*item;
-	t_queue	q;
+	t_queue	items;
 
 	inside_parenth = 0;
-	queue_init(&q);
+	queue_init(&items);
 	while (*line)
 	{
 		if (*line == '(')
@@ -97,6 +97,6 @@ void	items_classification(char *line)
 			item = item_construct(&line, get_operator(line), &inside_parenth);
 		else
 			item = item_construct(&line, OPERAND, &inside_parenth);
-		queue_push(&q, item);
+		queue_push(&items, item);
 	}
 }

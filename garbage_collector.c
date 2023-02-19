@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 10:37:00 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/18 14:14:52 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/19 14:55:24 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ void	*ft_garbage_collector(int option, int size, void *to_free)
 	}
 	if (option == SINGLE_RELEASE)
 	{
-		single_release(&head, to_free);
+		if (to_free)
+			single_release(&head, to_free);
 		return (to_free);
 	}
 	ft_lstclear(&head, free);

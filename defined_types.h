@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 16:29:48 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/18 16:18:51 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/19 18:27:02 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # define SUCCESS 0
 # define ERROR 1
 # define UPDATE 0
+# define CTRL_C 42
 
 enum	e_item_type
 {
@@ -42,12 +43,18 @@ typedef struct s_file
 	char	*name;
 }t_file;
 
+typedef struct s_arg
+{
+	int		flag;
+	char	*str;
+}t_arg;
+
 typedef struct s_operand
 {
 	int		files_count;
 	int		status;
 	char	*cmd;
-	char	**args;
+	t_arg	**args;
 	t_file	*files;
 }t_operand;
 
