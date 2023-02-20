@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 15:18:17 by okhiar            #+#    #+#             */
-/*   Updated: 2023/02/17 18:26:11 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/02/20 11:01:11 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,6 @@ int	check_option(char *option)
 	while (option[i] && option[i] == 'n')
 		i++;
 	if (!option[i])
-		return (1);
-	return (0);
-}
-
-int	is_all_question_mark(char *str)
-{
-	int	i;
-
-	i = 0;
-	if (!str[i])
-		return (0);
-	while (str[i] && str[i] == '?')
-		i++;
-	if (!str[i])
 		return (1);
 	return (0);
 }
@@ -52,8 +38,6 @@ int	ft_echo(char **args)
 	}
 	while (args[i])
 	{
-		// if (is_all_question_mark(args[i]))
-		// 	print_files_dirs(ft_strlen(args[i]));
 		ft_putstr_fd(args[i], 1);
 		if (args[i + 1])
 			write(1, " ", 1);

@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 14:25:27 by okhiar            #+#    #+#             */
-/*   Updated: 2023/02/13 15:57:47 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/02/20 11:00:32 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	all_digits(char	*str)
 	i = 0;
 	if (!str[0])
 		return (0);
-	nbr = remove_whitespaces(str);
+	nbr = remove_whitespaces(str);// TODO:: use strtrim function instead
 	if (nbr[0] == '-' || nbr[0] == '+')
 		i++;
 	while (nbr[i])

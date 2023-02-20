@@ -26,3 +26,9 @@ ls | (skdgj || wc && wc)     ---> second wc cannot read from the pipe (input con
 << lim cat < infile             ---> Will read from the infile
 echo hello>$EMPTY>file          ---> when we find an ambiguous Will not continue check redirection 
 echo hello > a > b > c > $EMPTY ---> Will create {a, b, c} and when find an ambiguous redict will not execute command
+
+
+/******************
+echo .*
+echo *
+echo *notfound

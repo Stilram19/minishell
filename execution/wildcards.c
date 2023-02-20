@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 10:05:21 by okhiar            #+#    #+#             */
-/*   Updated: 2023/02/19 14:03:03 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/02/19 21:56:52 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,53 +67,22 @@ char	**dir_entry(void)
 	return (entry_list);
 }
 
-char	**get_lists(t_list *head)
-{
-	int		i;
-	int		size;
-	char	**ret;
-
-	i = 0;
-	size = ft_lstsize(head);
-	ret = (char **)malloc(sizeof(char *) * (size + 1));
-	while (i < size)
-	{
-		ret[i++] = head->content ;
-		head = head->next;
-	}
-	ret[i] = NULL;
-	return (ret);
-}
-
-char	**matched_set(char *pattern)
+t_list *matched_set(char *pattern)
 {
 	int		i;
 	t_list	*head;
 	char	**dir_set;
-	char	**matched_set;
 
 	i = 0;
 	head = NULL;
 	dir_set = dir_entry();
 	while (dir_set[i])
 	{
-		if (pattern_match(pattern, dir_set[i]))
+		if (pattern_match(pattern, dir_set[i]) && (dir_set[i][0] != '.'
+			|| pattern[0] == '.'))
 			ft_lstadd_back(&head, ft_lstnew(dir_set[i]));
 		i++;
 	}
-	matched_set = get_lists(head);
-	return (matched_set);
+	return (head);
 }
 
-int	main(void)
-{
-	char	**list;
-	list = matched_set("b*.c");
-	for (int i = 0; list[i] != NULL; i++)
-		printf("%s\n", list[i]);
-	// if (pattern_match("f*.c*", "file.fdg"))
-	// 	printf("Pattern matching\n");
-	// else
-	// 	printf("Pattern not matching\n");
-	return (0);
-}

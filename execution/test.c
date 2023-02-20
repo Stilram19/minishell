@@ -3,40 +3,66 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <fcntl.h>
+#include <sys/wait.h>
+#include <signal.h>
+#include <readline/readline.h>
+
+// void    signal_handler(int sig)
+// {
+//         signal(SIGINT, SIG_IGN);
+//         if (sig == SIGINT)
+//                 printf("CTRL_C\n");
+// }
+
+// int main(void)
+// {
+//         int     pid;
+//         int     status;
+
+//         signal(SIGINT, signal_handler);
+//         pid = fork();
+//         if (!pid)
+//         {
+//                 signal(SIGINT, SIG_DFL);
+//                 char *line = readline("> ");
+//                 while (line)
+//                         line = readline("> ");
+//         }
+//         waitpid(pid, &status, 0);
+//         if (WIFEXITED(status))
+//                 printf("EXIT NORMALLY %d\n", WEXITSTATUS(status));
+//         sleep(5);
+//         printf("I'm Here\n");
+//         return (0);
+// }
+
+void    signal_handler(int sig)
+{
+        if (sig == SIGINT)
+                printf("CTRL_C\n");
+}
 
 int main(void)
 {
-        // int	i = 0;
-        // int	y = 0;
-        // int	fds[2];
-        // char    *cmd = strdup("/usr/bin/wc");
-        // char    **args = (char **)malloc(sizeof(char*) * 2);
+        int     pid;
+        int     status;
+        struct sigaction action;
 
-        // args[0] = strdup("wc");
-        // args[1] = NULL;
-        // pipe(fds);
-
-        // i = fork();
-        // if (i == 0)
-        // {
-        //         dup2(fds[0], 0);
-        //         close(fds[1]);
-        //         if (execve(cmd, args, NULL))
-        //                 perror("execve");
-        // }
-        // // y = fork();
-        // // if (y == 0)
-        // // {
-        // //         close(fds[1]);
-        // //         sleep(1);
-        // //         write(1, "blah blah", 9);
-        // //         exit(0);
-        // // }
-        // close(fds[0]);
-        // close(fds[1]);
-        // waitpid(i, 0, 0);
-        if (open("a", O_CREAT | O_WRONLY, 0666) == -1)
-                perror("open");
+        action.sa_handler = signal_handler;
+        sigaction(SIGINT, &action, NULL);
+        pid = fork();
+        if (!pid)
+        {
+                action.sa_handler = SIG_DFL;
+                sigaction(SIGINT, &action, NULL);
+                char *line = readline("> ");
+                while (line)
+                        line = readline("> ");
+        }
+        waitpid(pid, &status, 0);
+        if (WIFEXITED(status))
+                printf("EXIT NORMALLY %d\n", WEXITSTATUS(status));
+        sleep(5);
         printf("I'm Here\n");
         return (0);
 }

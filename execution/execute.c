@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:37:00 by okhiar            #+#    #+#             */
-/*   Updated: 2023/02/18 21:25:14 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/02/19 18:33:06 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,29 +153,25 @@ int	main(int ac, char **av, char **env)
 	int		lstatus;
 
 	get_env(env_dup(env));
-	root = new_node(AND_AND, NULL);
-	root->right = new_node(0, command_fill("cd", 0, 1));
-	root->right->cmd->args[0] = ft_strdup("/Users/okhihar");
-	root->right->cmd->args[1] = NULL;
-	// root->left->cmd->files[0] = (t_files *)malloc(sizeof(t_files));
-	// root->left->cmd->files[0]->type = IN_FILE;
-	// root->left->cmd->files[0]->name = ft_strdup("outfidfgle");
-	// root->left->cmd->files[1] = (t_files *)malloc(sizeof(t_files));
-	// root->left->cmd->files[1]->type = AMBIG;
-	// root->left->cmd->files[1]->name = ft_strdup("out1");
-	// root->left->cmd->files[2] = NULL;
-	root->left = new_node(0, command_fill("cd", 0, 1));
-	root->left->cmd->args[0] = ft_strdup("-");
-	root->left->cmd->args[1] = NULL;
-	// root->left->cmd->args[2] = NULL;
-	// root->left->cmd->files[0] = (t_files *)malloc(sizeof(t_files));
-	// root->left->cmd->files[0]->type = OUT_FILE;
-	// root->left->cmd->files[0]->name = ft_strdup("abc");
-	// root->left->cmd->files[1] = (t_files *)malloc(sizeof(t_files));
-	// root->left->cmd->files[1]->type = AMBIG;
-	// root->left->cmd->files[1]->name = ft_strdup("");
-	// root->left->cmd->files[2] = NULL;
-
+	root = new_node(PIPE, NULL);
+	// root->right = new_node(0, command_fill("cd", 0, 1));
+	// root->right->cmd->args[0] = ft_strdup("/Users/okhihar");
+	// root->right->cmd->args[1] = NULL;
+	// // root->left->cmd->files[0] = (t_files *)malloc(sizeof(t_files));
+	// // root->left->cmd->files[0]->type = IN_FILE;
+	// // root->left->cmd->files[0]->name = ft_strdup("outfidfgle");
+	// // root->left->cmd->files[1] = (t_files *)malloc(sizeof(t_files));
+	// // root->left->cmd->files[1]->type = AMBIG;
+	// // root->left->cmd->files[1]->name = ft_strdup("out1");
+	// // root->left->cmd->files[2] = NULL;
+	root->left = new_node(0, command_fill("cat", 0, 1));
+	root->left->cmd->args[0] = ft_strdup("cat");
+	root->left->cmd->args[1] = ft_strdup("/dev/random");
+	root->left->cmd->args[2] = NULL;
+	root->right = new_node(0, command_fill("ls", 0, 1));
+	// root->right->cmd->args[0] = ft_strdup("head");
+	// root->right->cmd->args[1] = ft_strdup("-n5");
+	// root->right->cmd->args[2] = NULL;
 	// root->right->left = new_node(0, command_fill("sleep", 0, 1));
 	// root->right->left->cmd->args[1] = ft_strdup("5");
 	// root->right->left->cmd->args[2] = NULL;

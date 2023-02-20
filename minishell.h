@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 15:49:24 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/18 20:09:59 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/02/19 21:39:55 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,5 +100,7 @@ void	ft_dup2(int f1, int f2);
 
 /*UTILS*/
 t_cmds	*command_fill(char *cmd, int fd_in, int fd_out);
+
+t_list *matched_set(char *pattern);
 
 #endif
