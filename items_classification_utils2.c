@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 17:57:52 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/19 18:07:47 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/20 13:01:33 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	get_limiters(char **tokens, t_queue *limiters, int *expand_enable)
 	*expand_enable = 1;
 	while (*(tokens + i))
 		i++;
-	queue_init(&limiters);
+	queue_init(limiters);
 	while (i--)
 	{
 		if (!ft_strncmp(*(tokens + i), "<<", 2))
@@ -45,7 +45,7 @@ void	get_limiters(char **tokens, t_queue *limiters, int *expand_enable)
 					|| ft_strchr(*(tokens + i + 1), '\"')))
 				*expand_enable = 0;
 			first = 0;
-			queue_push(remove_quotes(*(tokens + i + 1)));
+			queue_push(limiters, remove_quotes(*(tokens + i + 1)));
 		}
 	}
 }
@@ -66,6 +66,7 @@ char	*here_doc_expand(char *line, int expand_enable)
 			continue ;
 		line = var_expansion(&line, &i, var_name_len(line + i));
 	}
+	return (line);
 }
 
 void	heredoc_child(char *curr_lim, int fd, int write_enable)
@@ -87,7 +88,6 @@ void	heredoc_child(char *curr_lim, int fd, int write_enable)
 
 void	open_heredoc(char **tokens, int fd)
 {
-	int		fd;
 	int		expand_enable;
 	int		write_enable;
 	t_queue	limiters;
@@ -100,7 +100,7 @@ void	open_heredoc(char **tokens, int fd)
 			write_enable += expand_enable;
 		sig_def();
 		if (!fork())
-			heredoc_child((char *)queue_first(limiters), fd, write_enable);
+			heredoc_child((char *)queue_first(&limiters), fd, write_enable);
 		sig_set();
 		wait(NULL);
 		ft_garbage_collector(SINGLE_RELEASE, 0, queue_pop(&limiters));

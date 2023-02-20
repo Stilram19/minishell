@@ -1,4 +1,4 @@
-LIBFT_SRCS= $(wildcard ./libft/*.c)
+
 SRCS=		main.c \
 			env_utils.c \
 			garbage_collector.c \
@@ -10,26 +10,43 @@ SRCS=		main.c \
 			production_rules1.c \
 			production_rules2.c \
 			production_rules3.c \
+			items_classification.c \
+			items_classification_utils1.c \
+			items_classification_utils2.c \
+			items_classification_utils3.c \
+			queue_utils.c \
 			signals.c
 
-OBJS=		${SRCS:.c=.o}
-LIBFT_OBJS=	${LIBFT_SRCS:.c=.o}
+OBJS =		${SRCS:.c=.o}
 
-NAME=	minishell
-CC= cc 
-CFLAGS= -Wall -Wextra -Werror -I/Users/obednaou/brew/opt/readline/include/
-RDLIB = -lreadline -L/Users/obednaou/brew/opt/readline/lib/ 
+NAME =	minishell
+CC = cc 
+CFLAGS = -Wall -Wextra -Werror
+#CFLAGS += -fsanitize=address
+CFLAGS += -I/Users/obednaou/brew/opt/readline/include/
+RDLIB = -lreadline -L/Users/obednaou/brew/opt/readline/lib/
 RM= rm -f
+LIBFT = make -C ./libft
+LIBAR = ./libft/libft.a
+
+%.o: %.c
+	@${CC} ${CFLAGS} -c $^ -o $@
 
 all: ${NAME}
 
-${NAME}: ${LIBFT_OBJS} ${OBJS}
-	${CC} ${CFLAGS} ${RDLIB} ${OBJS} ${LIBFT_OBJS} -o ${NAME}
+${NAME}: ${OBJS}
+	@${LIBFT}
+	@${CC} ${CFLAGS} ${RDLIB} ${LIBAR} ${OBJS} -o ${NAME}
 
 clean:
-	${RM} ${LIBFT_OBJS} ${OBJS}
+	@make clean -C ./libft
+	@${RM} ${OBJS}
 
 fclean: clean
-	${RM} ${NAME}
+	@make fclean -C ./libft
+	@${RM} ${NAME}
 
 re: fclean all
+
+run: re
+	@./${NAME}

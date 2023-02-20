@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 17:52:19 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/20 11:41:53 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/20 14:42:30 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,14 @@ char	*get_command(char **tokens)
 void	**from_queue_to_array(t_queue *q)
 {
 	int		i;
+	int		len;
 	void	**array;
 
 	i = -1;
-	array = malloc(sizeof(void *) * (q->len + 1));
-	while (++i < q->len)
+	len = q->len;
+	array = ft_garbage_collector(ALLOCATE,
+		sizeof(void *) * (len + 1), NULL);
+	while (++i < len)
 		*(array + i) = queue_pop(q);
 	*(array + i) = NULL;
 	return (array);
@@ -52,5 +55,5 @@ char	**get_args(char **tokens, t_queue *args)
 			queue_push(args, remove_quotes(*(tokens + i)));
 		i++;
 	}
-	return (from_queue_to_array(args));
+	return ((char **)from_queue_to_array(args));
 }

@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 15:49:06 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/20 11:50:07 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/20 15:02:57 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,9 @@ void	task(char *line)
 		else if ((*items)->type == AND)
 			printf("AND\n");
 		else if ((*items)->type == PIPE)
-			printf("PIPE");
+			printf("PIPE\n");
 		else if ((*items)->type == OPERAND)
-			printf("OPERAND");
+			printf("OPERAND\n");
 		items++;
 	}
 }
@@ -103,7 +103,6 @@ int	main(int argc, char **argv, char **env)
 		task(line);
 		free(line);
 		ft_garbage_collector(GLOBAL_RELEASE, 0, NULL);
-		//system("leaks minishell");
 	}
 	return (0);
 }
