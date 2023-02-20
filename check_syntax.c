@@ -6,15 +6,15 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 13:04:46 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/17 15:34:41 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/20 10:35:31 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	is_redirect(char c)
+int	is_redirect(char *c)
 {
-	if (c == '<' || c == '>')
+	if (*c == '<' || *c == '>')
 		return (1);
 	return (0);
 }
@@ -24,13 +24,13 @@ int	check_meta_char(char *token)
 	int		count;
 	char	reference;
 
-	if (!is_redirect(*token))
+	if (!is_redirect(token))
 		return (0);
 	count = 0;
 	reference = *token;
 	while (*(token + count) == reference)
 		count++;
-	if (count >= 3 || is_redirect(*(token + count)))
+	if (count >= 3 || is_redirect(token + count))
 		return (1);
 	return (0);
 }

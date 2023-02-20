@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 18:21:19 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/18 14:38:04 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/20 10:51:18 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,9 +126,6 @@ void	expand_if(char **tokens)
 
 void	expanding(char **tokens)
 {
-	int		ambig_redir;
-	char	*token;
-
 	while (*tokens)
 	{
 		if (ft_strchr(*tokens, '$'))

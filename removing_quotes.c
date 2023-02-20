@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 10:35:28 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/18 17:47:23 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/20 10:55:59 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ char	*remove_quotes(char *token)
 	char	*new_token;
 	char	open_quote;
 
+	i = 0;
 	open_quote = 0;
 	new_token = ft_strdup(token);
 	while (*(new_token + i))

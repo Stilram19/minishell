@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 15:41:14 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/19 20:54:48 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/20 11:38:56 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	operand_construct(t_item *item, char **ptr_to_line, int status)
 	expanding(tokens);
 	item->operand = ft_garbage_collector(ALLOCATE, sizeof(t_operand), NULL);
 	item->operand->status = status;
-	item->operand->files = get_files(tokens);
+	item->operand->files = get_files(tokens, item->operand);
 	item->operand->cmd = get_command(tokens);
 	queue_push(&args, item->operand->cmd);
 	item->operand->args = get_args(tokens, &args);
@@ -79,7 +79,7 @@ void	*item_construct(char **ptr_to_line, int item_type, int *status)
 	return (item);
 }
 
-void	items_classification(char *line)
+t_item	**items_classification(char *line)
 {
 	int		inside_parenth;
 	void	*item;
@@ -99,8 +99,5 @@ void	items_classification(char *line)
 			item = item_construct(&line, OPERAND, &inside_parenth);
 		queue_push(&items, item);
 	}
+	return (from_queue_to_array(&items));
 }
-//(, ), |, ||, &&, cmd
-//(ls -l | cat) || (la | wc -l) && grep 123
-//{(, ls -l, |, cat, ), ||, (, la, |, wc -l, ), &&, grep 123}
-// --> && || | "ls -l" "cat" | "la" "wc -l" "grep 123"

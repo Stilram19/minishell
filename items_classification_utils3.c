@@ -6,18 +6,11 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 17:52:19 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/19 20:35:15 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/20 11:41:53 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	is_redirect(char *c)
-{
-	if (*c == '<' || *c == '>')
-		return (1);
-	return (0);
-}
 
 char	*get_command(char **tokens)
 {
@@ -34,10 +27,10 @@ char	*get_command(char **tokens)
 	return (NULL);
 }
 
-char	**from_queue_to_array(t_queue *q)
+void	**from_queue_to_array(t_queue *q)
 {
 	int		i;
-	char	**array;
+	void	**array;
 
 	i = -1;
 	array = malloc(sizeof(void *) * (q->len + 1));

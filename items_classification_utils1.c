@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:08:45 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/19 20:08:59 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/20 10:38:49 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,6 @@ void	give_files_names(char **tokens, t_file *files)
 	}
 }
 
-
-
 t_file	*get_files(char **tokens, t_operand *op)
 {
 	int		len;
@@ -99,13 +97,14 @@ t_file	*get_files(char **tokens, t_operand *op)
 	op->files_count = len;
 	if (!len)
 		return (NULL);
-	ft_garbage_collector(ALLOCATE, sizeof(t_file) * len, NULL);
+	files = ft_garbage_collector(ALLOCATE, sizeof(t_file) * len, NULL);
 	give_files_types(tokens, files, len);
 	give_files_names(tokens, files);
-	heredoc = get_here_doc(files);
+	heredoc = get_here_doc(files, len);
 	if (!heredoc)
 		return (files);
-	heredoc->heredoc_fd = open("heredoc", O_CREAT | O_RDWR | O_TRUNC, 0666);//TODO IMPLEMENT A METHOD FOR RANDOM FILENAME GENERATION
+	heredoc->heredoc_fd = open("heredoc",
+			O_CREAT | O_RDWR | O_TRUNC, 0666);
 	open_heredoc(tokens, heredoc->heredoc_fd);
 	return (files);
 }

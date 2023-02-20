@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 15:22:12 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/18 14:50:05 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/20 11:03:43 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	second_production_rule(char *str)
 	ret = 0;
 	if (third_production_rule(str))
 		return (check_command_syntax(str));
-	if (is_between_brackets(str))
+	if (is_between_parenth(str))
 	{
 		remove_outer_parenth(&str);
 		return (second_production_rule(str));
@@ -69,31 +69,3 @@ int	first_production_rule(char *str)
 		return (0);
 	return (second_production_rule(str));
 }
-
-//string -> t_command
-/*[>, ls, ls, ar1, >, ar1, asd]
-struct t_file{
-	char *name;
-	int type; //IN, OUT, HERDOC
-	int fd;
-}
-
-struct t_cmmand{
-	char *command;
-	char **args;
-	t_file **files;
-}
-
-struct t_item{
-	t_cmmand* c;
-	int type;
-}
-
-void construct_list(char *str)
-{
-	while (*str)
-	{
-		
-		str++;
-	}
-}*/

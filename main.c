@@ -6,12 +6,11 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 15:49:06 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/19 20:19:53 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/20 11:50:07 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "readline/readline.h"
 
 void	ft_display_tokens(char **tokens)
 {
@@ -28,7 +27,7 @@ void	ft_display_tokens(char **tokens)
 	printf("}\n");
 }
 
-void task(char *line)
+/*void task(char *line)
 {
 	char	*mask;
 	char	**tokens;
@@ -47,9 +46,29 @@ void task(char *line)
 	expanding(tokens);
 	printf("After expanding:\n");
 	ft_display_tokens(tokens);
-	remove_quotes(tokens);
-	printf("After removing quotes\n");
-	ft_display_tokens(tokens);
+}*/
+
+void	task(char *line)
+{
+	t_item	**items;
+
+	items = items_classification(line);
+	while (*items)
+	{
+		if ((*items)->type == L_PARENTH)
+			printf("Left parenth\n");
+		else if ((*items)->type == R_PARENTH)
+			printf("Right parenth\n");
+		else if ((*items)->type == OR)
+			printf("OR\n");
+		else if ((*items)->type == AND)
+			printf("AND\n");
+		else if ((*items)->type == PIPE)
+			printf("PIPE");
+		else if ((*items)->type == OPERAND)
+			printf("OPERAND");
+		items++;
+	}
 }
 
 void	syntax(char *line)
@@ -68,20 +87,23 @@ void	syntax(char *line)
 
 int	main(int argc, char **argv, char **env)
 {
-	/*char	*line;
+	char	*line;
 
 	(void)argc;
 	(void)argv;
 	get_env(env_dup(env));
 	while (1)
 	{
-		//signals();
-		//line = readline("minishell> ");
+		sig_set();
+		line = readline("minishell> ");
 		if (!line)
 			return (0);
 		add_history(line);
+		//syntax(line);
+		task(line);
 		free(line);
+		ft_garbage_collector(GLOBAL_RELEASE, 0, NULL);
 		//system("leaks minishell");
-	}*/
+	}
 	return (0);
 }

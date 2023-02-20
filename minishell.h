@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 15:49:24 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/18 17:53:33 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/20 11:39:50 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,12 @@
 # include <sys/wait.h>
 # include <signal.h>
 # include "defined_types.h"
+# include "readline/readline.h"
 
+void	sig_set(void);
+void	sig_def(void);
 int		is_blank(char c);
+int		is_redirect(char *c);
 char	**get_env(char **env);
 char	**env_dup(char **env);
 char	*get_var_value(char *key);
@@ -39,9 +43,19 @@ void	update_balance(char c, t_balance *b);
 void	open_close_quotes(char ch, int *c);
 char	*first_operand(char *str);
 char	*second_operand(char *str);
-void	remove_outer_brackets(char **ptr_to_str);
-int		is_between_brackets(char *str);
+void	remove_outer_parenth(char **ptr_to_str);
+int		is_between_parenth(char *str);
 int		check_command_syntax(char *str);
 int		is_there_middle_operator(char *str);
+int		add_history(const char *);
+void	*queue_first(t_queue *q);
+void	*queue_pop(t_queue *q);
+void	queue_push(t_queue *q, void *data);
+void	queue_init(t_queue *q);
+void	open_heredoc(char **tokens, int fd);
+void	**from_array_to_queue(t_queue *q);
+t_file	*get_here_doc(t_file *files, int len);
+t_file	*get_files(char **tokens, t_operand *op);
+t_item	**items_classification(char *line);
 
 #endif
