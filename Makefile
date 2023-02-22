@@ -22,7 +22,7 @@ OBJS =		${SRCS:.c=.o}
 NAME =	minishell
 CC = cc 
 CFLAGS = -Wall -Wextra -Werror
-#CFLAGS += -fsanitize=address
+CFLAGS += -fsanitize=address
 CFLAGS += -I/Users/obednaou/brew/opt/readline/include/
 RDLIB = -lreadline -L/Users/obednaou/brew/opt/readline/lib/
 RM= rm -f

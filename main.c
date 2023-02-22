@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 15:49:06 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/22 11:27:16 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/22 14:53:50 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,21 +67,32 @@ void	task(char *line)
 			printf("|\n");
 		else if ((*items)->type == OPERAND)
 		{
+			int	files_count;
+
+			files_count = (*items)->operand->files_count;
 			printf("OPERAND\n");
 			printf("Files count = %d\n", (*items)->operand->files_count);
 			printf("status=%d\n", (*items)->operand->status);
-			if (!((*items)->operand->files) && items++)
-				continue ;
-			if ((*items)->operand->files->file_type == IN)
-				printf("file1:IN\n");
-			if ((*items)->operand->files->file_type == OUT)
-				printf("file1:OUT\n");
-			if ((*items)->operand->files->file_type == APPEND)
-				printf("file1:APPEND\n");
-			if ((*items)->operand->files->file_type == AMBIG_REDIREC)
-				printf("file1:AMBIG_REDIRECT\n");
-			if ((*items)->operand->files->file_type == HEREDOC)
-				printf("file1:HEREDOC\n");
+//			t_file	*files = (*items)->operand->files;
+			/*while (files_count--)
+			{
+				if (files->file_type == IN)
+					printf("IN\n");
+				if (files->file_type == OUT)
+					printf("OUT\n");
+				if (files->file_type == APPEND)
+					printf("APPEND\n");
+				if (files->file_type == AMBIG_REDIREC)
+					printf("AMBIG_REDIRECT\n");
+				if (files->file_type == HEREDOC)
+					printf("HEREDOC\n");
+				files++;
+			}*/
+			/*while (files_count--)
+			{
+				printf("%s\n", files->name);
+				files++;
+			}*/
 		}
 		items++;
 	}

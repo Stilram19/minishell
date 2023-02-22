@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 17:57:52 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/20 13:01:33 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/22 14:56:59 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ void	open_heredoc(char **tokens, int fd)
 	t_queue	limiters;
 
 	get_limiters(tokens, &limiters, &expand_enable);
+	printf("limiters len=%d\n", limiters.len);
 	while (!limiters.len)
 	{
 		write_enable = (limiters.len == 1);

@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:08:45 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/22 11:44:01 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/22 14:55:18 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,18 +32,17 @@ int	files_count(char **tokens)
 	}
 	return (count);
 }
-//ls << here
-void	give_file_type(char **tokens, t_file *file, int *heredoc)
+
+int	give_file_type(char **tokens, t_file *file, int *heredoc)
 {
-	if (!ft_strncmp(*tokens, "<<", 2))
+	if (!(*heredoc) && !ft_strncmp(*tokens, "<<", 2))
 	{
-		if (!(*heredoc))
-		{
-			file->file_type = HEREDOC;
-			*heredoc = 1;
-		}
-		return ;
+		file->file_type = HEREDOC;
+		*heredoc = 1;
+		return (1);
 	}
+	else if (!ft_strncmp(*tokens, "<<", 2))
+		return (0);
 	if (!ft_strncmp(*tokens, "<", 1))
 		file->file_type = IN;
 	else if (!ft_strncmp(*tokens, ">>", 2))
@@ -52,6 +51,7 @@ void	give_file_type(char **tokens, t_file *file, int *heredoc)
 		file->file_type = OUT;
 	if (*(tokens + 1) && !**(tokens + 1))
 		file->file_type = AMBIG_REDIREC;
+	return (1);
 }
 
 void	give_files_types(char **tokens, t_file *files, int len)
@@ -59,6 +59,7 @@ void	give_files_types(char **tokens, t_file *files, int len)
 	int	i;
 	int	j;
 	int	heredoc;
+	int	boolean;
 
 	i = 0;
 	j = len - 1;
@@ -70,8 +71,9 @@ void	give_files_types(char **tokens, t_file *files, int len)
 		if (ft_strncmp(*(tokens + i), "<", 1)
 			&& ft_strncmp(*(tokens + i), ">", 1))
 			continue ;
-		give_file_type(tokens + i, files + j, &heredoc);
-		j--;
+		boolean = give_file_type(tokens + i, files + j, &heredoc);
+		if (boolean)
+			j--;
 	}
 }
 
@@ -85,13 +87,15 @@ void	give_files_names(char **tokens, t_file *files)
 		if (files->file_type != AMBIG_REDIREC && tokens++)
 		{
 			files->name = remove_quotes(*tokens);
+			files++;
 			continue ;
 		}
 		tokens++;
 		files->name = NULL;
+		files++;
 	}
 }
-
+//ls > f > f
 t_file	*get_files(char **tokens, t_operand *op)
 {
 	int		len;

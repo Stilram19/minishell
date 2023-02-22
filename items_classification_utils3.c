@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 17:52:19 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/20 14:42:30 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/22 14:05:50 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,42 @@ void	**from_queue_to_array(t_queue *q)
 	return (array);
 }
 
+void	encode_non_wildcard(char *arg)
+{
+	int	encode_enable;
+
+	encode_enable = 0;
+	while (*arg)
+	{
+		if (*arg == '\'' || *arg == '\"')
+		{
+			if (*arg == encode_enable)
+				encode_enable = 0;
+			else if (!encode_enable)
+				encode_enable = *arg;
+		}
+		if (encode_enable && *arg == '*')
+			*arg = -1;
+		arg++;
+	}
+}
+
 char	**get_args(char **tokens, t_queue *args)
 {
 	int		i;
+	char	*arg;
 
 	i = 0;
 	while (*(tokens + i))
 	{
 		if (!is_redirect(*(tokens + i))
 			&& i && !is_redirect(*(tokens + i - 1)))
-			queue_push(args, remove_quotes(*(tokens + i)));
+		{
+			arg = *(tokens + i);
+			if (ft_strchr(arg, '*'))
+				encode_non_wildcard(arg);
+			queue_push(args, remove_quotes(arg));
+		}
 		i++;
 	}
 	return ((char **)from_queue_to_array(args));
