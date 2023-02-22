@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 15:49:06 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/22 14:53:50 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/22 18:00:13 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ void	task(char *line)
 	t_item	**items;
 
 	items = items_classification(line);
-	while (*items)
+	(void)items;
+/*	while (*items)
 	{
 		if ((*items)->type == L_PARENTH)
 			printf("(\n");
@@ -74,7 +75,7 @@ void	task(char *line)
 			printf("Files count = %d\n", (*items)->operand->files_count);
 			printf("status=%d\n", (*items)->operand->status);
 //			t_file	*files = (*items)->operand->files;
-			/*while (files_count--)
+			while (files_count--)
 			{
 				if (files->file_type == IN)
 					printf("IN\n");
@@ -87,15 +88,14 @@ void	task(char *line)
 				if (files->file_type == HEREDOC)
 					printf("HEREDOC\n");
 				files++;
-			}*/
-			/*while (files_count--)
+			}
+			while (files_count--)
 			{
 				printf("%s\n", files->name);
 				files++;
-			}*/
+			}
 		}
-		items++;
-	}
+	}*/
 }
 
 void	syntax(char *line)

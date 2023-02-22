@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:08:45 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/22 14:55:18 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/22 15:11:37 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	files_count(char **tokens)
 	heredoc = 0;
 	while (*tokens)
 	{
-		if (!heredoc && !ft_strncmp(*tokens, "<<", 2) && count++)
+		if (!heredoc && !ft_strncmp(*tokens, "<<", 2) && ++count)
 			heredoc = 1;
 		else if (!ft_strncmp(*tokens, "<<", 2) && tokens++)
 			continue ;
@@ -95,7 +95,7 @@ void	give_files_names(char **tokens, t_file *files)
 		files++;
 	}
 }
-//ls > f > f
+
 t_file	*get_files(char **tokens, t_operand *op)
 {
 	int		len;

@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 15:41:14 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/22 11:00:46 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/22 17:59:39 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	operand_construct(t_item *item, char **ptr_to_line, int status)
 	//printf("%s\n", operand);
 	tokens = produce_tokens(operand, mask_generation(operand));
 	expanding(tokens);
-	ft_display_tokens(tokens);
+	//ft_display_tokens(tokens);
 	item->operand = ft_garbage_collector(ALLOCATE, sizeof(t_operand), NULL);
 	item->operand->status = status;
 	item->operand->files = get_files(tokens, item->operand);

@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 17:57:52 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/22 14:56:59 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/22 18:47:57 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,8 @@ void	get_limiters(char **tokens, t_queue *limiters, int *expand_enable)
 	i = 0;
 	first = 1;
 	*expand_enable = 1;
-	while (*(tokens + i))
-		i++;
 	queue_init(limiters);
-	while (i--)
+	while (*(tokens + i))
 	{
 		if (!ft_strncmp(*(tokens + i), "<<", 2))
 		{
@@ -47,6 +45,7 @@ void	get_limiters(char **tokens, t_queue *limiters, int *expand_enable)
 			first = 0;
 			queue_push(limiters, remove_quotes(*(tokens + i + 1)));
 		}
+		i++;
 	}
 }
 
@@ -88,22 +87,26 @@ void	heredoc_child(char *curr_lim, int fd, int write_enable)
 
 void	open_heredoc(char **tokens, int fd)
 {
+	int		pid;
+	int		status;
 	int		expand_enable;
 	int		write_enable;
 	t_queue	limiters;
 
 	get_limiters(tokens, &limiters, &expand_enable);
-	printf("limiters len=%d\n", limiters.len);
-	while (!limiters.len)
+	while (limiters.len)
 	{
 		write_enable = (limiters.len == 1);
 		if (write_enable)
 			write_enable += expand_enable;
-		sig_def();
+		heredoc_signal_handler();
 		if (!fork())
 			heredoc_child((char *)queue_first(&limiters), fd, write_enable);
 		sig_set();
-		wait(NULL);
+		waitpid(pid, &status, 0);
+		if (!WEXITED(status) || WEXITSTATUS(status) == CTRL_C)
+			break ;
 		ft_garbage_collector(SINGLE_RELEASE, 0, queue_pop(&limiters));
 	}
+	close(fd);
 }

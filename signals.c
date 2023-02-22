@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 16:33:47 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/20 11:33:40 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/22 18:44:57 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,13 @@ void	signal_handler(int sig)
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
+}
+
+void	heredoc_signal_handler(void)
+{
+	if (sig == SIGINT)
+		exit(CTRL_C);
+	signal(SIGQUIT, SIG_IGN);
 }
 
 void	sig_set(void)
