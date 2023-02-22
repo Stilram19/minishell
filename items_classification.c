@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 15:41:14 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/20 14:43:16 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/22 11:00:46 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*prepare_construct(char **ptr_to_line)
 	{
 		open_close_quotes(*(operand + i), &ignore);
 		if (!ignore && (fourth_production_rule(operand + i)
-			|| *(operand + i) == '(' || *(operand + i) == ')'))
+				|| *(operand + i) == '(' || *(operand + i) == ')'))
 			break ;
 		i++;
 	}
@@ -42,6 +42,8 @@ char	*prepare_construct(char **ptr_to_line)
 	*ptr_to_line += i;
 	return (operand);
 }
+
+void	ft_display_tokens(char **tokens);//debugging
 
 void	operand_construct(t_item *item, char **ptr_to_line, int status)
 {
@@ -54,15 +56,16 @@ void	operand_construct(t_item *item, char **ptr_to_line, int status)
 	(void)item;
 	(void)args;
 	operand = prepare_construct(ptr_to_line);
-	printf("%s\n", operand);
-	/*tokens = produce_tokens(operand, mask_generation(operand));
+	//printf("%s\n", operand);
+	tokens = produce_tokens(operand, mask_generation(operand));
 	expanding(tokens);
+	ft_display_tokens(tokens);
 	item->operand = ft_garbage_collector(ALLOCATE, sizeof(t_operand), NULL);
 	item->operand->status = status;
 	item->operand->files = get_files(tokens, item->operand);
-	item->operand->cmd = get_command(tokens);
-	queue_push(&args, item->operand->cmd);
-	item->operand->args = get_args(tokens, &args);*/
+	//item->operand->cmd = get_command(tokens);
+	//queue_push(&args, item->operand->cmd);
+	//item->operand->args = get_args(tokens, &args);
 }
 
 void	*item_construct(char **ptr_to_line, int item_type, int *status)

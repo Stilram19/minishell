@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:08:45 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/20 10:38:49 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/22 11:44:01 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ int	files_count(char **tokens)
 	{
 		if (!heredoc && !ft_strncmp(*tokens, "<<", 2) && count++)
 			heredoc = 1;
+		else if (!ft_strncmp(*tokens, "<<", 2) && tokens++)
+			continue ;
 		else if (!ft_strncmp(*tokens, "<", 1)
 			|| !ft_strncmp(*tokens, ">", 1))
 			count++;
@@ -30,13 +32,16 @@ int	files_count(char **tokens)
 	}
 	return (count);
 }
-
+//ls << here
 void	give_file_type(char **tokens, t_file *file, int *heredoc)
 {
-	if (!(*heredoc) && !ft_strncmp(*tokens, "<<", 2))
+	if (!ft_strncmp(*tokens, "<<", 2))
 	{
-		file->file_type = HEREDOC;
-		*heredoc = 1;
+		if (!(*heredoc))
+		{
+			file->file_type = HEREDOC;
+			*heredoc = 1;
+		}
 		return ;
 	}
 	if (!ft_strncmp(*tokens, "<", 1))
