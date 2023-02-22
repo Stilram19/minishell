@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 21:24:30 by okhiar            #+#    #+#             */
-/*   Updated: 2023/02/19 21:55:27 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/02/22 18:01:04 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,16 +56,16 @@ char	**wildcards_slice(char **args)
 	return (ret);
 }
 
-int	main(void)
-{
-	char	*args[5] = {"cat", ".*", "khiar", NULL};
-	char	**list;
-	list = wildcards_slice(args);
-	for (int i = 0; list[i] != NULL; i++)
-		printf("%s\n", list[i]);
-	// if (pattern_match("f*.c*", "file.fdg"))
-	// 	printf("Pattern matching\n");
-	// else
-	// 	printf("Pattern not matching\n");
-	return (0);
-}
+// int	main(void)
+// {
+// 	char	*args[5] = {"cat", ".*", "khiar", NULL};
+// 	char	**list;
+// 	list = wildcards_slice(args);
+// 	for (int i = 0; list[i] != NULL; i++)
+// 		printf("%s\n", list[i]);
+// 	// if (pattern_match("f*.c*", "file.fdg"))
+// 	// 	printf("Pattern matching\n");
+// 	// else
+// 	// 	printf("Pattern not matching\n");
+// 	return (0);
+// }

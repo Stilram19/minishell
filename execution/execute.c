@@ -6,12 +6,11 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:37:00 by okhiar            #+#    #+#             */
-/*   Updated: 2023/02/19 18:33:06 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/02/22 20:36:06 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-#include "build-ins/buildins.h"
 
 void	ft_dup2(int f1, int f2)
 {
@@ -37,7 +36,7 @@ void	io_cleanup(int in, int out)
 	ft_dup2(out, 1);
 }
 
-int	execute_buildin(t_cmds *cmds)
+int	buildins_brute_force(t_operand *cmds, int flag)
 {
 	int	status;
 
@@ -55,28 +54,33 @@ int	execute_buildin(t_cmds *cmds)
 	else if (!ft_strcmp(cmds->cmd, "unset"))
 		status = ft_unset(cmds->args);
 	else if (!ft_strcmp(cmds->cmd, "exit"))
-		status = ft_exit(cmds->args);
+		status = ft_exit(cmds->args + 1, flag);
 	return (status);
 }
 
-int	exec_cmds(t_cmds *cmds, int in, int out)
+int	exec_buildin(t_operand *cmds, int in, int out)
+{
+	int	status;
+	int	tmp_io[2];
+
+	tmp_io[0] = dup(0);
+	tmp_io[1] = dup(1);
+	status = redirect_io(cmds, in, out);
+	if (status)
+		return (io_cleanup(tmp_io[0], tmp_io[1]), redirect_error(status, 1));
+	status = buildins_brute_force(cmds, 1);
+	io_cleanup(tmp_io[0], tmp_io[1]);
+	return (status);
+}
+
+int	exec_cmds(t_operand *cmds, int in, int out)
 {
 	int	pid;
 	int	tmp[2];
 	int	status;
 
 	if (is_buildin(cmds->cmd) && defaults_io(in, out)) // ! you must check every thing carefully ==> ls | (false || pwd && wc)
-	{
-		tmp[0] = dup(0);
-		tmp[1] = dup(1);
-		status = redirect_io(cmds, in, out);
-		if (status)
-			return (io_cleanup(tmp[0], tmp[1]), redirect_error(status, 0));
-		status = execute_buildin(cmds);
-		io_cleanup(tmp[0], tmp[1]);
-		// * May you shouold cleanup here, ls | echo hello | cd .. | echo kfgdjs ::: DONE
-		return (status);
-	}
+		return (exec_buildin(cmds, in, out));
 	pid = fork();
 	if (!pid)
 	{
@@ -84,7 +88,7 @@ int	exec_cmds(t_cmds *cmds, int in, int out)
 		status = redirect_io(cmds, in, out);
 		(status && redirect_error(status, 1));
 		if (is_buildin(cmds->cmd))
-			exit(execute_buildin(cmds));
+			exit(buildins_brute_force(cmds, 0));
 		if (ft_execvp(cmds->cmd, cmds->args))
 			_ft_putstr_fd("\e[1;31mMinishell:\e[0m command not found\n", 2, 127);
 	}
@@ -118,16 +122,16 @@ int	execute(t_tree *root, int in, int out)
 {
 	int	status;
 
-	if (root->operation == 0) // ! BASE CASE
-		return (exec_cmds(root->cmd, in, out));
-	if (root->operation == PIPE)
+	if (root->item->type == OPERAND) // ! BASE CASE
+		return (exec_cmds(root->item->operand, in, out));
+	if (root->item->type == PIPE)
 	{
 		status = pipe_nodes(root, in, out);
 		return (status);
 	}
 	status = execute(root->left, in, out);
-	if ((status != 0 && root->operation == AND_AND) \
-		|| (status == 0 && root->operation == OR_OR))
+	if ((status != 0 && root->item->type == AND) \
+		|| (status == 0 && root->item->type == OR))
 		return (status);
 	status = execute(root->right, in, out);
 	return (status);
@@ -143,6 +147,7 @@ int	exec_line(t_tree *root)
 	// tmp_out = dup(1);
 	// io_cleanup(0, 1);
 	status = execute(root, STDIN_FILENO, STDOUT_FILENO);
+	set_exit_status(status);
 	return (status);
 }
 
@@ -164,11 +169,15 @@ int	main(int ac, char **av, char **env)
 	// // root->left->cmd->files[1]->type = AMBIG;
 	// // root->left->cmd->files[1]->name = ft_strdup("out1");
 	// // root->left->cmd->files[2] = NULL;
-	root->left = new_node(0, command_fill("cat", 0, 1));
-	root->left->cmd->args[0] = ft_strdup("cat");
-	root->left->cmd->args[1] = ft_strdup("/dev/random");
-	root->left->cmd->args[2] = NULL;
-	root->right = new_node(0, command_fill("ls", 0, 1));
+	root->left = new_node(OPERAND, command_fill("ls", 0, 1));
+	root->left->item->operand->args[0] = ft_strdup("ls");
+	root->left->item->operand->args[1] = ft_strdup("-l");
+	root->left->item->operand->args[2] = NULL;
+	root->right = new_node(OPERAND, command_fill("exit", 0, 1));
+	root->right->item->operand->args[0] = ft_strdup("exit");
+	root->right->item->operand->args[1] = ft_strdup("15");
+	// root->right->item->operand->args[2] = ft_strdup("");
+	root->right->item->operand->args[2] = NULL;
 	// root->right->cmd->args[0] = ft_strdup("head");
 	// root->right->cmd->args[1] = ft_strdup("-n5");
 	// root->right->cmd->args[2] = NULL;
@@ -187,6 +196,7 @@ int	main(int ac, char **av, char **env)
 	// root->right->right = new_node(AND_AND, NULL);
 	// root->right->right->left = new_node(0, command_fill("pwd", 0, 1));
 	// root->right->right->right = new_node(0, command_fill("wc", 0, 1));
+	// printf("%p\n", root->operand->args);
 	status = exec_line(root);
 	// sleep(50);
 	// int i = -1;
@@ -197,7 +207,7 @@ int	main(int ac, char **av, char **env)
 	// sleep(30);
 	(void)ac;
 	(void)av;
-	printf("here %d\n", status);
+	printf("here %d %s\n", status, get_var_value("?"));
 	// sleep(20);
 	return (status);
 }

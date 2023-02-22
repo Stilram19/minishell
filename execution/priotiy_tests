@@ -18,7 +18,11 @@ ls && exit
 
 ls | (skdgj || wc && wc)     ---> second wc cannot read from the pipe (input consumption or input exhaustion.)
 
+/************AMBIGUOUS
+export oussama="khiar blah"
+ls > $oussama ---> AMBIGUOUS
 
+ls > "khiar blah" ---> Not AMBIGUOUS
 
 
 /***************REDIRECTIONS******************/
@@ -32,3 +36,15 @@ echo hello > a > b > c > $EMPTY ---> Will create {a, b, c} and when find an ambi
 echo .*
 echo *
 echo *notfound
+
+
+//******* ()>
+cmd1 > out && cmd2 > out
+cmd1 > out && cmd2
+(cmd1 && cmd2) > out
+((cmd1 && cmd2) > out) > out1)
+((cmd1 && cmd2) > out) | cat > out1)
+
+
+
+cat <(ls)

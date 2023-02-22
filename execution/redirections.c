@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:08:25 by okhiar            #+#    #+#             */
-/*   Updated: 2023/02/18 18:00:00 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/02/22 13:27:20 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	redirect_error(int error_key, int ext)
 	return (EXIT_FAILURE);
 }
 
-int	redirect_io(t_cmds *cmds, int in, int out)
+int	redirect_io(t_operand *cmds, int in, int out)
 {
 	int	i;
 	int	fd_in;

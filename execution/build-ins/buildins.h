@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 10:31:04 by okhiar            #+#    #+#             */
-/*   Updated: 2023/02/18 21:09:14 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/02/22 18:36:39 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 int		ft_cd(char **args);
 int		ft_pwd(void);
 int		ft_env(void);
-int		ft_exit(char **args);
+int		ft_exit(char **args, int flag);
 int		ft_echo(char **args);
 int		ft_unset(char **args);
 int		ft_export(char **args);

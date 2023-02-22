@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 14:25:27 by okhiar            #+#    #+#             */
-/*   Updated: 2023/02/20 11:00:32 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/02/22 18:42:51 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,26 +60,25 @@ void	exit_with_status(char *str)
 	if (!str)
 		status = 0;
 	else if (all_digits(str))
-	{
-		ft_putstr_fd("minishel: exit\n", 1);
 		status = ft_atoi(str);
-	}
 	else
 	{
-		ft_putstr_fd("minishel: exit\n", 1);
+		// ft_putstr_fd("minishel: exit\n", 1);
 		ft_putstr_fd("exit: numeric argument required\n", 2);
 		status = 255;
 	}
 	exit(status);
 }
 
-int	ft_exit(char **args)
+int	ft_exit(char **args, int flag)
 {
 	int	status;
 
+	if (flag)
+		ft_putstr_fd("minishel: exit\n", 2);
 	if (args[0] && args[1])
 	{
-		ft_putstr_fd("exit: too many arguments\n", 2);
+		ft_putstr_fd("exit: too many arguments\n", 2); // ! Should be after "minishell: exit" printed
 		return (EXIT_FAILURE);
 	}
 	exit_with_status(args[0]);

@@ -5,6 +5,7 @@
 #include <fcntl.h>
 #include <sys/wait.h>
 #include <signal.h>
+#include <termios.h>
 #include <readline/readline.h>
 
 // void    signal_handler(int sig)
@@ -36,33 +37,10 @@
 //         return (0);
 // }
 
-void    signal_handler(int sig)
-{
-        if (sig == SIGINT)
-                printf("CTRL_C\n");
-}
-
 int main(void)
 {
-        int     pid;
-        int     status;
-        struct sigaction action;
+        struct termios orig;
 
-        action.sa_handler = signal_handler;
-        sigaction(SIGINT, &action, NULL);
-        pid = fork();
-        if (!pid)
-        {
-                action.sa_handler = SIG_DFL;
-                sigaction(SIGINT, &action, NULL);
-                char *line = readline("> ");
-                while (line)
-                        line = readline("> ");
-        }
-        waitpid(pid, &status, 0);
-        if (WIFEXITED(status))
-                printf("EXIT NORMALLY %d\n", WEXITSTATUS(status));
-        sleep(5);
-        printf("I'm Here\n");
+        
         return (0);
 }
