@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 16:08:07 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/27 18:49:22 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/27 19:39:58 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 // var="' '", >$var, >c$var --> ambiguous redirection
 // var=" ", >""$var, >$var"" --> ambiguous redirection
 // >""$empty, >$empty"" --> no such file or directory
-// >$empty""--> no such file or directory
 // >$empty --> ambiguous redirection
 
 int	is_all_blank(char *file_name)
@@ -41,6 +40,7 @@ int	is_ambiguous_redirect(char **ptr_to_file_name)
 	file_name = *ptr_to_file_name;
 	if (is_all_blank(file_name))
 		return (1);
+	file_name = remove_quotes(file_name);
 	while (*(file_name + i))
 	{
 		open_close_quotes(*(file_name + i), &quotes);

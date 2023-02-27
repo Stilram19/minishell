@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 16:29:48 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/27 16:42:12 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/27 20:19:40 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define DEFINED_TYPES_H
 
 # include "../libft/libft.h"
+
+# define SUCCESS 0
 
 # define OR_STR "||"
 # define AND_STR "&&"
@@ -60,5 +62,16 @@ typedef struct s_node
 	struct s_node	*right;
 	t_data			data;
 }t_node;
+
+typedef struct s_item{
+	void			*data;
+	struct s_item	*next;
+}t_item;
+
+typedef struct s_queue{
+	int		len;
+	t_item	*first;
+	t_item	*last;
+}t_queue;
 
 #endif
