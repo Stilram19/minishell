@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 16:29:48 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/26 20:48:51 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/27 16:42:12 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,10 @@
 # define OUT_STR ">"
 # define HERE_STR "<<"
 # define APPEND_STR ">>"
+
+# define SINGLE_QUOTE_MASK -1
+# define DOUBLE_QUOTE_MASK -2
+# define WILDCARD_MASK -3
 
 enum data_type
 {
