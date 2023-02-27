@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 16:39:55 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/26 22:05:27 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/27 13:43:55 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,14 +90,14 @@ void	parse_tree(char *str, t_node *root, int status)
 		root->left = ft_garbage_collector(ALLOCATE, sizeof(t_node), NULL);
 		root->right = ft_garbage_collector(ALLOCATE, sizeof(t_node), NULL);
 		parse_tree(left_str(str, op), root->left, status);
-		parse_tree(right_str(str, op), root->right, status);
+		parse_tree(right_str(str, op, 0), root->right, status);
 	}
 	else if (op_type == REDIREC)
 	{
 		root->data.type = REDIREC;
 		root->left = ft_garbage_collector(ALLOCATE, sizeof(t_node), NULL);
 		parse_tree(left_str(str, op), root->left, status);
-		files_parsing(root, right_str(str, op), op);
+		files_parsing(root, right_str(str, op, 1));
 	}
 	else if (ft_strchr(str, '('))
 		parse_tree(remove_outer_parenth(str), root, 1);

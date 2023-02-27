@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 20:50:55 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/26 21:46:23 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/27 13:42:16 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	*left_str(char *str, char *op)
 	return (ret);
 }
 
-char	*right_str(char *str, char *op)
+char	*right_str(char *str, char *op, int with_op)
 {
 	int		op_len;
 	int		quote;
@@ -57,7 +57,10 @@ char	*right_str(char *str, char *op)
 			break ;
 		str++;
 	}
-	temp = ft_strdup(str + op_len);
+	if (with_op)
+		temp = ft_strdup(str);
+	else
+		temp = ft_strdup(str + op_len);
 	ret = ft_strtrim(temp, " ");
 	ft_garbage_collector(SINGLE_RELEASE, 0, temp);
 	ft_garbage_collector(SINGLE_RELEASE, 0, str);
