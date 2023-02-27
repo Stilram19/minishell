@@ -6,24 +6,25 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 16:08:07 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/27 17:52:39 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/27 18:49:22 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// var="' '", >$var, >c$var --> ambiguous redirection
+// var=" ", >""$var, >$var"" --> ambiguous redirection
+// >""$empty, >$empty"" --> no such file or directory
+// >$empty""--> no such file or directory
+// >$empty --> ambiguous redirection
+
 int	is_all_blank(char *file_name)
 {
-	int	ret;
-
-	ret = 1;
-	while (*file_name)
-	{
-		if (!is_blank(*file_name) && ret--)
-			break ;
+	if (!(*file_name))
+		return (1);
+	while (is_blank(*file_name))
 		file_name++;
-	}
-	return (ret);
+	return (!(*file_name));
 }
 
 int	is_ambiguous_redirect(char **ptr_to_file_name)
