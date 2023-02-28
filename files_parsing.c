@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 13:37:32 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/27 20:39:46 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/28 17:52:49 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	give_file_type(char **tokens, t_file *file, int *heredoc)
 	return (1);
 }
 
-void	give_files_types(char **tokens, t_file *files, int len)
+void	 give_files_types(char **tokens, t_file *files, int len)
 {
 	int	i;
 	int	j;
@@ -91,22 +91,6 @@ void	give_files_types(char **tokens, t_file *files, int len)
 	}
 }
 
-char	*unmask_quotes(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (*(str + i))
-	{
-		if (*(str + i) == SINGLE_QUOTE_MASK)
-			*(str + i) = '\'';
-		else if (*(str + i) == DOUBLE_QUOTE_MASK)
-			*(str + i) = '\"';
-		i++;
-	}
-	return (str);
-}
-
 void	give_files_names(char **tokens, t_file *files)
 {
 	while (*tokens)
@@ -116,35 +100,36 @@ void	give_files_names(char **tokens, t_file *files)
 			continue ;
 		if (tokens++ && files->type != AMBIG)
 		{
-			files->name = unmask_quotes(*(tokens - 1));
+			files->pathname = unmask_quotes(*(tokens - 1));
 			files++;
 			continue ;
 		}
-		files->name = NULL;
+		files->pathname = NULL;
 		files++;
 	}
 }
 
 void	files_parsing(t_node *root, char *str)
 {
-	t_queue	*limiters;
-	t_file	*heredoc;
-	char	**tokens;
-	char	*here_name;
+	int			expand_enable;
+	t_queue		*limiters;
+	t_file		*heredoc;
+	char		**tokens;
 
+	if (g->exit_status)
+		return ;
 	tokens = produce_tokens(str, mask_genenration(str));
 	root->data.f_count = files_count(tokens);
 	root->data.files = ft_garbage_collector(ALLOCATE,
 		sizeof(t_file) * root->data.f_count, NULL);
-	limiters = get_limiters(tokens, );
+	limiters = get_limiters(tokens, &expand_enable);
 	give_files_types(tokens, root->data.files, root->data.f_count);
 	give_files_names(tokens, root->data.files);
 	heredoc = get_here_doc(root->data.files, root->data.f_count);
 	if (!heredoc)
 		return ;
-	here_name = random_file_name_generation();
-	heredoc->here_fd = open(here_name, O_CREAT | O_RDWR | O_TRUNC, 0666);
-	ft_garbage_collector(SINGLE_RELEASE, 0, here_name);
-	//a global or static variable to store each heredoc_file_name.
-	open_heredoc(tokens, heredoc->here_fd, limiters);
+	heredoc->pathname = random_file_name_generation();
+	heredoc->here_fd = open(heredoc->pathname, O_CREAT | O_RDWR | O_TRUNC, 0666);
+	queue_push(g->here_files, heredoc);
+	open_heredoc(tokens, heredoc->here_fd, limiters, expand_enable);
 }

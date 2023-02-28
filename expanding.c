@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 16:18:08 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/27 16:43:58 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/28 17:45:33 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ int	remove_dollar_if(char *add, int open_quote)
 	return (1);
 }
 
-void	expand_if(char **tokens)
+void	expand_if(char **ptr_to_token)
 {
 	int		i;
 	char	open_quote;
@@ -119,7 +119,7 @@ void	expand_if(char **tokens)
 
 	i = 0;
 	open_quote = 0;
-	token = *tokens;
+	token = *ptr_to_token;
 	while (*(token + i))
 	{
 		if (*(token + i) == '\'' || *(token + i) == '\"')
@@ -136,6 +136,6 @@ void	expand_if(char **tokens)
 		if (++i && !ft_isalnum(*(token + i)) && *(token + i) != '?'
 			&& *(token + i) != '_')
 			continue ;
-		token = var_expansion(tokens, &i, var_name_len(token + i));
+		token = var_expansion(ptr_to_token, &i, var_name_len(token + i));
 	}
 }

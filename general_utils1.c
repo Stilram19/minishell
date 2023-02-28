@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 20:18:45 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/26 21:52:25 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/28 17:56:50 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,46 @@ char	*remove_outer_parenth(char *str)
 	new_str = ft_strdup(str + 1);
 	ft_garbage_collector(SINGLE_RELEASE, 0, str);
 	return (new_str);
+}
+
+char	*unmask_quotes(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (*(str + i))
+	{
+		if (*(str + i) == SINGLE_QUOTE_MASK)
+			*(str + i) = '\'';
+		else if (*(str + i) == DOUBLE_QUOTE_MASK)
+			*(str + i) = '\"';
+		i++;
+	}
+	return (str);
+}
+
+char	*random_file_name_generation(void)
+{
+	int		i;
+	int		j;
+	int		fd;
+	char	buff[100];
+	char	random_name[11];
+
+	i = 0;
+	fd = open("/dev/random", O_RDONLY);
+	random_name[10] = '\0';
+	buff[99] = '\0';
+	while (i < 10)
+	{
+		j = 0;
+		read(fd, buff, 99);
+		while (*(buff + j) && i < 10)
+		{
+			if (ft_isalnum(*(buff + j)))
+				*(random_name + i++) = *(buff + j);
+			j++;
+		}
+	}
+	return (ft_strjoin("/tmp", random_name));
 }

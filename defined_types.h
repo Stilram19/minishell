@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 16:29:48 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/27 20:19:40 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/28 14:05:13 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,10 @@
 # define DOUBLE_QUOTE_MASK -2
 # define WILDCARD_MASK -3
 
+# define CTRL_C 42
+
+# define SYNTAX_ERROR 258
+
 enum data_type
 {
 	AND, OR, PIPE, REDIREC, COMMAND
@@ -43,7 +47,7 @@ typedef struct s_file
 {
 	int		type;
 	int		here_fd;
-	char	*name;
+	char	*pathname;
 }t_file;
 
 typedef struct s_data
@@ -73,5 +77,13 @@ typedef struct s_queue{
 	t_item	*first;
 	t_item	*last;
 }t_queue;
+
+typedef struct s_global
+{
+	int		exit_status;
+	t_queue	*here_files;
+}t_global;
+
+t_global	*g;
 
 #endif

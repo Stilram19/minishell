@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 20:14:47 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/27 20:50:09 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/28 18:22:28 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	heredoc_child(char *curr_lim, int fd, int write_enable)
 	exit(EXIT_SUCCESS);
 }
 
-void	open_heredoc(char **tokens, int fd, t_queue *limiters, int expand_enable)
+void	heredoc(char **tokens, int fd, t_queue *limiters, int expand)
 {
 	int		pid;
 	int		status;
@@ -99,14 +99,20 @@ void	open_heredoc(char **tokens, int fd, t_queue *limiters, int expand_enable)
 	{
 		write_enable = (limiters->len == 1);
 		if (write_enable)
-			write_enable += expand_enable;
-		heredoc_signal_handler();
+			write_enable += expand;
+		signal(SIGINT, SIG_IGN);
 		if (!fork())
+		{
+			signal(SIGINT, heredoc_sig_handler);
 			heredoc_child((char *)queue_first(limiters), fd, write_enable);
-		sig_set();
+		}
 		waitpid(pid, &status, 0);
+		sig_set();
 		if (!WIFEXITED(status) || WEXITSTATUS(status) == CTRL_C)
-			break ;
+		{
+			heredoc_clean();
+			return ;
+		}
 		ft_garbage_collector(SINGLE_RELEASE, 0, queue_pop(limiters));
 	}
 	close(fd);

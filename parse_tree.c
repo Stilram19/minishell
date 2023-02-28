@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 16:39:55 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/27 13:43:55 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/02/28 17:59:52 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ int	is_first_operator(char *str, char *op)
 	while (*str)
 	{
 		open_close_quotes(*str, &quote);
-		(!quote && open_close_parenth(*str, &parenth));
+		if (!quote)
+			open_close_parenth(*str, &parenth);
 		if (!(quote || parenth || ft_strncmp(str, op, op_len)))
 			return (1);
 		str++;

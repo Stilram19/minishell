@@ -5,8 +5,55 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/27 13:37:41 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/27 13:37:44 by obednaou         ###   ########.fr       */
+/*   Created: 2023/02/28 15:03:35 by obednaou          #+#    #+#             */
+/*   Updated: 2023/02/28 17:56:09 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "minishell.h"
+// var="ls -la"-->ls, -la
+//expand --> split into tokens --> find cmd --> find arguments
+
+void	quotes_handler(char **args)
+{
+	while (*args)
+	{
+		*args = remove_quotes(*args);
+		unmask_quotes(*args);
+		args++;
+	}
+}
+
+void	wildcard_ambig_handler(char **args)
+{
+	int		quotes;
+	char	*arg;
+
+	while (*args)
+	{
+		quotes = 0;
+		arg = *args;
+		while (*arg)
+		{
+			open_close_quotes(*arg, &quotes);
+			if (quotes && *arg == '*')
+				*arg = WILDCARD_MASK;
+			arg++;
+		}
+		args++;
+	}
+}
+
+void	cmd_parsing(t_node *root, char *str)
+{
+	char	**args;
+
+	if (g->exit_status)
+		return ;
+	expand_if(&str);
+	args = produce_tokens(str, mask_generation1(str));
+	wildcard_ambig_handler(args);
+	quotes_handler(args);
+	root->data.cmd = *args;
+	root->data.args = args;
+}
