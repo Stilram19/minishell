@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 16:23:18 by okhiar            #+#    #+#             */
-/*   Updated: 2023/02/22 20:32:40 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/02/24 13:28:30 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,18 @@ void	_ft_putstr_fd(char *str, int fd, int ext)
 		i++;
 	}
 	exit(ext);
+}
+
+char	*search_replace(char *str, char needle, char replacement)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == needle)
+			str[i] = replacement;
+		i++;
+	}
+	return (str);
 }

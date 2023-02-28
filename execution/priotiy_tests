@@ -1,5 +1,6 @@
 false || (sleedfp 3 && ls)
 ls || pwd && ls
+cat | ls
 ls && (false || pwd | wc)
 (ls && (lfhsg || pwd | wc)) | wc
 

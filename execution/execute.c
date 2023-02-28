@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:37:00 by okhiar            #+#    #+#             */
-/*   Updated: 2023/02/22 20:36:06 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/02/28 14:08:30 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,11 @@
 
 void	ft_dup2(int f1, int f2)
 {
-	// dprintf(2, "%d %d %d\n", f1, f2, getpid());
-	if (f1 != f2)
-	{
-		if (dup2(f1, f2) == -1)
-			perror("dup2");
-		close(f1);
-	}
+	if (f1 == f2)
+		return ;
+	if (dup2(f1, f2) == -1)
+		perror("dup2");
+	close(f1);
 }
 
 int	defaults_io(int in, int out)
@@ -34,6 +32,63 @@ void	io_cleanup(int in, int out)
 {
 	ft_dup2(in, 0);
 	ft_dup2(out, 1);
+}
+
+int	open_infile(t_files *files, int type)
+{
+	int	infile;
+
+	if (type == HERE)
+		return (files->fd);
+	infile = open(files->name, O_RDONLY);
+	return (infile);	
+}
+
+int	open_outfile(t_files *files, int type)
+{
+	int	outfile;
+
+	if (type == APPEND)
+		return (open(files->name, O_CREAT | O_APPEND| O_WRONLY, 0666));
+	outfile = open(files->name, O_CREAT | O_TRUNC | O_WRONLY, 0666);
+	return (outfile);
+}
+
+int	*io_rect(t_files **files, int in, int out)
+{
+	int	i;
+	int	tmp[2];
+	int	*io_fds;
+
+	i = 0;
+	io_fds = (int *)malloc(sizeof(int) * 2);
+	io_fds[0] = in;
+	io_fds[1] = out;
+	tmp[0] = -1;
+	tmp[1] = -1;
+	while (files && *files)
+	{
+		if (files[i]->type == IN || files[i]->type == HERE)
+		{
+			if (tmp[0] != -1)
+				close(io_fds[0]);
+			io_fds[0] = open_infile(files[i], files[i]->type);
+			tmp[0] = io_fds[0];
+		}
+		else if (files[i]->type == OUT || files[i]->type == APPEND)
+		{
+			if (tmp[1] != -1)
+				close(io_fds[1]);
+			io_fds[1] = open_outfile(files[i], files[i]->type);
+			tmp[1] = io_fds[1];
+		}
+		else
+			return (NULL); // ! before return you must call close
+		if (io_fds[0] == -1 || io_fds[1] == -1)
+			return (NULL); // ! before return you must call close
+		i++;
+	}
+	return (io_fds);
 }
 
 int	buildins_brute_force(t_operand *cmds, int flag)
@@ -58,43 +113,43 @@ int	buildins_brute_force(t_operand *cmds, int flag)
 	return (status);
 }
 
-int	exec_buildin(t_operand *cmds, int in, int out)
-{
-	int	status;
-	int	tmp_io[2];
+// int	exec_buildin(t_operand *cmds, int in, int out)
+// {
+// 	int	status;
+// 	int	tmp_io[2];
 
-	tmp_io[0] = dup(0);
-	tmp_io[1] = dup(1);
-	status = redirect_io(cmds, in, out);
-	if (status)
-		return (io_cleanup(tmp_io[0], tmp_io[1]), redirect_error(status, 1));
-	status = buildins_brute_force(cmds, 1);
-	io_cleanup(tmp_io[0], tmp_io[1]);
-	return (status);
-}
+// 	tmp_io[0] = dup(0);
+// 	tmp_io[1] = dup(1);
+// 	status = redirect_io(cmds, in, out);
+// 	if (status)
+// 		return (io_cleanup(tmp_io[0], tmp_io[1]), redirect_error(status, 0));
+// 	status = buildins_brute_force(cmds, 1);
+// 	io_cleanup(tmp_io[0], tmp_io[1]);
+// 	return (status);
+// }
 
-int	exec_cmds(t_operand *cmds, int in, int out)
-{
-	int	pid;
-	int	tmp[2];
-	int	status;
+// int	exec_cmds(t_operand *cmds, int in, int out)
+// {
+// 	int	pid;
+// 	int	tmp[2];
+// 	int	status;
 
-	if (is_buildin(cmds->cmd) && defaults_io(in, out)) // ! you must check every thing carefully ==> ls | (false || pwd && wc)
-		return (exec_buildin(cmds, in, out));
-	pid = fork();
-	if (!pid)
-	{
-		printf("%s***%d\n", cmds->cmd, getpid());
-		status = redirect_io(cmds, in, out);
-		(status && redirect_error(status, 1));
-		if (is_buildin(cmds->cmd))
-			exit(buildins_brute_force(cmds, 0));
-		if (ft_execvp(cmds->cmd, cmds->args))
-			_ft_putstr_fd("\e[1;31mMinishell:\e[0m command not found\n", 2, 127);
-	}
-	waitpid(pid, &status, 0);
-	return (WEXITSTATUS(status));
-}
+// 	if (is_buildin(cmds->cmd) && defaults_io(in, out)) // ! you must check every thing carefully ==> ls | (false || pwd && wc)
+// 		return (exec_buildin(cmds, in, out));
+// 	pid = fork();
+// 	if (!pid)
+// 	{
+// 		printf("%s***%d\n", cmds->cmd, getpid());
+// 		status = redirect_io(cmds, in, out);
+// 		(status && redirect_error(status, 1));
+// 		if (is_buildin(cmds->cmd))
+// 			exit(buildins_brute_force(cmds, 0));
+// 		if (ft_execvp(cmds->cmd, cmds->args))
+// 			_ft_putstr_fd("\e[1;31mMinishell:\e[0m command not found\n", 2, 127);
+// 	}
+// 	waitpid(pid, &status, 0);
+// 	return (WEXITSTATUS(status));
+// }
 
 int	pipe_nodes(t_tree *root, int in, int out)
 {
@@ -118,17 +173,27 @@ int	pipe_nodes(t_tree *root, int in, int out)
 	return (status);
 }
 
+int	redirect_io_node(t_tree *root, int in, int out)
+{
+	int	*io_fd;
+	int	status;
+
+	io_fd = io_rect(root->item->files, in, out); // ! if NULL Returned then return here
+	status = execute(root->left, io_fd[0], io_fd[1]);
+	return (status);
+}
+
 int	execute(t_tree *root, int in, int out)
 {
 	int	status;
+	int	pid;
 
-	if (root->item->type == OPERAND) // ! BASE CASE
+	if (root->item->type == COMMAND) // ! BASE CASE
 		return (exec_cmds(root->item->operand, in, out));
 	if (root->item->type == PIPE)
-	{
-		status = pipe_nodes(root, in, out);
-		return (status);
-	}
+		return (pipe_nodes(root, in, out));
+	if (root->item->type == REDIREC)
+		return (redirect_io_node(root, in, out));
 	status = execute(root->left, in, out);
 	if ((status != 0 && root->item->type == AND) \
 		|| (status == 0 && root->item->type == OR))
@@ -142,7 +207,7 @@ int	exec_line(t_tree *root)
 	// int	tmp_in;
 	// int	tmp_out;
 	int	status;
-	
+
 	// tmp_in = dup(0);
 	// tmp_out = dup(1);
 	// io_cleanup(0, 1);
@@ -173,11 +238,16 @@ int	main(int ac, char **av, char **env)
 	root->left->item->operand->args[0] = ft_strdup("ls");
 	root->left->item->operand->args[1] = ft_strdup("-l");
 	root->left->item->operand->args[2] = NULL;
-	root->right = new_node(OPERAND, command_fill("exit", 0, 1));
-	root->right->item->operand->args[0] = ft_strdup("exit");
-	root->right->item->operand->args[1] = ft_strdup("15");
+	printf("here\n");
+	root->left->item->operand->files[0] = malloc(sizeof(t_files));
+	root->left->item->operand->files[0]->name = ft_strdup("dir");
+	root->left->item->operand->files[0]->type = OUT_FILE;
+	root->left->item->operand->files[1] = NULL;
+	root->right = new_node(OPERAND, command_fill("pwd", 0, 1));
+	root->right->item->operand->args[0] = ft_strdup("pwd");
+	// root->right->item->operand->args[1] = ft_strdup("15");
 	// root->right->item->operand->args[2] = ft_strdup("");
-	root->right->item->operand->args[2] = NULL;
+	root->right->item->operand->args[1] = NULL;
 	// root->right->cmd->args[0] = ft_strdup("head");
 	// root->right->cmd->args[1] = ft_strdup("-n5");
 	// root->right->cmd->args[2] = NULL;

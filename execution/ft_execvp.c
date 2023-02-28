@@ -1,18 +1,16 @@
- /* ************************************************************************** */
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   ft_execvp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/31 18:35:03 by okhiar            #+#    #+#             */
-/*   Updated: 2023/01/31 21:44:15 by okhiar           ###   ########.fr       */
+/*   Created: 2023/02/26 14:00:52 by okhiar            #+#    #+#             */
+/*   Updated: 2023/02/26 14:02:58 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	ft_env(void);
 
 char	*ft_pathjoin(char *file, char *path)
 {
@@ -83,13 +81,14 @@ char	*valid_cmd(char *file, char *path)
 }
 
 /**
- * @brief will duplicate the actions of the shell in searching for an executable file,
- *  if the specified file name does not contain a slash "/" character. ft_execvp(@file, @args),
- * search path is the path specified in the environment by "PATH" variable.
+ * @brief will duplicate the actions of the shell in searching,
+ *  for an executable file,
+ *  if the specified file name does not contain a slash "/" character. 
+ * ft_execvp(@file, @args), search path is the path specified in 
+ * the environment by "PATH" variable.
  * 
  * @param file 
  * @param args 
- * @param env 
  * @return int 
  */
 int	ft_execvp(char *file, char **args)

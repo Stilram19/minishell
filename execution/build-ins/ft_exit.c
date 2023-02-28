@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 14:25:27 by okhiar            #+#    #+#             */
-/*   Updated: 2023/02/22 18:42:51 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/02/26 13:56:03 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ void	exit_with_status(char *str)
 		status = ft_atoi(str);
 	else
 	{
-		// ft_putstr_fd("minishel: exit\n", 1);
 		ft_putstr_fd("exit: numeric argument required\n", 2);
 		status = 255;
 	}

@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 21:24:30 by okhiar            #+#    #+#             */
-/*   Updated: 2023/02/22 18:01:04 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/02/26 13:46:38 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ char	**wildcards_slice(char **args)
 
 	i = 1;
 	sliced_args = NULL;
+	ft_lstadd_back(&sliced_args, ft_lstnew(args[0]));
 	while (args[i])
 	{
 		if (ft_strchr(args[i], '*'))
@@ -58,7 +59,7 @@ char	**wildcards_slice(char **args)
 
 // int	main(void)
 // {
-// 	char	*args[5] = {"cat", ".*", "khiar", NULL};
+// 	char	*args[5] = {"cat", "*.c", "khiar", NULL};
 // 	char	**list;
 // 	list = wildcards_slice(args);
 // 	for (int i = 0; list[i] != NULL; i++)

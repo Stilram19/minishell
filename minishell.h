@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 15:49:24 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/22 20:35:21 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/02/27 16:41:51 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,14 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <dirent.h>
+# include <sys/stat.h>
 # include <readline/readline.h>
 # include "execution/build-ins/buildins.h"
 
 # define CMN_NF "\e[1;31mMinishell\e[0m: Command not found\n"
 # define HD_MSG "here_doc> "
+# define AMBIG_ERR 1
+# define NO_S_FILE 2
 
 // typedef struct s_cmds t_cmds;
 typedef struct s_tree t_tree;
@@ -34,38 +37,34 @@ enum gar_col
 	SINGLE_RELEASE
 };
 
-enum file_type
+enum data_type
 {
-	IN_FILE,
-	OUT_FILE,
-	HEREDOC,
-	APPEND,
-	AMBIG
+	AND, OR, PIPE, REDIREC, COMMAND
 };
 
-enum	e_item_type
+enum file_type
 {
-	L_PARENTH, R_PARENTH, OR, AND, PIPE, OPERAND
+	IN, OUT, HERE, APPEND, AMBIG
 };
 
 typedef struct	s_files
 {
-	char	*name;
 	int		type;
 	int		fd; // ? in case of heredoc
+	char	*name;
 }	t_files;
 
 typedef struct	s_operand
 {
 	char	*cmd;
 	char	**args;
-	t_files	**files;
 }	t_operand;
 
 typedef struct	s_item
 {
 	int			type;
 	t_operand	*operand;
+	t_files		**files;
 }	t_item;
 
 typedef struct	s_tree
@@ -101,8 +100,8 @@ void	ft_dup2(int f1, int f2);
 void	set_exit_status(int status);
 
 /*UTILS*/
+char		*search_replace(char *str, char needle, char replecement);
 t_operand	*command_fill(char *cmd, int fd_in, int fd_out);
-
-t_list *matched_set(char *pattern);
+t_list	 *matched_set(char *pattern);
 
 #endif
