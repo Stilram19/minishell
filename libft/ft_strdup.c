@@ -1,38 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/01 14:16:56 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/01 18:35:40 by obednaou         ###   ########.fr       */
+/*   Created: 2022/10/08 17:58:33 by obednaou          #+#    #+#             */
+/*   Updated: 2023/02/10 14:57:39 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-char	*first_operator(char *str);
-int		operator_type(char *op);
-
-void	test(char *str)
+char	*ft_strdup(const char *s1)
 {
-	//int		op_type;
-	char	*op;
-	char	*right;
-	char	*left;
+	size_t	i;
+	char	*copy;
 
-	(void)right;
-	op = first_operator(str);
-	left = left_str(str, op);
-	printf("%s\n", left);
-	//printf("%s\n", op);
-}
-
-int	main(int argc, char **argv, char **env)
-{
-	(void)env;
-	(void)argc;
-	test(*(argv + 1));
-	return (0);
+	i = ft_strlen(s1);
+	copy = ft_garbage_collector(ALLOCATE, (i + 1) * sizeof(char), NULL);
+	if (!copy)
+		return (0);
+	*(copy + i) = 0;
+	while (i--)
+		*(copy + i) = *(s1 + i);
+	return (copy);
 }

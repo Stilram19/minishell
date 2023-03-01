@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 13:37:32 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/28 17:52:49 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/03/01 14:54:09 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ void	files_parsing(t_node *root, char *str)
 
 	if (g->exit_status)
 		return ;
-	tokens = produce_tokens(str, mask_genenration(str));
+	tokens = produce_tokens(str, mask_generation(str));
 	root->data.f_count = files_count(tokens);
 	root->data.files = ft_garbage_collector(ALLOCATE,
 		sizeof(t_file) * root->data.f_count, NULL);
@@ -131,5 +131,5 @@ void	files_parsing(t_node *root, char *str)
 	heredoc->pathname = random_file_name_generation();
 	heredoc->here_fd = open(heredoc->pathname, O_CREAT | O_RDWR | O_TRUNC, 0666);
 	queue_push(g->here_files, heredoc);
-	open_heredoc(tokens, heredoc->here_fd, limiters, expand_enable);
+	ft_heredoc(heredoc->here_fd, limiters, expand_enable);
 }

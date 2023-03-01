@@ -1,38 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/01 14:16:56 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/01 18:35:40 by obednaou         ###   ########.fr       */
+/*   Created: 2022/10/05 14:33:15 by obednaou          #+#    #+#             */
+/*   Updated: 2023/02/18 14:11:32 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-char	*first_operator(char *str);
-int		operator_type(char *op);
-
-void	test(char *str)
+size_t	ft_strlen(const char *str)
 {
-	//int		op_type;
-	char	*op;
-	char	*right;
-	char	*left;
+	size_t	i;
 
-	(void)right;
-	op = first_operator(str);
-	left = left_str(str, op);
-	printf("%s\n", left);
-	//printf("%s\n", op);
-}
-
-int	main(int argc, char **argv, char **env)
-{
-	(void)env;
-	(void)argc;
-	test(*(argv + 1));
-	return (0);
+	i = 0;
+	if (!str)
+		return (0);
+	while (*(str + i))
+		i++;
+	return (i);
 }

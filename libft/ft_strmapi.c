@@ -1,38 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/01 14:16:56 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/01 18:35:40 by obednaou         ###   ########.fr       */
+/*   Created: 2022/10/09 15:35:54 by obednaou          #+#    #+#             */
+/*   Updated: 2023/02/12 12:50:38 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-char	*first_operator(char *str);
-int		operator_type(char *op);
-
-void	test(char *str)
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	//int		op_type;
-	char	*op;
-	char	*right;
-	char	*left;
+	size_t	i;
+	char	*new_s;
 
-	(void)right;
-	op = first_operator(str);
-	left = left_str(str, op);
-	printf("%s\n", left);
-	//printf("%s\n", op);
-}
-
-int	main(int argc, char **argv, char **env)
-{
-	(void)env;
-	(void)argc;
-	test(*(argv + 1));
-	return (0);
+	if (!(s && f))
+		return (0);
+	i = ft_strlen(s);
+	new_s = ft_garbage_collector(ALLOCATE, (i + 1) * sizeof(char), NULL);
+	if (!new_s)
+		return (0);
+	*(new_s + i) = 0;
+	while (i--)
+		*(new_s + i) = (*f)(i, *(s + i));
+	return (new_s);
 }

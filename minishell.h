@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 15:49:24 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/01 14:02:46 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/03/01 17:47:44 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,13 @@ char	*random_file_name_generation(void);
 char	*right_str(char *str, char *op, int with_op);
 void	set_env(char **my_env, char *name, char *value);
 void	*ft_garbage_collector(int option, int size, void *to_free);
-void	heredoc(char **tokens, int fd, t_queue *limiters, int expand);
+void	ft_heredoc(int fd, t_queue *limiters, int expand);
 char	*var_expansion(char **ptr_to_token, int *ptr_to_i, int name_len);
 char	**produce_tokens(char *line, char *mask);
-char	*mask_generation1(char *line);
+char	*mask_generation2(char *line);
 char	*mask_generation(char *line);
 int		check_syntax(char **tokens);
-int		is_ambiguous_redirect(char *ptr_to_file_name);
+int		is_ambiguous_redirect(char **ptr_to_file_name);
 void	open_close_quotes(char ch, int *c);
 void	open_close_parenth(char ch, int *c);
 void	heredoc_sig_handler(int sig);
@@ -54,15 +54,21 @@ char	*second_operand(char *str);
 char	*remove_outer_parenth(char *str);
 int		is_between_parenth(char *str);
 int		check_command_syntax(char *str);
+char	*get_operator(char *op);
+int		operator_type(char *op);
 int		is_there_middle_operator(char *str);
 void	queue_push(t_queue *q, void *data);
+void	node_init(t_node *root, int status);
 int		add_history(const char *);
 void	*queue_first(t_queue *q);
 void	*queue_pop(t_queue *q);
+void	*ft_min(void *add1, void *add2);
 void	heredoc_clean(void);
+int		here_sig(void);
 void	queue_init(t_queue *q);
 void	cmd_parsing(t_node *root, char *str);
 void	files_parsing(t_node *root, char *str);
 t_file	*get_here_doc(t_file *files, int len);
+t_queue	*get_limiters(char **tokens, int *expand_enable);
 
 #endif

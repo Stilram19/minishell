@@ -6,76 +6,80 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 16:39:55 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/28 17:59:52 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/03/01 18:05:20 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	node_init(t_node *root, int status)
+char	*first_op_add(char *str, char *op)
 {
-	root->left = NULL;
-	root->right = NULL;
-	root->data.args = NULL;
-	root->data.cmd = NULL;
-	root->data.f_count = 0;
-	root->data.files = NULL;
-	root->data.status = status;
-	root->data.type = COMMAND;
-}
-
-int	is_first_operator(char *str, char *op)
-{
-	int	op_len;
-	int	quote;
-	int	parenth;
+	int		quote;
+	int		op_len;
+	int		parenth;
+	char	*cmp_op;
 
 	quote = 0;
 	parenth = 0;
+	cmp_op = NULL;
 	op_len = ft_strlen(op);
 	while (*str)
 	{
 		open_close_quotes(*str, &quote);
 		if (!quote)
+		{
 			open_close_parenth(*str, &parenth);
-		if (!(quote || parenth || ft_strncmp(str, op, op_len)))
-			return (1);
+			cmp_op = get_operator(str);
+		}
+		if (!quote && !parenth && cmp_op && !ft_strncmp(cmp_op, op, op_len + 1))
+			return (str);
 		str++;
 	}
-	return (0);
+	return (NULL);
 }
 
-int	operator_type(char *op)
+char	*first_logical_operator(char *str)
 {
-	if (!op)
-		return (-1);
-	if (!ft_strncmp(op, AND_STR, 2))
-		return (AND);
-	if (!ft_strncmp(op, OR_STR, 2))
-		return (OR);
-	if (!ft_strnmp(op, PIPE_STR, 1))
-		return (PIPE);
-	return (REDIREC);
+	char	*or;
+	char	*and;
+
+	and = first_op_add(str, AND_STR);
+	or = first_op_add(str, OR_STR);
+	return (ft_min(and, or));
+}
+
+char	*first_redirec(char *str)
+{
+	char	*in;
+	char	*out;
+	char	*here;
+	char	*append;
+
+	here = first_op_add(str, HERE_STR);
+	append = first_op_add(str, APPEND_STR);
+	in = first_op_add(str, IN_STR);
+	out = first_op_add(str, OUT_STR);
+	in = ft_min(in, here);
+	out = ft_min(out, append);
+	return (ft_min(in, out));
 }
 
 char	*first_operator(char *str)
 {
-	if (is_first_operator(str, AND_STR))
-		return (AND_STR);
-	if (is_first_operator(str, OR_STR))
-		return (OR_STR);
-	if (is_first_operator(str, PIPE_STR))
+	char	*redirec;
+	char	*logical_op;
+
+	logical_op = first_logical_operator(str);
+	if (logical_op)
+		return (get_operator(logical_op));
+	if (first_op_add(str, PIPE_STR))
 		return (PIPE_STR);
-	if (is_first_operator(str, IN_STR))
-		return (IN_STR);
-	if (is_first_operator(str, OUT_STR))
-		return (OUT_STR);
-	if (is_first_operator(str, HERE_STR))
-		return (HERE_STR);
-	if (is_first_operator(str, APPEND_STR))
-		return (APPEND_STR);
+	redirec = first_redirec(str);
+	if (redirec)
+		return (get_operator(redirec));
 	return (NULL);
 }
+
 // TODO the input string must be trimed.
 void	parse_tree(char *str, t_node *root, int status)
 {

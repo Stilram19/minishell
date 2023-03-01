@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 15:03:35 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/28 17:56:09 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/03/01 14:56:51 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	cmd_parsing(t_node *root, char *str)
 	if (g->exit_status)
 		return ;
 	expand_if(&str);
-	args = produce_tokens(str, mask_generation1(str));
+	args = produce_tokens(str, mask_generation2(str));
 	wildcard_ambig_handler(args);
 	quotes_handler(args);
 	root->data.cmd = *args;
