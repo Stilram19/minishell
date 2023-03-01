@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 15:49:24 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/28 18:31:56 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/03/01 14:02:46 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,7 @@ char	**produce_tokens(char *line, char *mask);
 char	*mask_generation1(char *line);
 char	*mask_generation(char *line);
 int		check_syntax(char **tokens);
-int		first_production_rule(char *str);
-int		third_production_rule(char *str);
-int		fourth_production_rule(char *str);
+int		is_ambiguous_redirect(char *ptr_to_file_name);
 void	open_close_quotes(char ch, int *c);
 void	open_close_parenth(char ch, int *c);
 void	heredoc_sig_handler(int sig);
