@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 16:18:08 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/28 17:45:33 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/03/01 22:16:44 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ char	*quotes_mask(char *str)
 	int	i;
 
 	i = 0;
+	if (!str)
+		return (NULL);
 	while (*(str + i))
 	{
 		if (*(str + i) == '\'')
@@ -50,7 +52,8 @@ char	*var_expansion(char **ptr_to_token, int *ptr_to_i, int name_len)
 
 	var_name = ft_strdup(*ptr_to_token + *ptr_to_i);
 	*(var_name + name_len) = '\0';
-	var_value = quotes_mask(get_var_value(var_name));
+	//var_value = quotes_mask(get_var_value(var_name));
+	var_value = get_var_value(var_name);
 	value_len = ft_strlen(var_value);
 	to_free = *ptr_to_token;
 	new_len = ft_strlen(to_free) + value_len - (name_len + 1);

@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 16:39:55 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/01 18:05:20 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/03/01 20:03:09 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void	parse_tree(char *str, t_node *root, int status)
 		parse_tree(left_str(str, op), root->left, status);
 		files_parsing(root, right_str(str, op, 1));
 	}
-	else if (ft_strchr(str, '('))
+	else if (*str == '(')
 		parse_tree(remove_outer_parenth(str), root, 1);
 	else
 		cmd_parsing(root, str);

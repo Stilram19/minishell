@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 13:37:32 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/01 14:54:09 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/03/01 22:09:07 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,10 @@ int	files_count(char **tokens)
 
 int	give_file_type(char **tokens, t_file *file, int *heredoc)
 {
-	if (!(*heredoc) && !ft_strncmp(*tokens, "<<", 2))
+	int	here_flag;
+
+	here_flag = *heredoc;
+	if (!here_flag && !ft_strncmp(*tokens, "<<", 2))
 	{
 		file->type = HERE;
 		*heredoc = 1;
@@ -65,6 +68,7 @@ int	give_file_type(char **tokens, t_file *file, int *heredoc)
 		file->type = OUT;
 	if (is_ambiguous_redirect(tokens + 1))
 		file->type = AMBIG;
+	//printf("%p\n", *(tokens + 1));
 	return (1);
 }
 
@@ -100,7 +104,7 @@ void	give_files_names(char **tokens, t_file *files)
 			continue ;
 		if (tokens++ && files->type != AMBIG)
 		{
-			files->pathname = unmask_quotes(*(tokens - 1));
+			files->pathname = unmask_quotes(*tokens);
 			files++;
 			continue ;
 		}
@@ -116,8 +120,8 @@ void	files_parsing(t_node *root, char *str)
 	t_file		*heredoc;
 	char		**tokens;
 
-	if (g->exit_status)
-		return ;
+	//if (g->exit_status)
+		//return ;
 	tokens = produce_tokens(str, mask_generation(str));
 	root->data.f_count = files_count(tokens);
 	root->data.files = ft_garbage_collector(ALLOCATE,
@@ -125,6 +129,7 @@ void	files_parsing(t_node *root, char *str)
 	limiters = get_limiters(tokens, &expand_enable);
 	give_files_types(tokens, root->data.files, root->data.f_count);
 	give_files_names(tokens, root->data.files);
+	return ;//debugging
 	heredoc = get_here_doc(root->data.files, root->data.f_count);
 	if (!heredoc)
 		return ;
@@ -133,3 +138,4 @@ void	files_parsing(t_node *root, char *str)
 	queue_push(g->here_files, heredoc);
 	ft_heredoc(heredoc->here_fd, limiters, expand_enable);
 }
+// >, $empty

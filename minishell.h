@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 15:49:24 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/01 17:47:44 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/03/01 21:35:55 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void	*queue_pop(t_queue *q);
 void	*ft_min(void *add1, void *add2);
 void	heredoc_clean(void);
 int		here_sig(void);
+void	restart(char **env);
 void	queue_init(t_queue *q);
 void	cmd_parsing(t_node *root, char *str);
 void	files_parsing(t_node *root, char *str);
