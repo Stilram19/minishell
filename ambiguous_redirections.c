@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 16:08:07 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/01 13:47:24 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/03/01 13:48:40 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,24 +30,6 @@ int	is_all_blank(char *file_name)
 	{
 		if (!is_blank(*file_name))
 			return (0);
-		file_name++;
-	}
-	return (1);
-}
-//""$var--$var--$var--$var
-//"empty"
-//""''""''""''""''""''""''""
-int	is_all_closed_quotes(char *file_name)
-{
-	int	quotes;
-
-	quotes = 0;
-	while (*file_name)
-	{
-		open_close_quotes(*file_name, &quotes);
-		if (!is_blank(*file_name) && *file_name != quotes)
-			return (0);
-		if ()
 		file_name++;
 	}
 	return (1);
