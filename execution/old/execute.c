@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 15:06:28 by okhiar            #+#    #+#             */
-/*   Updated: 2023/02/14 21:58:49 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/02/28 15:05:25 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -326,3 +326,19 @@ int	main(int ac, char **av, char **env)
 	// ft_env();
 	return (0);
 }
+
+
+// int	exec_buildin(t_operand *cmds, int in, int out)
+// {
+// 	int	status;
+// 	int	tmp_io[2];
+
+// 	tmp_io[0] = dup(0);
+// 	tmp_io[1] = dup(1);
+// 	status = redirect_io(cmds, in, out);
+// 	if (status)
+// 		return (io_cleanup(tmp_io[0], tmp_io[1]), redirect_error(status, 0));
+// 	status = buildins_brute_force(cmds, 1);
+// 	io_cleanup(tmp_io[0], tmp_io[1]);
+// 	return (status);
+// }

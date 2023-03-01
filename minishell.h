@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 15:49:24 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/27 16:41:51 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/02/28 15:13:09 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ typedef struct	s_tree
 
 
 /*Binary Tree*/
-t_tree	*new_node(int op_type, t_operand *cmds);
+t_tree	*new_node(int op_type, t_operand *cmds, t_files **files);
 
 /*Parsing*/
 char	**get_env(char **env);
@@ -94,14 +94,15 @@ int		ft_execvp(char *file, char **args);
 void	_ft_putstr_fd(char *str, int fd, int ext);
 int		is_buildin(char *cmd);
 int		ft_strcmp(char *str1, char *str2);
-int		redirect_io(t_operand *cmds, int in, int out);
+int		*io_rect(t_files **files, int in, int out);
 int		redirect_error(int error_key, int ext);
 void	ft_dup2(int f1, int f2);
 void	set_exit_status(int status);
 
 /*UTILS*/
 char		*search_replace(char *str, char needle, char replecement);
-t_operand	*command_fill(char *cmd, int fd_in, int fd_out);
+t_operand	*command_fill(char *cmd);
+t_files		**files_fill();
 t_list	 *matched_set(char *pattern);
 
 #endif
