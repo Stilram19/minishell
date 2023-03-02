@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 16:44:11 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/28 16:02:16 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/03/02 16:00:24 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char	*mask_generation2(char *line)
 		open_close_quotes(*(line + i), &ignore);
 		if (!ignore && is_blank(*(line + i)))
 			*(mask + i) = '1';
-		else if (!ignore)
+		else
 			*(mask + i) = '0';
 		i++;
 	}

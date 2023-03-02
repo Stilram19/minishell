@@ -6,23 +6,13 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 15:03:35 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/01 14:56:51 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/03/02 18:59:03 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 // var="ls -la"-->ls, -la
 //expand --> split into tokens --> find cmd --> find arguments
-
-void	quotes_handler(char **args)
-{
-	while (*args)
-	{
-		*args = remove_quotes(*args);
-		unmask_quotes(*args);
-		args++;
-	}
-}
 
 void	wildcard_ambig_handler(char **args)
 {
@@ -44,6 +34,17 @@ void	wildcard_ambig_handler(char **args)
 	}
 }
 
+void	quotes_handler(char **args)
+{
+	while (*args)
+	{
+		*args = remove_quotes(*args);
+		unmask_quotes(*args);
+		args++;
+	}
+	wildcard_ambig_handler(args);
+}
+
 void	cmd_parsing(t_node *root, char *str)
 {
 	char	**args;
@@ -51,7 +52,9 @@ void	cmd_parsing(t_node *root, char *str)
 	if (g->exit_status)
 		return ;
 	expand_if(&str);
+	printf("|%s|\n", str);
 	args = produce_tokens(str, mask_generation2(str));
+	//printf("%s\n", *args);
 	wildcard_ambig_handler(args);
 	quotes_handler(args);
 	root->data.cmd = *args;

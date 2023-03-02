@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 20:14:47 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/02 11:19:16 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/03/02 17:38:24 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,28 +29,22 @@ t_file	*get_here_doc(t_file *files, int len)
 t_queue	*get_limiters(char **tokens, int *expand_enable)
 {
 	int		i;
-	int		last;
 	char	*temp;
 	t_queue	*limiters;
 
 	i = 0;
-	last = 1;
-	*expand_enable = 1;
 	limiters = ft_garbage_collector(ALLOCATE, sizeof(t_queue), NULL);
 	queue_init(limiters);
 	while (*(tokens + i))
-		i++;
-	while (i--)
 	{
 		if (!ft_strncmp(*(tokens + i), "<<", 2))
 		{
-			if (last && (ft_strchr(*(tokens + i + 1), '\'')
-					|| ft_strchr(*(tokens + i + 1), '\"')))
-				*expand_enable = 0;
-			last = 0;
+			*expand_enable = !(ft_strchr(*(tokens + i + 1), '\'')
+					|| ft_strchr(*(tokens + i + 1), '\"'));
 			temp = remove_quotes(*(tokens + i + 1));
 			queue_push(limiters, temp);
 		}
+		i++;
 	}
 	return (limiters);
 }

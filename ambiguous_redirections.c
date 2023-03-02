@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 16:08:07 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/01 22:11:11 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/03/02 16:16:46 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,14 @@ int	split_and_check_ambiguity(char *file_name)
 	ret = 0;
 	tokens = produce_tokens(file_name, mask_generation2(file_name));
 	while (*(tokens + i))
+	{
+		//printf("%s\n", *(tokens + i));
 		i++;
+	}
+	//printf("%d %s\n", i, *tokens);
+	*tokens = ft_strtrim(*tokens, " ");
 	*tokens = remove_quotes(*tokens);
-	if (i > 1 || !(*tokens))
+	if (i > 1 || !(**tokens))
 		ret = 1;
 	i = -1;
 	while (*(tokens + ++i))
@@ -69,7 +74,7 @@ int	is_ambiguous_redirect(char **ptr_to_file_name)
 		ret = 1;
 	if (!ret && ft_strchr(file_name, ' '))
 		ret = split_and_check_ambiguity(file_name);
-	*ptr_to_file_name = remove_quotes(file_name);
 	return (ret);
 }
-//"$empty"
+//"$a"
+//a="a b"

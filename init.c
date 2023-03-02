@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 13:50:46 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/28 18:09:25 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/03/02 17:57:56 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	global_clean(void)
 	g = ft_garbage_collector(ALLOCATE, sizeof(t_global), NULL);
 	g->here_files = ft_garbage_collector(ALLOCATE, sizeof(t_queue), NULL);
 	queue_init(g->here_files);
-	g->exit_status = EXIT_SUCCESS;
 }
 
 void	restart(char **env)

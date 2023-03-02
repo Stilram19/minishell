@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 13:37:32 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/02 12:14:00 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/03/02 17:55:51 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,23 +95,34 @@ void	 give_files_types(char **tokens, t_file *files, int len)
 	}
 }
 
-void	give_files_names(char **tokens, t_file *files)
+void	give_files_names(char **tokens, t_file *files, int len)
 {
-	while (*tokens)
+	int		i;
+	char	*op;
+
+	i = 0;
+	while (i < len)
 	{
-		if (ft_strncmp(*tokens, "<", 2)
-			&& ft_strncmp(*tokens, ">", 1) && tokens++)
+		((op = NULL) || (files[i].pathname = NULL));
+		if (files[i].type == HERE && ++i)
 			continue ;
-		if (tokens++ && files->type != AMBIG && files->type != HERE)
+		if (files[i].type == APPEND)
+			op = APPEND_STR;
+		else if (files[i].type == OUT)
+			op = OUT_STR;
+		else if (files[i].type == IN)
+			op = IN_STR;
+		else if (files[i].type == AMBIG)
+		 	tokens += 2;
+		while (op && *tokens)
 		{
-			//files->pathname = unmask_quotes(*tokens);
-			files->pathname = *tokens;
-			//printf("%d %p\n", files->type ,files->pathname);
-			files++;
-			continue ;
+			if (ft_strncmp(op, *tokens, ft_strlen(op) + 1) && tokens++)
+				continue ;
+			tokens++;
+			files[i].pathname = unmask_quotes(remove_quotes(*tokens));
+			break ;
 		}
-		files->pathname = NULL;
-		files++;
+		i++;
 	}
 }
 
@@ -122,16 +133,15 @@ void	files_parsing(t_node *root, char *str)
 	t_file		*heredoc;
 	char		**tokens;
 
-	//if (g->exit_status)
-		//return ;
+	if (g->exit_status)
+		return ;
 	tokens = produce_tokens(str, mask_generation(str));
 	root->data.f_count = files_count(tokens);
 	root->data.files = ft_garbage_collector(ALLOCATE,
 		sizeof(t_file) * root->data.f_count, NULL);
 	limiters = get_limiters(tokens, &expand_enable);
 	give_files_types(tokens, root->data.files, root->data.f_count);
-	give_files_names(tokens, root->data.files);
-	return ;//debugging
+	give_files_names(tokens, root->data.files, root->data.f_count);
 	heredoc = get_here_doc(root->data.files, root->data.f_count);
 	if (!heredoc)
 		return ;
