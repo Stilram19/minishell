@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 10:35:28 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/28 19:43:32 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/03/02 11:19:23 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,6 @@ char	*remove_quotes(char *str)
 		else
 			i++;
 	}
-	ft_garbage_collector(SINGLE_RELEASE, 0, str);
+	//ft_garbage_collector(SINGLE_RELEASE, 0, str);
 	return (new_str);
 }

@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 14:16:56 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/01 22:51:42 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/03/02 11:56:54 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,13 @@ void	test(char **env)
 		while (i < root->data.f_count)
 		{
 			if ((root->data.files)[i].type == IN)
-				printf("IN|%s\n", (root->data.files)[i].pathname);
-				else if ((root->data.files)[i].type == OUT)
-				printf("OUT|%s\n", (root->data.files)[i].pathname);
+				printf("IN|%p\n", (root->data.files)[i].pathname);
+			else if ((root->data.files)[i].type == OUT)
+				printf("OUT|%p\n", (root->data.files)[i].pathname);
 			else if ((root->data.files)[i].type == APPEND)
-				printf("APPEND|%s\n", (root->data.files)[i].pathname);
+				printf("APPEND|%p\n", (root->data.files)[i].pathname);
 			else if ((root->data.files)[i].type == HERE)
-				printf("HERE\n");
+				printf("HERE|%p\n", (root->data.files)[i].pathname);
 			else if ((root->data.files)[i].type == AMBIG)
 				printf("AMBIG\n");
 			else

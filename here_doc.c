@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 20:14:47 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/01 20:56:39 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/03/02 11:19:16 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ t_queue	*get_limiters(char **tokens, int *expand_enable)
 {
 	int		i;
 	int		last;
+	char	*temp;
 	t_queue	*limiters;
 
 	i = 0;
@@ -47,7 +48,8 @@ t_queue	*get_limiters(char **tokens, int *expand_enable)
 					|| ft_strchr(*(tokens + i + 1), '\"')))
 				*expand_enable = 0;
 			last = 0;
-			queue_push(limiters, remove_quotes(*(tokens + i + 1)));
+			temp = remove_quotes(*(tokens + i + 1));
+			queue_push(limiters, temp);
 		}
 	}
 	return (limiters);
