@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 13:37:32 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/02 11:56:47 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/03/02 12:14:00 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,10 +102,8 @@ void	give_files_names(char **tokens, t_file *files)
 		if (ft_strncmp(*tokens, "<", 2)
 			&& ft_strncmp(*tokens, ">", 1) && tokens++)
 			continue ;
-		if (tokens++ && files->type != AMBIG)
+		if (tokens++ && files->type != AMBIG && files->type != HERE)
 		{
-			if (files->type == HERE)
-				printf("%s\n", *tokens);
 			//files->pathname = unmask_quotes(*tokens);
 			files->pathname = *tokens;
 			//printf("%d %p\n", files->type ,files->pathname);
@@ -132,7 +130,6 @@ void	files_parsing(t_node *root, char *str)
 		sizeof(t_file) * root->data.f_count, NULL);
 	limiters = get_limiters(tokens, &expand_enable);
 	give_files_types(tokens, root->data.files, root->data.f_count);
-	return ;//debugging
 	give_files_names(tokens, root->data.files);
 	return ;//debugging
 	heredoc = get_here_doc(root->data.files, root->data.f_count);
