@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 16:39:55 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/03 14:50:20 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/03/03 17:34:56 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	*first_op_add(char *str, char *op)
 	return (NULL);
 }
 
-char	*first_logical_operator(char *str)
+/*char	*last_logical_operator(char *str)
 {
 	char	*or;
 	char	*and;
@@ -46,6 +46,28 @@ char	*first_logical_operator(char *str)
 	and = first_op_add(str, AND_STR);
 	or = first_op_add(str, OR_STR);
 	return (ft_min(and, or));
+}*/
+
+char	*last_logical_operator(char *str)
+{
+	int		quotes;
+	int		parenth;
+	char	*last_op;
+
+	quotes = 0;
+	parenth = 0;
+	last_op = NULL;
+	while (*str)
+	{
+		open_close_quotes(*str, &quotes);
+		if (!quotes)
+			open_close_parenth(*str, &parenth);
+		if (!(quotes || parenth) && !(ft_strncmp(str, OR_STR, 2)
+			&& ft_strncmp(str, AND_STR, 2)))
+			last_op = str;
+		str++;
+	}
+	return (last_op);
 }
 
 char	*first_redirec(char *str)
@@ -64,20 +86,27 @@ char	*first_redirec(char *str)
 	return (ft_min(in, out));
 }
 
-char	*first_operator(char *str)
+char	*middle_operator(char *str)
 {
+	char	*middle_op;
 	char	*redirec;
+	char	*pipe_add;
 	char	*logical_op;
 
-	logical_op = first_logical_operator(str);
-	if (logical_op)
-		return (get_operator(logical_op));
-	if (first_op_add(str, PIPE_STR))
-		return (PIPE_STR);
-	redirec = first_redirec(str);
-	if (redirec)
-		return (get_operator(redirec));
-	return (NULL);
+	middle_op = NULL;
+	logical_op = last_logical_operator(str);
+	middle_op = logical_op;
+	if (!middle_op)
+	{
+		pipe_add = first_op_add(str, PIPE_STR);
+		middle_op = pipe_add;
+	}
+	if (!middle_op)
+	{
+		redirec = first_redirec(str);
+		middle_op = redirec;
+	}
+	return (middle_op);
 }
 
 // TODO the input string must be trimed.
@@ -86,7 +115,7 @@ void	parse_tree(char *str, t_node *root, int status)
 	int		op_type;
 	char	*op;
 
-	op = first_operator(str);
+	op = middle_operator(str);
 	op_type = operator_type(op);
 	node_init(root, status);
 	if (op_type == AND || op_type == OR || op_type == PIPE)
