@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 13:37:32 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/02 17:55:51 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/03/03 15:36:02 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,4 +150,3 @@ void	files_parsing(t_node *root, char *str)
 	queue_push(g->here_files, heredoc);
 	ft_heredoc(heredoc->here_fd, limiters, expand_enable);
 }
-// >, $empty

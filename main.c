@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 14:16:56 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/02 19:07:06 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/03/03 14:52:13 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 char	*first_operator(char *str);
 int		operator_type(char *op);
 
-void	test(char **env)
+void	test(void)
 {
 	int		i;
 	char	*str;
@@ -35,13 +35,14 @@ void	test(char **env)
 		add_history(str);
 		char *new_str;
 
-		restart(env);
+		restart();
 		g->exit_status = 0;
 		new_str = ft_strdup(str);
 		root = ft_garbage_collector(ALLOCATE, sizeof(t_node), NULL);
+		parse_tree(new_str, root, 0);
 		//node_init(root, 0);
-		//files_parsing(root, new_str);
-		cmd_parsing(root, new_str);
+	//	files_parsing(root, new_str);
+		/*cmd_parsing(root, new_str);
 		printf("cmd: {%s}\n", root->data.cmd);
 		char	**args;
 
@@ -54,7 +55,7 @@ void	test(char **env)
 				printf(", ");
 			args++;
 		}
-		printf("}\n");
+		printf("}\n");*/
 		/*while (i < root->data.f_count)
 		{
 			if ((root->data.files)[i].type == IN)
@@ -75,13 +76,41 @@ void	test(char **env)
 	}
 }
 
+void	task(char *str)
+{
+	t_node	*root;
+
+	root = ft_garbage_collector(ALLOCATE, sizeof(t_node), NULL);
+	parse_tree(str, root, 0);
+	display_tree(root, 0);
+}
+
 //(ls && pwd || pwd)
 int	main(int argc, char **argv, char **env)
 {
+	char	*line;
+	char	*new_line;
+
 	(void)argc;
 	(void)argv;
-	(void)env;
-	test(env);
-
+	//test(env);
+	get_env(env_dup(env));
+	while (1)
+	{
+		restart();
+		g->exit_status = EXIT_SUCCESS;
+		line = readline("minishell$ ");
+		if (!line)
+			return (0);
+		if (!(*line))
+		{
+			free(line);
+			continue ;
+		}
+		add_history(line);
+		new_line = ft_strdup(line);
+		task(new_line);
+		free(line);
+	}
 	return (0);
 }

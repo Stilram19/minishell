@@ -12,7 +12,9 @@ SRCS=		main.c \
 			parse_tree_utils.c \
 			tokenization1.c \
 			tokenization2.c \
+			display_parse_tree.c \
 			ambiguous_redirections.c \
+			utils_without_garbage_collection.c \
 			queue_utils.c \
 			here_doc.c \
 			init.c \
