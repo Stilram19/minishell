@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 16:29:48 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/04 13:27:05 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/04 21:52:12 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,17 @@ enum file_type
 {
 	IN, OUT, HERE, APPEND, AMBIG
 };
+
+enum io_type
+{
+	DFTERM, PIPE_IO
+};
+
+typedef struct s_fdio
+{
+	int	fd;
+	int	type;
+}	t_fdio;
 
 typedef struct s_file
 {

@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 14:16:56 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/04 17:47:45 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/04 22:33:53 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	main(int argc, char **argv, char **env)
 	get_env(env_dup(env));
 	while (1)
 	{
-		line = readline("\e[1;32m➜\e[0m  \e[1;36m$Minishell> \e[0m");
+		line = readline("\e[1;33m➥\e[0m \e[1;36mMinishell> \e[0m");
 		if (!line)
 			return (0);
 		if (!(*line))

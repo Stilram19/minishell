@@ -6,17 +6,11 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 21:24:30 by okhiar            #+#    #+#             */
-/*   Updated: 2023/03/04 13:23:42 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/04 18:05:52 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-// void	slice_to_lst(char *str, t_list **head)
-// {
-// 	t_list	*head;
-
-// }
 
 char	**get_lists(t_list *head)
 {
@@ -56,17 +50,3 @@ char	**wildcards_slice(char **args)
 	ret = get_lists(sliced_args);
 	return (ret);
 }
-
-// int	main(void)
-// {
-// 	char	*args[5] = {"cat", "*.c", "khiar", NULL};
-// 	char	**list;
-// 	list = wildcards_slice(args);
-// 	for (int i = 0; list[i] != NULL; i++)
-// 		printf("%s\n", list[i]);
-// 	// if (pattern_match("f*.c*", "file.fdg"))
-// 	// 	printf("Pattern matching\n");
-// 	// else
-// 	// 	printf("Pattern not matching\n");
-// 	return (0);
-// }

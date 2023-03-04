@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:37:00 by okhiar            #+#    #+#             */
-/*   Updated: 2023/03/04 16:28:44 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/04 21:30:33 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ void	ft_dup2(int f1, int f2)
 	close(f1);
 }
 
-int	defaults_io(int in, int out)
+int	defaults_io(int in_type, int out_type)
 {
-	if (in == 0 && out == 1)
+	if (in_type != PIPE_IO && out_type != PIPE_IO)
 		return (1);
 	return (0);
 }
@@ -32,6 +32,27 @@ void	io_cleanup(int in, int out)
 {
 	ft_dup2(in, 0);
 	ft_dup2(out, 1);
+}
+
+t_fdio	*set_io_type(int *fds, int type)
+{
+	t_fdio	*fd_io;
+
+	fd_io = (t_fdio *)malloc(sizeof(t_fdio) * 2);
+	fd_io[0].fd = fds[0];
+	fd_io[0].type = type;
+	fd_io[1].fd = fds[1];
+	fd_io[1].type = type;
+	return (fd_io);
+}
+
+int	check_exit_reason(int status)
+{
+	if (WIFEXITED(status))
+		return (WEXITSTATUS(status));
+	else if (WIFSIGNALED(status))
+		return (WTERMSIG(status) | 0x80);
+	return (status);
 }
 
 int	buildins_brute_force(t_data *cmds, int flag)
@@ -63,10 +84,7 @@ int	exec_buildin(t_data *cmds, int in, int out)
 
 	tmp_io[0] = dup(0);
 	tmp_io[1] = dup(1);
-	printf("Here\n");
-	// status = redirect_io(cmds, in, out);
-	// if (status)
-	// 	return (io_cleanup(tmp_io[0], tmp_io[1]), redirect_error(status, 1));
+	printf("here\n");
 	ft_dup2(in, 0);
 	ft_dup2(out, 1);
 	status = buildins_brute_force(cmds, 1);
@@ -74,76 +92,75 @@ int	exec_buildin(t_data *cmds, int in, int out)
 	return (status);
 }
 
-int	exec_cmds(t_data *cmds, int in, int out)
+int	exec_cmds(t_data *cmds, t_fdio in, t_fdio out)
 {
 	int	pid;
 	int	status;
 
-	if (is_buildin(cmds->cmd) && defaults_io(in, out)) // ! you must check every thing carefully ==> ls | (false || pwd && wc)
-		return (exec_buildin(cmds, in, out));
+	if (is_buildin(cmds->cmd) && !cmds->status 
+		&& defaults_io(in.type, out.type))
+		return (exec_buildin(cmds, in.fd, out.fd));
 	pid = fork();
 	if (!pid)
 	{
-		// printf("%s***%d\n", cmds->cmd, getpid());
-		ft_dup2(in, 0);
-		ft_dup2(out, 1);
+		sig_def();
+		ft_dup2(in.fd, 0);
+		ft_dup2(out.fd, 1);
 		if (is_buildin(cmds->cmd))
 			exit(buildins_brute_force(cmds, 0));
 		if (ft_execvp(cmds->cmd, cmds->args))
 			_ft_putstr_fd("\e[1;31mMinishell:\e[0m command not found\n", 2, 127);
 	}
-	// if (in != 0) // ! maybe it better to close them on redirct io go Down
-	// 	close(in);
-	// if (out != 1)
-	// 	close(out);
 	waitpid(pid, &status, 0);
-	return (WEXITSTATUS(status)); // ! before use WEXITSTATUS check if the process exits normally (exit(), main retuns) or if terminated by signal
+	status = check_exit_reason(status);
+	return (status);
 }
 
-int	pipe_nodes(t_node *root, int in, int out)
+int	pipe_nodes(t_node *root, t_fdio in, t_fdio out)
 {
-	int	pid;
-	int	status;
-	int	fds[2];
+	int		pid;
+	int		status;
+	t_fdio	*fd_io;
+	int		fds[2];
 
 	pipe(fds);
+	fd_io = set_io_type(fds, PIPE_IO);
 	pid = fork();
 	if (!pid)
 	{
 		close(fds[0]);
-		status = execute(root->left, in, fds[1]);
+		status = execute(root->left, in, fd_io[1]);
 		close(fds[1]);
 		exit(status);
 	}
 	close(fds[1]);
-	status = execute(root->right, fds[0], out);
+	status = execute(root->right, fd_io[0], out);
 	close(fds[0]);
 	waitpid(pid, 0, 0);
 	return (status);
 }
 
-int	redirect_io_node(t_node *root, int in, int out)
+int	redirect_io_node(t_node *root, t_fdio in, t_fdio out)
 {
-	int	*io_fd;
-	int	status;
+	t_fdio	*io_fd;
+	int		status;
 
 	io_fd = io_rect(&root->data, in, out);
 	if (!io_fd)
 		return (ft_putstr_fd("Minishell : No such file or directory\n", 2), 1);
 	status = execute(root->left, io_fd[0], io_fd[1]);
-	// TODO :: close io[0] and io[1], if not equal to in/out
-	if (io_fd[0] != in)
-		close(io_fd[0]);
-	if (io_fd[1] != out)
-		close(io_fd[1]);
+	if (io_fd[0].fd != in.fd)
+		close(io_fd[0].fd);
+	if (io_fd[1].fd != out.fd)
+		close(io_fd[1].fd);
 	return (status);
 }
 
-int	execute(t_node *root, int in, int out)
+int	execute(t_node *root, t_fdio in, t_fdio out)
 {
 	int	status;
 
-	if (root->data.type == COMMAND) // ! BASE CASE
+	if (root->data.type == COMMAND)
 	{
 		if (!root->data.cmd)
 			return (0);
@@ -163,35 +180,14 @@ int	execute(t_node *root, int in, int out)
 
 int	exec_line(t_node *root)
 {
-	// int	tmp_in;
-	// int	tmp_out;
 	int	status;
+	t_fdio	io_fd[2];
 
-	// tmp_in = dup(0);
-	// tmp_out = dup(1);
-	// io_cleanup(0, 1);
-	status = execute(root, STDIN_FILENO, STDOUT_FILENO);
-	printf("%d\n", status);
+	io_fd[0].fd = STDIN_FILENO;
+	io_fd[0].type = DFTERM;
+	io_fd[1].fd = STDOUT_FILENO;
+	io_fd[1].type = DFTERM;
+	status = execute(root, io_fd[0], io_fd[1]);
 	set_exit_status(status);
 	return (status);
 }
-
-// int	main(int ac, char **av, char **env)
-// {
-// 	t_tree *root;
-// 	int		status;
-// 	int		lstatus;
-
-// 	get_env(env_dup(env));
-// 	root = new_node(PIPE, NULL, files_fill());
-// 	root->right = new_node(COMMAND, command_fill("wcshd"), NULL);
-// 	root->left = new_node(PIPE, NULL, NULL);
-// 	root->left->left = new_node(COMMAND, command_fill("ls"), NULL);
-// 	root->left->right = new_node(COMMAND, command_fill("cat"), NULL);
-// 	status = exec_line(root);
-// 	printf("here %d %s\n", status, get_var_value("?"));
-// 	sleep(20);
-// 	(void)ac;
-// 	(void)av;
-// 	return (status);
-// }

@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 20:14:47 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/04 14:14:23 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/04 21:59:18 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,3 +111,4 @@ void	ft_heredoc(int fd, t_queue *limiters, int expand)
 	}
 	close(fd);
 }
+// ! when heredoc get SIGINT you must close /dev/random

@@ -10,6 +10,8 @@ ls && (false || pwd | wc)
 (ls && exit)
 ls && exit
 
+ls | exit > out < Makefile ?? IMPORTANT
+
 ************
 (ls && (pwdfs || sleep 3 && pwd)) | (ls) ---> wait
 (ls && (pwdfs || sleep 3 && pwd)) | ls   ---> Does not wait
