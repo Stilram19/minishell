@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 15:49:24 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/03 14:31:41 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/03/04 20:45:58 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ char	*var_expansion(char **ptr_to_token, int *ptr_to_i, int name_len);
 char	**produce_tokens(char *line, char *mask);
 char	*ft_strjoin1(char const *s1, char const *s2);
 char	*ft_strdup1(const char *s1);
+char	*mask_generation3(char *line);
 char	*mask_generation2(char *line);
 char	*mask_generation(char *line);
 int		check_syntax(char **tokens);

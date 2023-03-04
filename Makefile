@@ -2,6 +2,7 @@
 SRCS=		main.c \
 			env_utils.c \
 			garbage_collector.c \
+			syntax_errors.c \
 			expanding.c \
 			removing_quotes.c \
 			files_parsing.c \

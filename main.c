@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 14:16:56 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/03 14:52:13 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/03/04 19:02:45 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,18 @@ void	task(char *str)
 	display_tree(root, 0);
 }
 
-//(ls && pwd || pwd)
+int	preliminary_syntax_test(char *str);
+
+void	task1(char *str)
+{
+	if (preliminary_syntax_test(str))
+	{
+		printf("Syntax error!\n");
+		return ;
+	}
+	printf("Valid syntax!\n");
+}
+
 int	main(int argc, char **argv, char **env)
 {
 	char	*line;
@@ -94,12 +105,13 @@ int	main(int argc, char **argv, char **env)
 	(void)argc;
 	(void)argv;
 	//test(env);
+	restart();
+	g->exit_status = EXIT_SUCCESS;
 	get_env(env_dup(env));
 	while (1)
 	{
-		restart();
-		g->exit_status = EXIT_SUCCESS;
 		line = readline("minishell$ ");
+		//printf("%d\n", *line);
 		if (!line)
 			return (0);
 		if (!(*line))
@@ -109,8 +121,10 @@ int	main(int argc, char **argv, char **env)
 		}
 		add_history(line);
 		new_line = ft_strdup(line);
-		task(new_line);
+		//task(new_line);
+		task1(new_line);
 		free(line);
+		restart();
 	}
 	return (0);
 }
