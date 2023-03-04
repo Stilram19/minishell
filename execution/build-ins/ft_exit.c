@@ -6,11 +6,11 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 14:25:27 by okhiar            #+#    #+#             */
-/*   Updated: 2023/02/26 13:56:03 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/04 14:58:39 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "buildins.h"
+#include "../../includes/minishell.h"
 
 int	ft_is_whitespace(int c)
 {
@@ -71,8 +71,6 @@ void	exit_with_status(char *str)
 
 int	ft_exit(char **args, int flag)
 {
-	int	status;
-
 	if (flag)
 		ft_putstr_fd("minishel: exit\n", 2);
 	if (args[0] && args[1])

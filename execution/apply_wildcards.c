@@ -6,11 +6,11 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 21:24:30 by okhiar            #+#    #+#             */
-/*   Updated: 2023/02/26 13:46:38 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/04 13:23:42 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../includes/minishell.h"
 
 // void	slice_to_lst(char *str, t_list **head)
 // {

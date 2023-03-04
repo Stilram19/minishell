@@ -6,11 +6,11 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 12:54:29 by okhiar            #+#    #+#             */
-/*   Updated: 2023/02/18 21:06:24 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/04 17:08:06 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "buildins.h"
+#include "../../includes/minishell.h"
 
 void	check_append(char **env_v, char *v, char *val, int app)
 {
@@ -20,10 +20,10 @@ void	check_append(char **env_v, char *v, char *val, int app)
 	{
 		if (!ft_strchr(*env_v, '='))
 			*env_v = ft_strjoin(*env_v, "=");
-		*env_v = ft_strjoin(*env_v, val);
+		*env_v = ft_strjoin1(*env_v, val);
 	}
 	else
-		*env_v = ft_strdup(v);
+		*env_v = ft_strdup1(v);
 }
 
 void	ft_set_var(char **env, char *var, int append)
@@ -47,9 +47,9 @@ void	ft_set_var(char **env, char *var, int append)
 	while (env[++i])
 		new_env[i] = env[i];
 	if (append)
-		new_env[i] = ft_strjoin(var_name, ft_strjoin("=", var_value));
+		new_env[i] = ft_strjoin1(var_name, ft_strjoin("=", var_value));
 	else
-		new_env[i] = ft_strdup(var);
+		new_env[i] = ft_strdup1(var);
 	new_env[i + 1] = NULL;
 	get_env(new_env);
 }

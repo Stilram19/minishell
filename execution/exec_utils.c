@@ -1,38 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 16:23:18 by okhiar            #+#    #+#             */
-/*   Updated: 2023/02/28 15:12:49 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/04 15:30:27 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../includes/minishell.h"
 
-t_operand	*command_fill(char *cmd)
-{
-	t_operand	*cmd_s;
+// t_operand	*command_fill(char *cmd)
+// {
+// 	t_operand	*cmd_s;
 
-	cmd_s = (t_operand *)malloc(sizeof(t_operand));
-	cmd_s->cmd = ft_strdup(cmd);
-	cmd_s->args = (char **)malloc(sizeof(char *) * 5);
-	cmd_s->args[0] = ft_strdup(cmd);
-	cmd_s->args[1] = NULL;
-	// printf("%p=====\n", cmd_s->args[0]);
-	return (cmd_s);
-}
+// 	cmd_s = (t_operand *)malloc(sizeof(t_operand));
+// 	cmd_s->cmd = ft_strdup(cmd);
+// 	cmd_s->args = (char **)malloc(sizeof(char *) * 5);
+// 	cmd_s->args[0] = ft_strdup(cmd);
+// 	cmd_s->args[1] = NULL;
+// 	// printf("%p=====\n", cmd_s->args[0]);
+// 	return (cmd_s);
+// }
 
-t_files	**files_fill(void)
-{
-	t_files **files;
+// t_files	**files_fill(void)
+// {
+// 	t_files **files;
 
-	files = (t_files **)malloc(sizeof(t_files *) * 4);
-	files[0] = NULL;
-	return (files);
-}
+// 	files = (t_files **)malloc(sizeof(t_files *) * 4);
+// 	files[0] = NULL;
+// 	return (files);
+// }
 
 void	set_exit_status(int status)
 {
@@ -69,4 +69,18 @@ char	*search_replace(char *str, char needle, char replacement)
 		i++;
 	}
 	return (str);
+}
+
+int	ft_strcmp(char *s1, char *s2)
+{
+	int i;
+
+	i = 0;
+	while (s1[i] || s2[i])
+	{
+		if (s1[i] != s2[i])
+			return (1);
+		i++;
+	}
+	return (0);
 }

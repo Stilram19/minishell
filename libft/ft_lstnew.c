@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okhiar <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/08 18:42:52 by okhiar            #+#    #+#             */
-/*   Updated: 2022/10/08 18:43:01 by okhiar           ###   ########.fr       */
+/*   Created: 2022/10/09 17:53:56 by obednaou          #+#    #+#             */
+/*   Updated: 2023/02/10 10:33:43 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 t_list	*ft_lstnew(void *content)
 {
-	t_list	*lst;
+	t_list	*head;
 
-	lst = (t_list *)malloc(sizeof(t_list));
-	if (!lst)
+	head = malloc(sizeof(t_list));
+	if (!head)
 		return (0);
-	lst->content = content;
-	lst->next = 0;
-	return (lst);
+	head->next = 0;
+	head->content = content;
+	return (head);
 }

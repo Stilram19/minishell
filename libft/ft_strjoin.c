@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okhiar <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/07 15:47:26 by okhiar            #+#    #+#             */
-/*   Updated: 2022/10/07 15:47:46 by okhiar           ###   ########.fr       */
+/*   Created: 2022/10/09 08:54:21 by obednaou          #+#    #+#             */
+/*   Updated: 2023/02/10 14:57:47 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,18 @@
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
-	char	*str;
-	size_t	tlen;
+	size_t	i;
+	size_t	j;
+	char	*join;
 
-	tlen = ft_strlen(s1) + ft_strlen(s2);
-	str = (char *)malloc(sizeof(char) * (tlen + 1));
-	if (!str)
+	if (!(s1 && s2))
 		return (0);
-	ft_memcpy(str, s1, ft_strlen(s1));
-	ft_memcpy((str + ft_strlen(s1)), s2, ft_strlen(s2) + 1);
-	return (str);
+	i = ft_strlen(s1);
+	j = ft_strlen(s2);
+	join = ft_garbage_collector(ALLOCATE, (i + j + 1) * sizeof(char), NULL);
+	if (!join)
+		return (0);
+	ft_strlcpy(join, s1, i + 1);
+	ft_strlcpy(join + i, s2, j + 1);
+	return (join);
 }

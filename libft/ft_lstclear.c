@@ -5,24 +5,26 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/11 20:29:12 by okhiar            #+#    #+#             */
-/*   Updated: 2022/10/19 22:49:25 by okhiar           ###   ########.fr       */
+/*   Created: 2022/10/10 10:06:31 by obednaou          #+#    #+#             */
+/*   Updated: 2023/03/04 16:57:46 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstclear(t_list **lst, void (*del)(void *))
+void	ft_lstclear(t_list **lst, void (*del)(void*))
 {
-	t_list	*tmp;
+	t_list	*head;
+	t_list	*next_temp;
 
 	if (!(lst && del))
 		return ;
-	while (*lst != 0)
+	head = *lst;
+	while (head)
 	{
-		tmp = *lst;
-		*lst = (*lst)->next;
-		ft_lstdelone(tmp, del);
+		next_temp = head->next;
+		ft_lstdelone(head, del);
+		head = next_temp;
 	}
 	*lst = 0;
 }

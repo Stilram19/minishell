@@ -6,11 +6,11 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 10:43:29 by okhiar            #+#    #+#             */
-/*   Updated: 2023/02/13 15:07:39 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/04 13:21:53 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "buildins.h"
+#include "../../includes/minishell.h"
 
 int	ft_pwd(void)
 {

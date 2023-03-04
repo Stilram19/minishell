@@ -3,101 +3,91 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/09 14:06:34 by okhiar            #+#    #+#             */
-/*   Updated: 2022/10/25 15:19:19 by okhiar           ###   ########.fr       */
+/*   Created: 2022/10/09 11:07:47 by obednaou          #+#    #+#             */
+/*   Updated: 2023/02/10 15:15:06 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	words_count(char const *str, char c)
+static size_t	ft_arrlen(char const *s, char c)
 {
-	int	count;
-	int	i;
+	size_t	i;
+	size_t	size;
 
-	count = 0;
 	i = 0;
-	while (str[i])
+	size = 0;
+	while (*(s + i))
 	{
-		while (str[i] && str[i] == c)
+		while (*(s + i) && *(s + i) == c)
 			i++;
-		if (str[i])
-			count++;
-		while (str[i] && str[i] != c)
+		if (*(s + i))
+			size++;
+		while (*(s + i) && *(s + i) != c)
 			i++;
 	}
-	return (count);
+	return (size);
 }
 
-static int	ft_seplen(char const *str, char c)
+static void	free_the_heap(void	*ptr, size_t j)
 {
-	int	i;
-
-	i = 0;
-	while (str[i] && str[i] != c)
-	i++;
-	return (i);
+	while (j--)
+		free((void *)ptr + j);
+	free(ptr);
 }
 
-static char	*ft_make_str(char const *str, char c)
+static char	*ft_allocate_word(char **arr, const char **s, char c, int j)
 {
-	char	*word;
-	int		i;
-	int		len;
+	size_t		i;
+	char		*str;
+	const char	*s1;
 
 	i = 0;
-	len = ft_seplen(str, c);
-	word = (char *)malloc(sizeof(char) * (len + 1));
-	if (!word)
-		return (0);
-	while (i < len)
-	{
-		word[i] = str[i];
+	s1 = *s;
+	while (*(s1 + i) && *(s1 + i) != c)
 		i++;
+	*s = s1 + i;
+	str = ft_garbage_collector(ALLOCATE, (i + 1) * sizeof(char), NULL);
+	if (!str)
+	{
+		free_the_heap(arr, j);
+		return (0);
 	}
-	word[i] = '\0';
-	return (word);
-}
-
-static char	**free_all(char **strs, size_t i)
-{
-	i--;
+	*(str + i) = 0;
 	while (i > 0)
 	{
-		free(strs[i]);
-		strs[i] = 0;
 		i--;
+		*(str + i) = *(s1 + i);
 	}
-	free(strs);
-	strs = 0;
-	return (0);
+	return (str);
 }
 
-char	**ft_split(char const *str, char c)
+char	**ft_split(char const *s, char c)
 {
-	char	**strs;
-	size_t	i;
+	size_t	j;
+	char	**arr;
 
-	i = 0;
-	strs = (char **)malloc(sizeof(char *) * (words_count(str, c) + 1));
-	if (!strs)
+	j = 0;
+	if (!s)
 		return (0);
-	while (*str)
+	arr = ft_garbage_collector(ALLOCATE,
+			(ft_arrlen(s, c) + 1) * sizeof(char *), NULL);
+	if (!arr)
+		return (0);
+	while (*s)
 	{
-		while (*str && *str == c)
-			str++;
-		if (*str)
+		while (*s && *s == c)
+			s++;
+		if (*s)
 		{
-			strs[i] = ft_make_str(str, c);
-			if (!strs[i])
-				return (free_all(strs, i));
-			i++;
+			*(arr + j) = ft_allocate_word(arr, &s, c, j);
+			if (!*(arr + j))
+				return (0);
+			j++;
 		}
-		while (*str && *str != c)
-			str++;
 	}
-	strs[i] = 0;
-	return (strs);
+	*(arr + j) = 0;
+	return (arr);
 }

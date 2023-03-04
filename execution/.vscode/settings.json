@@ -1,9 +1,0 @@
-{
-	"files.associations": {
-		"buildins.h": "c",
-		"libft.h": "c",
-		"minishell.h": "c",
-		"dirent.h": "c",
-		"stdio.h": "c"
-	}
-}

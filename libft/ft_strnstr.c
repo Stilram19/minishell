@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: obednaou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/07 16:52:12 by okhiar            #+#    #+#             */
-/*   Updated: 2022/10/19 21:40:16 by okhiar           ###   ########.fr       */
+/*   Created: 2022/10/07 13:21:36 by obednaou          #+#    #+#             */
+/*   Updated: 2022/10/20 15:34:09 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,23 @@
 
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 {
-	size_t	nlen;
-	int		check;
+	size_t	i;
+	size_t	needle_len;
 
+	i = 0;
+	needle_len = ft_strlen(needle);
 	if (!(*needle))
 		return ((char *)haystack);
-	if (!haystack && !len)
-		return (0);
-	nlen = ft_strlen(needle);
-	while (*haystack && len >= nlen)
+	while (i < len && *(haystack + i))
 	{
-		check = ft_strncmp(haystack, needle, nlen);
-		if (!check)
-			return ((char *)haystack);
-		haystack++;
-		len--;
+		if (!ft_strncmp(haystack + i, needle, needle_len))
+		{
+			if (needle_len + i <= len)
+				return ((char *)haystack + i);
+			else
+				break ;
+		}
+		i++;
 	}
 	return (0);
 }
-
-//len -= (nlen - 1);

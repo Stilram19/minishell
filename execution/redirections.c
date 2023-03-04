@@ -6,11 +6,11 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:08:25 by okhiar            #+#    #+#             */
-/*   Updated: 2023/02/28 15:31:23 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/04 14:55:30 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../includes/minishell.h"
 
 int	redirect_error(int error_key, int ext)
 {
@@ -30,29 +30,30 @@ int	is_directory(char *path)
 	stat(path, &path_stat);
 	if (S_ISDIR(path_stat.st_mode))
 		return (1);
+	return (0);
 }
 
-int	open_infile(t_files *files, int type)
+int	open_infile(t_file *files, int type)
 {
 	int	infile;
 
 	if (type == HERE)
-		return (files->fd);
-	infile = open(files->name, O_RDONLY);
+		return (files->here_fd);
+	infile = open(files->pathname, O_RDONLY);
 	return (infile);	
 }
 
-int	open_outfile(t_files *files, int type)
+int	open_outfile(t_file *files, int type)
 {
 	int	outfile;
 
 	if (type == APPEND)
-		return (open(files->name, O_CREAT | O_APPEND| O_WRONLY, 0666));
-	outfile = open(files->name, O_CREAT | O_TRUNC | O_WRONLY, 0666);
+		return (open(files->pathname, O_CREAT | O_APPEND| O_WRONLY, 0666));
+	outfile = open(files->pathname, O_CREAT | O_TRUNC | O_WRONLY, 0666);
 	return (outfile);
 }
 
-int	*io_rect(t_files **files, int in, int out)
+int	*io_rect(t_data *data, int in, int out)
 {
 	int	i;
 	int	tmp[2];
@@ -64,21 +65,21 @@ int	*io_rect(t_files **files, int in, int out)
 	io_fds[1] = out;
 	tmp[0] = -1;
 	tmp[1] = -1;
-	while (files && files[i])
+	while (i < data->f_count)
 	{
 		// printf("here %d\n", i);
-		if (files[i]->type == IN || files[i]->type == HERE)
+		if (data->files[i].type == IN || data->files[i].type == HERE)
 		{
 			if (tmp[0] != -1)
 				close(io_fds[0]);
-			io_fds[0] = open_infile(files[i], files[i]->type);
+			io_fds[0] = open_infile(&data->files[i], data->files[i].type);
 			tmp[0] = io_fds[0];
 		}
-		else if (files[i]->type == OUT || files[i]->type == APPEND)
+		else if (data->files[i].type == OUT || data->files[i].type == APPEND)// ! check if is a directory
 		{
 			if (tmp[1] != -1)
 				close(io_fds[1]);
-			io_fds[1] = open_outfile(files[i], files[i]->type);
+			io_fds[1] = open_outfile(&data->files[i], data->files[i].type);
 			tmp[1] = io_fds[1];
 		}
 		else

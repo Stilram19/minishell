@@ -3,66 +3,59 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okhiar <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/08 10:24:21 by okhiar            #+#    #+#             */
-/*   Updated: 2022/10/08 10:24:31 by okhiar           ###   ########.fr       */
+/*   Created: 2022/10/09 14:14:34 by obednaou          #+#    #+#             */
+/*   Updated: 2023/02/12 12:50:16 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	ft_intlen(long n)
+static int	ft_digits_count(int n)
 {
-	int	i;
+	int	count;
 
-	i = 0;
-	if (n == 0)
+	count = 0;
+	if (!n)
 		return (1);
 	if (n < 0)
 	{
-		i++;
+		if (n == -2147483648)
+			return (11);
 		n *= -1;
+		count++;
 	}
 	while (n > 0)
 	{
+		count++;
 		n /= 10;
-		i++;
 	}
-	return (i);
-}
-
-static void	ft_tostr(char *str, long nb, int i)
-{
-	while (nb > 0)
-	{
-		str[i--] = nb % 10 + '0';
-		nb /= 10;
-	}
+	return (count);
 }
 
 char	*ft_itoa(int n)
 {
-	long	nb;
-	char	*str;
+	char	*ret;
 	int		i;
 
-	nb = n;
-	i = ft_intlen(nb);
-	str = (char *)malloc(sizeof(char) * (i + 1));
-	if (!str)
+	i = ft_digits_count(n);
+	ret = ft_garbage_collector(ALLOCATE, (i + 1) * sizeof(char), NULL);
+	if (!ret)
 		return (0);
-	str[i--] = '\0';
-	if (nb == 0)
+	if (n < 0)
+		*ret = 45;
+	if (!n)
+		*ret = 48;
+	*(ret + i) = 0;
+	while (n)
 	{
-		str[0] = '0';
-		return (str);
+		i--;
+		if (n < 0)
+			*(ret + i) = -(n % 10) + 48;
+		else
+			*(ret + i) = n % 10 + 48;
+		n /= 10;
 	}
-	if (nb < 0)
-	{
-		str[0] = '-';
-		nb *= -1;
-	}
-	ft_tostr(str, nb, i);
-	return (str);
+	return (ret);
 }

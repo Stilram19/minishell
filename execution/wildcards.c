@@ -6,11 +6,11 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 10:05:21 by okhiar            #+#    #+#             */
-/*   Updated: 2023/02/26 13:58:57 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/04 13:23:42 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../includes/minishell.h"
 
 int	pattern_match(char *pattern, char *match)
 {

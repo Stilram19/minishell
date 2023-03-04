@@ -6,19 +6,19 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 14:00:52 by okhiar            #+#    #+#             */
-/*   Updated: 2023/02/26 14:02:58 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/04 14:05:23 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../includes/minishell.h"
 
 char	*ft_pathjoin(char *file, char *path)
 {
 	char	*tmp;
 	char	*ret;
 
-	tmp = ft_strjoin(path, "/");
-	ret = ft_strjoin(tmp, file);
+	tmp = _ft_strjoin(path, "/");
+	ret = _ft_strjoin(tmp, file);
 	free(tmp);
 	return (ret);
 }
@@ -34,8 +34,6 @@ static char	**free_all(char **strs)
 		strs[i] = 0;
 		i++;
 	}
-	free(strs[i]);
-	strs[i] = 0;
 	free(strs);
 	strs = NULL;
 	return (NULL);
@@ -59,10 +57,10 @@ char	*valid_cmd(char *file, char *path)
 
 	i = 0;
 	if (!access(file, X_OK))
-		return (ft_strdup(file));
+		return (_ft_strdup(file));
 	if (!path)
 		return (0);
-	paths = ft_split(path, ':');
+	paths = _ft_split(path, ':');
 	if (!paths)
 		return (0);
 	while (paths[i])

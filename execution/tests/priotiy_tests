@@ -1,8 +1,10 @@
 false || (sleedfp 3 && ls)
 ls || pwd && ls
 cat | ls
+ls | (head -n1 && wc)
 ls && (false || pwd | wc)
 (ls && (lfhsg || pwd | wc)) | wc
+(ls && pwd) | (cat && (wc | cat))
 
 ************
 (ls && exit)

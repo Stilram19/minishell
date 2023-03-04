@@ -6,11 +6,11 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 10:30:31 by okhiar            #+#    #+#             */
-/*   Updated: 2023/02/26 13:55:44 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/04 15:20:46 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "buildins.h"
+#include "../../includes/minishell.h"
 
 void	ft_putstr_fd__(char *str, int fd)
 {
@@ -24,7 +24,7 @@ void	ft_putstr_fd__(char *str, int fd)
 char	*check_dir(char *arg)
 {
 	char	*dir;
-	char	*key;
+	// char	*key;
 
 	if (!arg)
 	{
@@ -55,7 +55,8 @@ int	ft_cd(char **args)
 		return (EXIT_FAILURE);
 	if (chdir(dir))
 	{
-		ft_putstr_fd__("cd: no such file or directory\n", 2);
+		perror("CD");
+		// ft_putstr_fd__("cd: no such file or directory\n", 2);
 		return (EXIT_FAILURE);
 	}
 	if (ft_strcmp(dir, ".") && ft_strcmp(dir, "..") && args[0])

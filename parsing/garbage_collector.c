@@ -6,11 +6,11 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 10:37:00 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/10 14:47:31 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/04 14:14:23 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../includes/minishell.h"
 
 /**
  * @brief releases the given address in the collection.
@@ -35,7 +35,7 @@ void	single_release(t_list **ptr_to_head, void *to_free)
 		if (temp1->next->content == to_free)
 		{
 			temp2 = temp1->next->next;
-			ft_lstdelone(temp1->next, free);
+			ft_lstdelone(temp1->next, free); 
 			temp1->next = temp2;
 			return ;
 		}
@@ -64,13 +64,16 @@ void	*ft_garbage_collector(int option, int size, void *to_free)
 	if (option == ALLOCATE)
 	{
 		ptr = malloc(size);
+		if (!ptr)
+			exit(EXIT_FAILURE);
 		ft_lstadd_front(&head, ft_lstnew(ptr));
 		return (ptr);
 	}
 	if (option == SINGLE_RELEASE)
 	{
-		single_release(&head, to_free);
-		return (ptr);
+		if (to_free)
+			single_release(&head, to_free);
+		return (to_free);
 	}
 	ft_lstclear(&head, free);
 	return (ptr);

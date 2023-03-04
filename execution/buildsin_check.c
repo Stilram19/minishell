@@ -6,11 +6,11 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 16:04:16 by okhiar            #+#    #+#             */
-/*   Updated: 2023/02/10 21:54:06 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/04 13:35:25 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../includes/minishell.h"
 
 int	in_array(char **arr, char *key)
 {

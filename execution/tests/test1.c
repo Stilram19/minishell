@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <sys/wait.h>
 #include <stdlib.h>
+#include <signal.h>
 
 void	child1(int out)
 {
@@ -14,6 +15,7 @@ void	child1(int out)
 	pid = fork();
 	if (!pid)
 	{
+		// signal(SIGPIPE, SIG_DFL);
 		dup2(out, 1);
 		if (execve(cmd, args, NULL))
 			perror("execve");
@@ -41,12 +43,18 @@ void	child2(int in)
 	// exit(0);
 }
 
+void	handle_sigpipe(int sig)
+{
+	dprintf(2, "SIGPIPE: %d\n", sig);
+}
+
 int main(void)
 {
 	int	pid;
 	int	fds[2];
 	int	status;
 
+	signal(SIGPIPE, SIG_IGN);
 	pipe(fds);
 	pid = fork();
 	if (!pid)
