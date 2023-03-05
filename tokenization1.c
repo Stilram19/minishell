@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 17:36:59 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/28 15:58:45 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/03/05 15:23:05 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,11 @@ char	**produce_tokens(char *line, char *mask)
 {
 	int		j;
 	int		size;
+	char	*to_free;
 	char	**tokens;
 
 	j = 0;
+	to_free = mask;
 	size = tokens_count(mask) + 1;
 	tokens = ft_garbage_collector(ALLOCATE, sizeof(char *) * size, NULL);
 	while (*line)
@@ -91,5 +93,6 @@ char	**produce_tokens(char *line, char *mask)
 		mask++;
 	}
 	*(tokens + j) = NULL;
+	ft_garbage_collector(SINGLE_RELEASE, 0, to_free);
 	return (tokens);
 }

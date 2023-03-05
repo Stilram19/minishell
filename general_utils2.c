@@ -6,11 +6,23 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 18:08:25 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/01 20:03:21 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/03/05 15:24:51 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	is_meta(char *s)
+{
+	char		c;
+	const char	*meta;
+
+	c = *s;
+	meta = "|&<>";
+	if (ft_strchr(meta, c))
+		return (1);
+	return (0);
+}
 
 void	*ft_min(void *add1, void *add2)
 {

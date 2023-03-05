@@ -6,11 +6,18 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 20:50:55 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/03 17:43:12 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/03/05 15:25:02 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	is_blank(char c)
+{
+	if (c == ' ' || c == '\t')
+		return (1);
+	return (0);
+}
 
 char	*left_str(char *str, char *op)
 {

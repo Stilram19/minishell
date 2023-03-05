@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 16:29:48 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/04 19:03:14 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/03/05 14:06:06 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 
 # define CTRL_C 42
 
+# define VALID_SYNTAX 0
 # define SYNTAX_ERROR 258
 
 enum data_type

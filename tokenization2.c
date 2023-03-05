@@ -6,18 +6,11 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 16:44:11 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/04 20:45:27 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/03/05 14:23:01 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	is_blank(char c)
-{
-	if (c == ' ' || c == '\t')
-		return (1);
-	return (0);
-}
 
 char	*mask_generation(char *line)
 {
@@ -67,15 +60,17 @@ char	*mask_generation2(char *line)
 
 void	assign_mask_if(char *mask, char c, int parenth)
 {
+	const char meta[]  = "><&|";
+
 	if (parenth || c == ')')
 	{
-		*mask = '3';
+		*mask = '6';
 		return ;
 	}
 	if (is_blank(c))
 		*mask = '1';
-	if (is_operator(c))
-		*mask = '2';
+	if (ft_strchr(meta, c))
+		*mask = ft_strchr(meta, c) - meta + '2';
 	else
 		*mask = '0';
 }
@@ -93,7 +88,7 @@ char	*mask_generation3(char *str)
 	while (*str)
 	{
 		open_close_quotes(*str, &quotes);
-		if (!quotes)
+		if (!quotes || parenth)
 		{
 			open_close_parenth(*str, &parenth);
 			assign_mask_if(*str, parenth, mask);
@@ -106,3 +101,4 @@ char	*mask_generation3(char *str)
 	*mask = '\0';
 	return (mask);
 }
+// (ls || 'asdfgh')

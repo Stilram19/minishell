@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 15:49:24 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/04 20:45:58 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/03/05 15:25:22 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 void	sig_set(void);
 void	sig_def(void);
 int		is_blank(char c);
+int		is_meta(char *str);
 void	heredoc_sig_handler(int sig);
 int		var_name_len(char *var);
 int		is_redirect(char *c);
