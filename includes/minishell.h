@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 15:49:24 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/04 19:55:07 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/05 14:27:38 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,26 +84,29 @@ void	init_session(void);
 /*Execution*/
 int		exec_line(t_node *root);
 int		execute(t_node *root, t_fdio in, t_fdio out);
+int		buildins_brute_force(t_data *cmds, int flag);
+int		exec_buildin(t_data *cmds, int in, int out);
 int		ft_execvp(char *file, char **args);
 void	_ft_putstr_fd(char *str, int fd, int ext);
 int		is_buildin(char *cmd);
 int		ft_strcmp(char *s1, char *s2);
 t_fdio	*io_rect(t_data *data, t_fdio in, t_fdio out);
-int		redirect_error(int error_key, int ext);
 void	ft_dup2(int f1, int f2);
 void	set_exit_status(int status);
 char	**_ft_split(char const *str, char c);
-char	*_ft_strjoin(char const *s1, char const *s2);
-char	*_ft_strdup(const char *str);
 
 int		envlen(char **env);
 
 /*UTILS*/
-char		*search_replace(char *str, char needle, char replecement);
-// t_operand	*command_fill(char *cmd);
-// t_files		**files_fill();
-t_list		 *matched_set(char *pattern);
+char	*search_replace(char *str, char needle, char replecement);
+t_list	*matched_set(char *pattern);
+void	ft_dup2(int f1, int f2);
+void	error_msg(char *msg);
+int		defaults_io(int in_type, int out_type);
+int		check_exit_reason(int status);
+t_fdio	*set_io_type(int *fds, int type);
 
+/*BUILDINS*/
 int		ft_cd(char **args);
 int		ft_pwd(void);
 int		ft_env(void);

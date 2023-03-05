@@ -21,11 +21,12 @@ SRCS=		main.c \
 			./parsing/signals.c \
 			./execution/ft_execvp.c \
 			./execution/ft_execvp_utils.c \
-			./execution/ft_execvp_utils1.c \
 			./execution/execute.c \
 			./execution/exec_utils.c \
 			./execution/buildsin_check.c \
+			./execution/buildins_exec.c \
 			./execution/redirections.c \
+			./execution/global_utils.c \
 			./execution/build-ins/buildins_utils.c \
 			./execution/build-ins/ft_cd.c \
 			./execution/build-ins/ft_pwd.c \

@@ -6,33 +6,11 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 16:23:18 by okhiar            #+#    #+#             */
-/*   Updated: 2023/03/04 15:30:27 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/05 14:21:46 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-// t_operand	*command_fill(char *cmd)
-// {
-// 	t_operand	*cmd_s;
-
-// 	cmd_s = (t_operand *)malloc(sizeof(t_operand));
-// 	cmd_s->cmd = ft_strdup(cmd);
-// 	cmd_s->args = (char **)malloc(sizeof(char *) * 5);
-// 	cmd_s->args[0] = ft_strdup(cmd);
-// 	cmd_s->args[1] = NULL;
-// 	// printf("%p=====\n", cmd_s->args[0]);
-// 	return (cmd_s);
-// }
-
-// t_files	**files_fill(void)
-// {
-// 	t_files **files;
-
-// 	files = (t_files **)malloc(sizeof(t_files *) * 4);
-// 	files[0] = NULL;
-// 	return (files);
-// }
 
 void	set_exit_status(int status)
 {
@@ -44,43 +22,39 @@ void	set_exit_status(int status)
 	ft_set_var(env, var, 0);
 }
 
-void	_ft_putstr_fd(char *str, int fd, int ext)
+void	ft_dup2(int f1, int f2)
 {
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		write(fd, &str[i], 1);
-		i++;
-	}
-	exit(ext);
+	if (f1 == f2)
+		return ;
+	if (dup2(f1, f2) == -1)
+		perror("dup2");
+	close(f1);
 }
 
-char	*search_replace(char *str, char needle, char replacement)
+int	defaults_io(int in_type, int out_type)
 {
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == needle)
-			str[i] = replacement;
-		i++;
-	}
-	return (str);
-}
-
-int	ft_strcmp(char *s1, char *s2)
-{
-	int i;
-
-	i = 0;
-	while (s1[i] || s2[i])
-	{
-		if (s1[i] != s2[i])
-			return (1);
-		i++;
-	}
+	if (in_type != PIPE_IO && out_type != PIPE_IO)
+		return (1);
 	return (0);
+}
+
+t_fdio	*set_io_type(int *fds, int type)
+{
+	t_fdio	*fd_io;
+
+	fd_io = (t_fdio *)malloc(sizeof(t_fdio) * 2);
+	fd_io[0].fd = fds[0];
+	fd_io[0].type = type;
+	fd_io[1].fd = fds[1];
+	fd_io[1].type = type;
+	return (fd_io);
+}
+
+int	check_exit_reason(int status)
+{
+	if (WIFEXITED(status))
+		return (WEXITSTATUS(status));
+	else if (WIFSIGNALED(status))
+		return (WTERMSIG(status) | 0x80);
+	return (status);
 }

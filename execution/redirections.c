@@ -6,22 +6,11 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:08:25 by okhiar            #+#    #+#             */
-/*   Updated: 2023/03/04 22:31:14 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/05 13:13:32 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-int	redirect_error(int error_key, int ext)
-{
-	if (error_key == AMBIG_ERR)
-		ft_putstr_fd("\e[1;31mMinishell:\e[0m ambiguous redirect\n", 2);
-	else
-		ft_putstr_fd("\e[1;31mMinishell:\e[0m No such file or directory\n", 2);
-	if (ext)
-		exit(EXIT_FAILURE);
-	return (EXIT_FAILURE);
-}
 
 t_fdio	*init_fdio(t_fdio in, t_fdio out)
 {
@@ -45,34 +34,54 @@ int	is_directory(char *path)
 	return (0);
 }
 
-int	open_infile(t_file *files, int type, int prev_ifd)
+int	open_infile(t_file *files, int *prev_ifd)
 {
 	int	infile;
 
-	if (prev_ifd != -1)
-		close(prev_ifd);
-	if (type == HERE)
-		return (files->here_fd);
-	infile = open(files->pathname, O_RDONLY);
-	return (infile);	
+	if (*prev_ifd != -1)
+		close(*prev_ifd);
+	if (files->type == HERE)
+		infile = files->here_fd;
+	else
+		infile = open(files->pathname, O_RDONLY);
+	if (infile == -1)
+		error_msg(ft_strjoin(files->pathname, " No such file or directory\n"));
+	*prev_ifd = infile;
+	return (infile);
 }
 
-int	open_outfile(t_file *files, int type, int prev_ofd)
+int	open_outfile(t_file *files, int *prev_ofd)
 {
 	int	outfile;
 
-	if (prev_ofd != -1)
-		close(prev_ofd);
-	if (type == APPEND)
-		return (open(files->pathname, O_CREAT | O_APPEND| O_WRONLY, 0666));
-	outfile = open(files->pathname, O_CREAT | O_TRUNC | O_WRONLY, 0666);
+	if (*prev_ofd != -1)
+		close(*prev_ofd);
+	if (is_directory(files->pathname))
+	{
+		error_msg(ft_strjoin(files->pathname, " is a directory\n"));
+		*prev_ofd = -1;
+		return (-1);
+	}
+	if (files->type == APPEND)
+		outfile = open(files->pathname, O_CREAT | O_APPEND | O_WRONLY, 0666);
+	else
+		outfile = open(files->pathname, O_CREAT | O_TRUNC | O_WRONLY, 0666);
+	*prev_ofd = outfile;
 	return (outfile);
+}
+
+void	clean_up_of(int *io)
+{
+	if (io[0] != -1)
+		close(io[0]);
+	if (io[1] != -1)
+		close(io[1]);
 }
 
 t_fdio	*io_rect(t_data *data, t_fdio in, t_fdio out)
 {
-	int	i;
-	int	tmp[2];
+	int		i;
+	int		tmp[2];
 	t_fdio	*io_fds;
 
 	i = 0;
@@ -82,19 +91,13 @@ t_fdio	*io_rect(t_data *data, t_fdio in, t_fdio out)
 	while (i < data->f_count)
 	{
 		if (data->files[i].type == IN || data->files[i].type == HERE)
-		{
-			io_fds[0].fd = open_infile(&data->files[i], data->files[i].type, tmp[0]);
-			tmp[0] = io_fds[0].fd;
-		}
-		else if (data->files[i].type == OUT || data->files[i].type == APPEND)// ! check if is a directory
-		{
-			io_fds[1].fd = open_outfile(&data->files[i], data->files[i].type, tmp[1]);
-			tmp[1] = io_fds[1].fd;
-		}
+			io_fds[0].fd = open_infile(&data->files[i], &tmp[0]);
+		else if (data->files[i].type == OUT || data->files[i].type == APPEND)
+			io_fds[1].fd = open_outfile(&data->files[i], &tmp[1]);
 		else
-			return (NULL); // ! before return you must call close
+			return (error_msg(" ambiguous redirect\n"), clean_up_of(tmp), NULL);
 		if (io_fds[0].fd == -1 || io_fds[1].fd == -1)
-			return (NULL); // ! before return you must call close
+			return (clean_up_of(tmp), NULL);
 		i++;
 	}
 	return (io_fds);

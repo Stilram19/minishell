@@ -6,19 +6,19 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 14:00:52 by okhiar            #+#    #+#             */
-/*   Updated: 2023/03/04 14:05:23 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/05 13:20:09 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-char	*ft_pathjoin(char *file, char *path)
+static char	*ft_pathjoin(char *file, char *path)
 {
 	char	*tmp;
 	char	*ret;
 
-	tmp = _ft_strjoin(path, "/");
-	ret = _ft_strjoin(tmp, file);
+	tmp = ft_strjoin1(path, "/");
+	ret = ft_strjoin1(tmp, file);
 	free(tmp);
 	return (ret);
 }
@@ -49,7 +49,7 @@ static char	**free_all(char **strs)
  * @param path the set of path variables
  * @return char* the address of the valid path, or NULL if it is not
  */
-char	*valid_cmd(char *file, char *path)
+static char	*valid_cmd(char *file, char *path)
 {
 	size_t	i;
 	char	**paths;
@@ -57,7 +57,7 @@ char	*valid_cmd(char *file, char *path)
 
 	i = 0;
 	if (!access(file, X_OK))
-		return (_ft_strdup(file));
+		return (ft_strdup1(file));
 	if (!path)
 		return (0);
 	paths = _ft_split(path, ':');

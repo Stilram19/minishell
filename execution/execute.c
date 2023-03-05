@@ -6,91 +6,11 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:37:00 by okhiar            #+#    #+#             */
-/*   Updated: 2023/03/04 21:30:33 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/05 14:21:36 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-void	ft_dup2(int f1, int f2)
-{
-	if (f1 == f2)
-		return ;
-	if (dup2(f1, f2) == -1)
-		perror("dup2");
-	close(f1);
-}
-
-int	defaults_io(int in_type, int out_type)
-{
-	if (in_type != PIPE_IO && out_type != PIPE_IO)
-		return (1);
-	return (0);
-}
-
-void	io_cleanup(int in, int out)
-{
-	ft_dup2(in, 0);
-	ft_dup2(out, 1);
-}
-
-t_fdio	*set_io_type(int *fds, int type)
-{
-	t_fdio	*fd_io;
-
-	fd_io = (t_fdio *)malloc(sizeof(t_fdio) * 2);
-	fd_io[0].fd = fds[0];
-	fd_io[0].type = type;
-	fd_io[1].fd = fds[1];
-	fd_io[1].type = type;
-	return (fd_io);
-}
-
-int	check_exit_reason(int status)
-{
-	if (WIFEXITED(status))
-		return (WEXITSTATUS(status));
-	else if (WIFSIGNALED(status))
-		return (WTERMSIG(status) | 0x80);
-	return (status);
-}
-
-int	buildins_brute_force(t_data *cmds, int flag)
-{
-	int	status;
-
-	status = 0;
-	if (!ft_strcmp(cmds->cmd, "cd"))
-		status = ft_cd(cmds->args + 1);
-	else if (!ft_strcmp(cmds->cmd, "env"))
-		status = ft_env();
-	else if (!ft_strcmp(cmds->cmd, "pwd"))
-		status = ft_pwd();
-	else if (!ft_strcmp(cmds->cmd, "echo"))
-		status = ft_echo(cmds->args + 1);
-	else if (!ft_strcmp(cmds->cmd, "export"))
-		status = ft_export(cmds->args + 1);
-	else if (!ft_strcmp(cmds->cmd, "unset"))
-		status = ft_unset(cmds->args + 1);
-	else if (!ft_strcmp(cmds->cmd, "exit"))
-		status = ft_exit(cmds->args + 1, flag);
-	return (status);
-}
-
-int	exec_buildin(t_data *cmds, int in, int out)
-{
-	int	status;
-	int	tmp_io[2];
-
-	tmp_io[0] = dup(0);
-	tmp_io[1] = dup(1);
-	printf("here\n");
-	ft_dup2(in, 0);
-	ft_dup2(out, 1);
-	status = buildins_brute_force(cmds, 1);
-	io_cleanup(tmp_io[0], tmp_io[1]);
-	return (status);
-}
 
 int	exec_cmds(t_data *cmds, t_fdio in, t_fdio out)
 {
@@ -147,7 +67,7 @@ int	redirect_io_node(t_node *root, t_fdio in, t_fdio out)
 
 	io_fd = io_rect(&root->data, in, out);
 	if (!io_fd)
-		return (ft_putstr_fd("Minishell : No such file or directory\n", 2), 1);
+		return (1);
 	status = execute(root->left, io_fd[0], io_fd[1]);
 	if (io_fd[0].fd != in.fd)
 		close(io_fd[0].fd);
