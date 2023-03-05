@@ -27,6 +27,8 @@ SRCS=		main.c \
 			./execution/buildins_exec.c \
 			./execution/redirections.c \
 			./execution/global_utils.c \
+			./execution/wildcards.c \
+			./execution/apply_wildcards.c \
 			./execution/build-ins/buildins_utils.c \
 			./execution/build-ins/ft_cd.c \
 			./execution/build-ins/ft_pwd.c \

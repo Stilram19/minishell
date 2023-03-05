@@ -1,3 +1,7 @@
+
+echo blahblah*
+
+
 false || (sleedfp 3 && ls)
 ls || pwd && ls
 cat | ls
@@ -9,6 +13,10 @@ ls && (false || pwd | wc)
 ************
 (ls && exit)
 ls && exit
+
+exit 9223372036854775808
+
+ export "x=gh"=10
 
 ls | exit > out < Makefile ?? IMPORTANT
 

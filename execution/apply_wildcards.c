@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 21:24:30 by okhiar            #+#    #+#             */
-/*   Updated: 2023/03/04 18:05:52 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/05 17:38:34 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,14 @@ char	**wildcards_slice(char **args)
 	t_list	*sliced_args;
 	char	**ret;
 
-	i = 1;
+	i = 0;
 	sliced_args = NULL;
-	ft_lstadd_back(&sliced_args, ft_lstnew(args[0]));
 	while (args[i])
 	{
 		if (ft_strchr(args[i], '*'))
 			ft_lstadd_back(&sliced_args, matched_set(args[i]));
 		else
-			ft_lstadd_back(&sliced_args, ft_lstnew(args[i]));
+			ft_lstadd_back(&sliced_args, ft_lstnew(search_replace(args[i], WILDCARD_MASK, '*')));
 		i++;
 	}
 	ret = get_lists(sliced_args);

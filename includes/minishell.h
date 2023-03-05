@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 15:49:24 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/05 14:27:38 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/05 17:16:26 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ int		envlen(char **env);
 /*UTILS*/
 char	*search_replace(char *str, char needle, char replecement);
 t_list	*matched_set(char *pattern);
+char	**wildcards_slice(char **args);
 void	ft_dup2(int f1, int f2);
 void	error_msg(char *msg);
 int		defaults_io(int in_type, int out_type);

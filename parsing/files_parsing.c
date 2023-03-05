@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 13:37:32 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/04 14:14:23 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/05 16:14:32 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ void	give_files_names(char **tokens, t_file *files, int len)
 			if (ft_strncmp(op, *tokens, ft_strlen(op) + 1) && tokens++)
 				continue ;
 			tokens++;
-			files[i].pathname = unmask_quotes(remove_quotes(*tokens));
+			files[i].pathname = unmask_quotes(remove_quotes(*tokens));// ! here
 			break ;
 		}
 		i++;

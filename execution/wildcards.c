@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 10:05:21 by okhiar            #+#    #+#             */
-/*   Updated: 2023/03/04 13:23:42 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/05 18:04:45 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ char	**dir_entry(void)
 	char			**entry_list;
 	struct dirent	*dir_entry;
 	DIR				*dir_ptr;
-	t_list			*matchlist;
 
 	entry_list = (char **)malloc(sizeof(char *) * (dir_count() + 1));
 	dir_ptr = opendir(".");
@@ -58,7 +57,7 @@ char	**dir_entry(void)
 	dir_entry = readdir(dir_ptr);
 	while (dir_entry)
 	{
-		entry_list[i] = ft_strdup(dir_entry->d_name);// TODO replace * {00101010} with -1 {11111111} on the dir entry
+		entry_list[i] = ft_strdup(dir_entry->d_name);
 		i++;
 		dir_entry = readdir(dir_ptr);
 	}
@@ -78,11 +77,12 @@ t_list	*matched_set(char *pattern)
 	dir_set = dir_entry();
 	while (dir_set[i])
 	{
-		if (pattern_match(pattern, dir_set[i]) && (dir_set[i][0] != '.'
-			|| pattern[0] == '.'))
-			ft_lstadd_back(&head, ft_lstnew(dir_set[i]));// TODO Replace -1 By * to back to original
+		if (pattern_match(pattern, search_replace(dir_set[i], '*', WILDCARD_MASK))
+			&& (dir_set[i][0] != '.' || pattern[0] == '.'))
+			ft_lstadd_back(&head, ft_lstnew(search_replace(dir_set[i], WILDCARD_MASK, '*')));
 		i++;
 	}
+	if (!head)
+		ft_lstadd_back(&head, ft_lstnew(search_replace(pattern, WILDCARD_MASK, '*')));
 	return (head);
 }
-

@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 14:19:26 by okhiar            #+#    #+#             */
-/*   Updated: 2023/03/05 14:19:58 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/05 15:37:14 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	*search_replace(char *str, char needle, char replacement)
 
 int	ft_strcmp(char *s1, char *s2)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (s1[i] || s2[i])

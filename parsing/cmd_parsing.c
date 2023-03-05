@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 15:03:35 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/04 14:14:23 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/05 16:01:39 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,23 @@ void	wildcard_ambig_handler(char **args)
 		}
 		args++;
 	}
+}
+
+char	*wildcard_ambig(char *str)
+{
+	int	i;
+	int	quotes;
+
+	i = 0;
+	quotes = 0;
+	while (*(str + i))
+	{
+		open_close_quotes(*(str + i), &quotes);
+		if (quotes && *(str + i) == '*')
+			*(str + i) = WILDCARD_MASK;
+		i++;
+	}
+	return (str);
 }
 
 void	quotes_handler(char **args)

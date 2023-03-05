@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:37:00 by okhiar            #+#    #+#             */
-/*   Updated: 2023/03/05 14:21:36 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/05 17:56:05 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@ int	exec_cmds(t_data *cmds, t_fdio in, t_fdio out)
 	int	pid;
 	int	status;
 
-	if (is_buildin(cmds->cmd) && !cmds->status 
+	cmds->args = wildcards_slice(cmds->args);
+	cmds->cmd = cmds->args[0];
+	if (is_buildin(cmds->cmd) && !cmds->status
 		&& defaults_io(in.type, out.type))
 		return (exec_buildin(cmds, in.fd, out.fd));
 	pid = fork();
@@ -29,7 +31,10 @@ int	exec_cmds(t_data *cmds, t_fdio in, t_fdio out)
 		if (is_buildin(cmds->cmd))
 			exit(buildins_brute_force(cmds, 0));
 		if (ft_execvp(cmds->cmd, cmds->args))
+		{
+			dprintf(2, "%s ", cmds->cmd);
 			_ft_putstr_fd("\e[1;31mMinishell:\e[0m command not found\n", 2, 127);
+		}
 	}
 	waitpid(pid, &status, 0);
 	status = check_exit_reason(status);
@@ -100,7 +105,7 @@ int	execute(t_node *root, t_fdio in, t_fdio out)
 
 int	exec_line(t_node *root)
 {
-	int	status;
+	int		status;
 	t_fdio	io_fd[2];
 
 	io_fd[0].fd = STDIN_FILENO;

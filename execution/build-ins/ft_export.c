@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 12:54:29 by okhiar            #+#    #+#             */
-/*   Updated: 2023/03/04 17:08:06 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/05 15:34:12 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	ft_print_set(char **env)
 	}
 }
 
-int	ft_export(char **args)// !  export "x=gh"=10
+int	ft_export(char **args)
 {
 	int	i;
 	int	status;
