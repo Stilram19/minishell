@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 15:49:24 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/05 15:25:22 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/03/05 16:39:57 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	*ft_strdup1(const char *s1);
 char	*mask_generation3(char *line);
 char	*mask_generation2(char *line);
 char	*mask_generation(char *line);
-int		check_syntax(char **tokens);
+int		syntax_test(char *str);
 int		is_ambiguous_redirect(char **ptr_to_file_name);
 void	open_close_quotes(char ch, int *c);
 void	open_close_parenth(char ch, int *c);
@@ -66,6 +66,7 @@ void	queue_push(t_queue *q, void *data);
 void	node_init(t_node *root, int status);
 int		add_history(const char *);
 void	*queue_first(t_queue *q);
+void	ft_free(char **tokens);
 void	*queue_pop(t_queue *q);
 void	*ft_min(void *add1, void *add2);
 void	heredoc_clean(void);

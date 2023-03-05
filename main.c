@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 14:16:56 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/04 19:02:45 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/03/05 20:48:16 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,17 +85,37 @@ void	task(char *str)
 	display_tree(root, 0);
 }
 
-int	preliminary_syntax_test(char *str);
+void	ft_display(char **tokens)
+{
+	printf("tokens: {");
+	while (*tokens)
+	{
+		printf("%s", *tokens);
+		if (++tokens && *tokens)
+			printf(", ");
+	}
+	printf("}\n");
+}
+#define BLK "\e[0;30m"
+#define RED "\e[0;31m"
+#define GRN "\e[0;32m"
+#define YEL "\e[0;33m"
+#define BLU "\e[0;34m"
+#define MAG "\e[0;35m"
+#define CYN "\e[0;36m"
+#define WHT "\e[0;37m"
+#define reset "\e[0m"
 
+int c;
 void	task1(char *str)
 {
-	if (preliminary_syntax_test(str))
-	{
-		printf("Syntax error!\n");
-		return ;
-	}
-	printf("Valid syntax!\n");
+	if (syntax_test(str))
+		c = 1;
+	else
+		c = 0;
 }
+//Regular text
+
 
 int	main(int argc, char **argv, char **env)
 {
@@ -110,7 +130,13 @@ int	main(int argc, char **argv, char **env)
 	get_env(env_dup(env));
 	while (1)
 	{
-		line = readline("minishell$ ");
+		const char* name;
+		if (c == 0)
+			name = GRN"➜"reset" minishell$ ";
+		else
+			name = RED"➜"reset" minishell$ ";
+		line = readline(name);
+		g->exit_status = EXIT_SUCCESS;
 		//printf("%d\n", *line);
 		if (!line)
 			return (0);

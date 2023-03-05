@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 18:42:50 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/05 15:23:53 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/03/05 20:25:17 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,87 @@
 // (*) after redirec: a word (must not be blank).
 
 //(pwd && ls) | pwd ==> (pwd && ls), |, pwd
+
+int	redirec_arg_test(char *left_token, char *token_to_test)
+{
+	if (!left_token || *left_token != '(')
+		return (VALID_SYNTAX);
+	if (!token_to_test || is_meta(token_to_test))
+		return (VALID_SYNTAX);
+	return (SYNTAX_ERROR);
+}
+
+int	operator_test(char **tokens, int i)
+{
+	char	*main_token;
+	char	*left_token;
+	char	*right_token;
+
+	left_token = NULL;
+	right_token = *(tokens + i + 1);
+	if (i)
+		left_token = *(tokens + i - 1);
+	main_token = *(tokens + i);
+	if (!right_token || is_meta(right_token))
+		return (SYNTAX_ERROR);
+	if (left_token && is_meta(right_token))
+		return (SYNTAX_ERROR);
+	if (ft_strlen(main_token) >= 3)
+		return (SYNTAX_ERROR);
+	if (*main_token == '<' || *main_token == '>')
+		return (VALID_SYNTAX);
+	if (!left_token || (*main_token == '&'
+		&& *(main_token + 1) == '\0'))
+		return (SYNTAX_ERROR);
+	return (VALID_SYNTAX);
+}
+
+int	is_argument_after_parenth(char **tokens)
+{
+	int		i;
+	char	*token;
+
+	i = 0;
+	while (*(tokens + i))
+	{
+		token = *(tokens + i);
+		if (!is_meta(token))
+			return (SYNTAX_ERROR);
+		if (*token != '<'
+			&& *token != '>')
+			break ;
+		if (!(*(tokens + i + 1)))
+			break ;
+		i += 2;
+	}
+	return (VALID_SYNTAX);
+}
+
+int	parenth_test(char **tokens, int i)
+{
+	char	*main_token;
+	char	*left_token;
+	char	*right_token;
+
+	left_token = NULL;
+	main_token = *(tokens + i);
+	if (i)
+		left_token = *(tokens + i - 1);
+	right_token = *(tokens + i + 1);
+	if (left_token && ft_strchr("<>", *left_token))
+		return (SYNTAX_ERROR);
+	if (left_token && !is_meta(left_token))
+		return (SYNTAX_ERROR);
+	if (right_token)
+		return (is_argument_after_parenth(tokens + i + 1));
+	while (*main_token)
+	{
+		if (!ft_strchr("()", *main_token) && !is_blank(*main_token))
+			return (VALID_SYNTAX);
+		main_token++;
+	}
+	return (SYNTAX_ERROR);
+}
 
 int	preliminary_syntax_test(char *str)
 {
@@ -47,73 +128,16 @@ int	preliminary_syntax_test(char *str)
 	return (quotes || parenth);
 }
 
-int	operator_test(char **tokens, int i)
-{
-	char	*token;
-
-	token = *(tokens + i);
-	if (*(tokens + i + 1) == NULL)
-		return (SYNTAX_ERROR);
-	if (ft_strlen(token) >= 3)
-		return (SYNTAX_ERROR);
-	if (ft_strchr(token, '>') || ft_strchr(token, '<'))
-		return (VALID_SYNTAX);
-	if (*token == '&' && *(token + 1) == '\0')
-		return (SYNTAX_ERROR);
-	if (*token == '<' || *token == '>')
-		return (VALID_SYNTAX);
-	if (i == 0)
-		return (SYNTAX_ERROR);
-	return (VALID_SYNTAX);
-}
-
-int	parenth_test(char **tokens, int i)
-{
-	char	*main_token;
-	char	*left_token;
-	char	*right_token;
-
-	left_token = NULL;
-	main_token = *(tokens + i);
-	if (i)
-		left_token = *(tokens + i - 1);
-	right_token = *(tokens + i + 1);	
-	if (left_token && ft_strchr("<>", *left_token))
-		return (SYNTAX_ERROR);
-	if (left_token && !is_meta(left_token))
-		return (SYNTAX_ERROR);
-	if (right_token && !is_meta(right_token))
-		return (SYNTAX_ERROR);
-	while (*main_token)
-	{
-		if (!ft_strchr("()", *main_token))
-			return (VALID_SYNTAX);
-		main_token++;
-	}
-	return (SYNTAX_ERROR);
-}
-
-void	ft_free(char **tokens)
-{
-	int	i;
-
-	i = 0;
-	while (*(tokens + i))
-	{
-		ft_garbage_collector(SINGLE_RELEASE, 0, *(tokens + i));
-		i++;
-	}
-	ft_garbage_collector(SINGLE_RELEASE, 0, tokens);
-}
-
 int	syntax_test(char *str)
 {
 	int		i;
 	int		ret;
-	char	*tokens;
+	char	**tokens;
 
 	i = 0;
-	ret = 0;
+	ret = VALID_SYNTAX;
+	if (preliminary_syntax_test(str))
+		return (SYNTAX_ERROR);
 	tokens = produce_tokens(str, mask_generation3(str));
 	while (!ret && *(tokens + i))
 	{
@@ -121,8 +145,8 @@ int	syntax_test(char *str)
 			ret = operator_test(tokens, i);
 		else if (ft_strchr(*(tokens + i), '(') == *(tokens + i))
 		{
-			remove_outer_parenth(*(tokens + i));
-			ret = syntax_test(*tokens);
+			*(tokens + i) = remove_outer_parenth(*(tokens + i));
+			ret = syntax_test(*(tokens + i));
 			if (!ret)
 				ret = parenth_test(tokens, i);
 		}

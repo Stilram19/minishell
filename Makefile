@@ -9,6 +9,7 @@ SRCS=		main.c \
 			cmd_parsing.c \
 			general_utils1.c \
 			general_utils2.c \
+			general_utils3.c \
 			parse_tree.c \
 			parse_tree_utils.c \
 			tokenization1.c \

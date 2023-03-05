@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 16:08:07 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/02 16:16:46 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/03/05 16:27:26 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,26 +39,25 @@ int	split_and_check_ambiguity(char *file_name)
 {
 	int		i;
 	int		ret;
+	char	*token;
 	char	**tokens;
 
 	i = 0;
 	ret = 0;
 	tokens = produce_tokens(file_name, mask_generation2(file_name));
-	while (*(tokens + i))
-	{
-		//printf("%s\n", *(tokens + i));
-		i++;
-	}
-	//printf("%d %s\n", i, *tokens);
+	token = *tokens;
 	*tokens = ft_strtrim(*tokens, " ");
 	*tokens = remove_quotes(*tokens);
-	if (i > 1 || !(**tokens))
+	if (i > 1 || !(*token))
 		ret = 1;
-	i = -1;
-	while (*(tokens + ++i))
-		ft_garbage_collector(SINGLE_RELEASE, 0, *(tokens + i));
-	ft_garbage_collector(SINGLE_RELEASE, 0, tokens);
-	return (ret);
+	while (*token)
+	{
+		if (*token != '*')
+			return (ret);
+		token++;
+	}
+	ft_free(tokens);
+	return (1);
 }
 
 // "a"$space
