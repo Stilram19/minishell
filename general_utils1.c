@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 20:18:45 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/28 18:48:41 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/03/06 15:25:24 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,5 +90,6 @@ char	*random_file_name_generation(void)
 			j++;
 		}
 	}
+	close(fd);
 	return (ft_strjoin("/tmp/", random_name));
 }

@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 18:08:25 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/05 15:24:51 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/03/06 11:19:32 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 int	is_meta(char *s)
 {
-	char		c;
-	const char	*meta;
+	char	c;
+	char	*meta;
 
 	c = *s;
-	meta = "|&<>";
+	meta = "<>&|";
 	if (ft_strchr(meta, c))
 		return (1);
 	return (0);

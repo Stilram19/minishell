@@ -16,6 +16,7 @@ SRCS=		main.c \
 			tokenization2.c \
 			display_parse_tree.c \
 			ambiguous_redirections.c \
+			args_files_separation.c \
 			utils_without_garbage_collection.c \
 			queue_utils.c \
 			here_doc.c \

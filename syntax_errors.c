@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 18:42:50 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/05 20:25:17 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/03/06 18:04:15 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,6 @@
 
 //(pwd && ls) | pwd ==> (pwd && ls), |, pwd
 
-int	redirec_arg_test(char *left_token, char *token_to_test)
-{
-	if (!left_token || *left_token != '(')
-		return (VALID_SYNTAX);
-	if (!token_to_test || is_meta(token_to_test))
-		return (VALID_SYNTAX);
-	return (SYNTAX_ERROR);
-}
-
 int	operator_test(char **tokens, int i)
 {
 	char	*main_token;
@@ -49,7 +40,7 @@ int	operator_test(char **tokens, int i)
 	main_token = *(tokens + i);
 	if (!right_token || is_meta(right_token))
 		return (SYNTAX_ERROR);
-	if (left_token && is_meta(right_token))
+	if (left_token && is_meta(left_token))
 		return (SYNTAX_ERROR);
 	if (ft_strlen(main_token) >= 3)
 		return (SYNTAX_ERROR);
@@ -125,8 +116,12 @@ int	preliminary_syntax_test(char *str)
 		open_close_parenth(*str, &parenth);
 		str++;
 	}
-	return (quotes || parenth);
+	if (quotes || parenth)
+		return (SYNTAX_ERROR);
+	return (VALID_SYNTAX);
 }
+
+void	ft_display(char **tokens);
 
 int	syntax_test(char *str)
 {
@@ -138,7 +133,9 @@ int	syntax_test(char *str)
 	ret = VALID_SYNTAX;
 	if (preliminary_syntax_test(str))
 		return (SYNTAX_ERROR);
-	tokens = produce_tokens(str, mask_generation3(str));
+	tokens = produce_tokens(str, mask_generation3(str, "<>&|"));
+	ft_display(tokens);
+	return (0);
 	while (!ret && *(tokens + i))
 	{
 		if (is_meta(*(tokens + i)))

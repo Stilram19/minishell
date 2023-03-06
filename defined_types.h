@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 16:29:48 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/05 20:36:31 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/03/06 10:23:34 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,10 @@
 
 # define VALID_SYNTAX 0
 # define SYNTAX_ERROR 258
+
+#define RED "\e[0;31m"
+#define GRN "\e[0;32m"
+#define reset "\e[0m"
 
 enum data_type
 {
