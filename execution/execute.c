@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:37:00 by okhiar            #+#    #+#             */
-/*   Updated: 2023/03/05 17:56:05 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/05 22:26:45 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,7 @@ int	exec_cmds(t_data *cmds, t_fdio in, t_fdio out)
 		if (is_buildin(cmds->cmd))
 			exit(buildins_brute_force(cmds, 0));
 		if (ft_execvp(cmds->cmd, cmds->args))
-		{
-			dprintf(2, "%s ", cmds->cmd);
 			_ft_putstr_fd("\e[1;31mMinishell:\e[0m command not found\n", 2, 127);
-		}
 	}
 	waitpid(pid, &status, 0);
 	status = check_exit_reason(status);
@@ -59,6 +56,8 @@ int	pipe_nodes(t_node *root, t_fdio in, t_fdio out)
 		exit(status);
 	}
 	close(fds[1]);
+	// if (in.fd != STDIN_FILENO)
+	// 	close(in.fd); // ! will be validated
 	status = execute(root->right, fd_io[0], out);
 	close(fds[0]);
 	waitpid(pid, 0, 0);

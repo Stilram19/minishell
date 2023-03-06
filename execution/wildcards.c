@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 10:05:21 by okhiar            #+#    #+#             */
-/*   Updated: 2023/03/05 18:04:45 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/05 21:38:19 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char	**dir_entry(void)
 	struct dirent	*dir_entry;
 	DIR				*dir_ptr;
 
-	entry_list = (char **)malloc(sizeof(char *) * (dir_count() + 1));
+	entry_list = ft_garbage_collector(ALLOCATE, sizeof(char *) * (dir_count() + 1), NULL);
 	dir_ptr = opendir(".");
 	i = 0;
 	dir_entry = readdir(dir_ptr);
@@ -61,8 +61,8 @@ char	**dir_entry(void)
 		i++;
 		dir_entry = readdir(dir_ptr);
 	}
-	entry_list[i] = NULL;
 	closedir(dir_ptr);
+	entry_list[i] = NULL;
 	return (entry_list);
 }
 

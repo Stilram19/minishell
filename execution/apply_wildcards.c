@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 21:24:30 by okhiar            #+#    #+#             */
-/*   Updated: 2023/03/05 17:38:34 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/05 22:10:18 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ char	**get_lists(t_list *head)
 
 	i = 0;
 	size = ft_lstsize(head);
-	ret = (char **)malloc(sizeof(char *) * (size + 1));
+	ret = ft_garbage_collector(ALLOCATE, sizeof(char *) * (size + 1), NULL);
 	while (i < size)
 	{
-		ret[i++] = head->content ;
+		ret[i++] = ft_strdup(head->content);
 		head = head->next;
 	}
 	ret[i] = NULL;
@@ -43,9 +43,10 @@ char	**wildcards_slice(char **args)
 		if (ft_strchr(args[i], '*'))
 			ft_lstadd_back(&sliced_args, matched_set(args[i]));
 		else
-			ft_lstadd_back(&sliced_args, ft_lstnew(search_replace(args[i], WILDCARD_MASK, '*')));
+			ft_lstadd_back(&sliced_args, ft_lstnew(ft_strdup1(search_replace(args[i], WILDCARD_MASK, '*'))));
 		i++;
 	}
 	ret = get_lists(sliced_args);
+	ft_lstclear(&sliced_args, free);
 	return (ret);
 }

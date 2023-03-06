@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 10:30:31 by okhiar            #+#    #+#             */
-/*   Updated: 2023/03/05 14:41:11 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/05 21:41:35 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ int	ft_cd(char **args)
 		return (EXIT_FAILURE);
 	if (chdir(dir))
 	{
+		if (owd)
+			free(owd);
 		ft_putstr_fd__("cd: no such file or directory\n", 2);
 		return (EXIT_FAILURE);
 	}
@@ -62,5 +64,7 @@ int	ft_cd(char **args)
 	cwd = getcwd(NULL, 0);
 	ft_set_var(get_env(NULL), ft_strjoin("OLDPWD=", owd), 0);
 	ft_set_var(get_env(NULL), ft_strjoin("PWD=", cwd), 0);
+	free(cwd);
+	free(owd);
 	return (EXIT_SUCCESS);
 }

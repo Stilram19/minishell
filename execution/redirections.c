@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:08:25 by okhiar            #+#    #+#             */
-/*   Updated: 2023/03/05 13:13:32 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/05 21:17:00 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_fdio	*init_fdio(t_fdio in, t_fdio out)
 {
 	t_fdio	*io_fds;
 
-	io_fds = (t_fdio *)malloc(sizeof(t_fdio) * 2);
+	io_fds = ft_garbage_collector(ALLOCATE, sizeof(t_fdio) * 2, NULL);
 	io_fds[0].fd = in.fd;
 	io_fds[1].fd = out.fd;
 	io_fds[0].type = in.type;

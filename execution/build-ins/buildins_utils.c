@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 21:53:02 by okhiar            #+#    #+#             */
-/*   Updated: 2023/03/04 13:21:53 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/05 21:21:16 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static char	*set_mask(char *name, int len)
 
 	i = 0;
 	flag = 0;
-	mask = (char *)malloc(sizeof(char) * (len + 1));
+	mask = ft_garbage_collector(ALLOCATE, sizeof(char) * (len + 1), NULL);
 	while (name[i])
 	{
 		if (!ft_isalnum(name[i]) && name[i] != '_')

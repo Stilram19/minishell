@@ -43,7 +43,7 @@ OBJS =		${SRCS:.c=.o}
 NAME =	minishell
 CC = cc 
 CFLAGS = -Wall -Wextra -Werror
-CFLAGS += -fsanitize=address -g
+# CFLAGS += -fsanitize=address -g
 CFLAGS += -I/Users/okhiar/goinfre/brew/opt/readline/include/
 RDLIB = -lreadline -L/Users/okhiar/goinfre/brew/opt/readline/lib/
 RM= rm -f

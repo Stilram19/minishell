@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 16:19:07 by okhiar            #+#    #+#             */
-/*   Updated: 2023/03/04 13:21:53 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/05 21:22:49 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	unset_var_env(char **env, char *name)
 			new_env[j++] = env[i];
 		i++;
 	}
+	// ! free env[index], env
 	new_env[j] = NULL;
 	get_env(new_env);
 }

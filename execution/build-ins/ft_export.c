@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 12:54:29 by okhiar            #+#    #+#             */
-/*   Updated: 2023/03/05 15:34:12 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/05 21:26:53 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	check_append(char **env_v, char *v, char *val, int app)
 {
 	if (!val[0] && !app)
 		return ;
+	free(*env_v);
 	if (app)
 	{
 		if (!ft_strchr(*env_v, '='))
@@ -51,6 +52,7 @@ void	ft_set_var(char **env, char *var, int append)
 	else
 		new_env[i] = ft_strdup1(var);
 	new_env[i + 1] = NULL;
+	free(env);
 	get_env(new_env);
 }
 

@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 16:23:18 by okhiar            #+#    #+#             */
-/*   Updated: 2023/03/05 14:21:46 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/05 21:44:24 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_fdio	*set_io_type(int *fds, int type)
 {
 	t_fdio	*fd_io;
 
-	fd_io = (t_fdio *)malloc(sizeof(t_fdio) * 2);
+	fd_io = ft_garbage_collector(ALLOCATE, sizeof(t_fdio) * 2, NULL);
 	fd_io[0].fd = fds[0];
 	fd_io[0].type = type;
 	fd_io[1].fd = fds[1];
