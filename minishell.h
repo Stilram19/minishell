@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 15:49:24 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/06 17:21:00 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/03/06 20:04:49 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ char	*unmask_quotes(char *str);
 char	*first_operand(char *str);
 char	*second_operand(char *str);
 char	*remove_outer_parenth(char *str);
+char	*remove_outer_parenth2(char *str);
 int		is_between_parenth(char *str);
 int		check_command_syntax(char *str);
 char	*get_operator(char *op);

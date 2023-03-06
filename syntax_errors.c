@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 18:42:50 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/06 18:04:15 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/03/06 22:45:59 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,32 @@ int	operator_test(char **tokens, int i)
 	if (i)
 		left_token = *(tokens + i - 1);
 	main_token = *(tokens + i);
-	if (!right_token || is_meta(right_token))
-		return (SYNTAX_ERROR);
-	if (left_token && is_meta(left_token))
+	/*if (!right_token || is_meta(right_token))
 		return (SYNTAX_ERROR);
 	if (ft_strlen(main_token) >= 3)
 		return (SYNTAX_ERROR);
 	if (*main_token == '<' || *main_token == '>')
 		return (VALID_SYNTAX);
-	if (!left_token || (*main_token == '&'
+	if (!left_token || is_meta(left_token))
+		return (SYNTAX_ERROR);
+	if (!(*main_token == '&'
 		&& *(main_token + 1) == '\0'))
+		return (SYNTAX_ERROR);*/
+	if (!right_token)
+		return (SYNTAX_ERROR);
+	if (ft_strchr("<>", *main_token))
+	{
+		if (is_meta(right_token))
+			return (SYNTAX_ERROR);
+		if (left_token && ft_strchr("<>" ,*left_token))
+			return (SYNTAX_ERROR);
+		return (VALID_SYNTAX);
+	}
+	if (!left_token)
+		return (SYNTAX_ERROR);
+	if (ft_strchr("&|", *right_token))
+		return (SYNTAX_ERROR);
+	if (is_meta(left_token))
 		return (SYNTAX_ERROR);
 	return (VALID_SYNTAX);
 }
@@ -90,6 +106,7 @@ int	parenth_test(char **tokens, int i)
 		return (SYNTAX_ERROR);
 	if (right_token)
 		return (is_argument_after_parenth(tokens + i + 1));
+	return (VALID_SYNTAX);
 	while (*main_token)
 	{
 		if (!ft_strchr("()", *main_token) && !is_blank(*main_token))
@@ -134,21 +151,19 @@ int	syntax_test(char *str)
 	if (preliminary_syntax_test(str))
 		return (SYNTAX_ERROR);
 	tokens = produce_tokens(str, mask_generation3(str, "<>&|"));
-	ft_display(tokens);
-	return (0);
 	while (!ret && *(tokens + i))
 	{
 		if (is_meta(*(tokens + i)))
 			ret = operator_test(tokens, i);
 		else if (ft_strchr(*(tokens + i), '(') == *(tokens + i))
 		{
-			*(tokens + i) = remove_outer_parenth(*(tokens + i));
-			ret = syntax_test(*(tokens + i));
+			ret = syntax_test(remove_outer_parenth2(*(tokens + i)));
 			if (!ret)
 				ret = parenth_test(tokens, i);
 		}
 		i++;
 	}
+	//ft_garbage_collector(SINGLE_RELEASE, 0, str);
 	ft_free(tokens);
 	return (ret);
 }

@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 14:16:56 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/06 18:04:02 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/03/06 22:22:50 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,15 +103,15 @@ void	task(char *line)
 
 	g->exit_status = EXIT_SUCCESS;
 	new_line = ft_strdup(line);
-	/*g->exit_status = syntax_test(new_line);
+	g->exit_status = syntax_test(new_line);
 	if (g->exit_status)
 	{
 		// set exit status in env
 		ft_putendl_fd("minishell: Syntax error!", 2);
 		return ;
-	}*/
-	//new_line = args_files_separation(new_line);
-	//printf("After rearrangement: %s\n", new_line);
+	}
+	new_line = args_files_separation(new_line);
+	printf("After rearrangement: %s\n", new_line);
  	/*char *mask;
  	char	**tokens;
 

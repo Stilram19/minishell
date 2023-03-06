@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 18:34:17 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/06 17:20:54 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/03/06 19:00:58 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,13 @@ void	ft_free(char **tokens)
 
 int	global_len(char **tokens)
 {
-	int	i;
 	int	len;
 
-	i = 0;
 	len = 0;
-	while (*(tokens + i))
+	while (*tokens)
 	{
-		i++;
-		len += ft_strlen(*(tokens + i));
+		len += ft_strlen(*tokens) + 1;
+		tokens++;
 	}
 	return (len);
 }
@@ -54,8 +52,9 @@ char	*join_tokens(char **tokens)
 	while (*(tokens + i))
 	{
 		len = ft_strlen(*(tokens + i));
-		j += len;
 		ft_strlcpy(ret + j, *(tokens + i), len + 1);
+		ft_strlcpy(ret + j + len, " ", 2);
+		j += len + 1;
 		i++;
 	}
 	ft_free(tokens);
