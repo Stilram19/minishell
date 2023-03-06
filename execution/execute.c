@@ -6,11 +6,20 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:37:00 by okhiar            #+#    #+#             */
-/*   Updated: 2023/03/05 22:26:45 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/06 16:25:55 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	child_sig(int sig)
+{
+	if (sig == SIGINT)
+	{
+		write(2, "\n", 1);
+		exit(42);// ! will checked
+	}
+}
 
 int	exec_cmds(t_data *cmds, t_fdio in, t_fdio out)
 {
@@ -23,9 +32,11 @@ int	exec_cmds(t_data *cmds, t_fdio in, t_fdio out)
 		&& defaults_io(in.type, out.type))
 		return (exec_buildin(cmds, in.fd, out.fd));
 	pid = fork();
+	signal(SIGINT, SIG_IGN);
 	if (!pid)
 	{
 		sig_def();
+		signal(SIGINT, child_sig);
 		ft_dup2(in.fd, 0);
 		ft_dup2(out.fd, 1);
 		if (is_buildin(cmds->cmd))

@@ -9,9 +9,9 @@ void	child1(int out)
 	int		pid;
 	int		status;
 	char	*cmd;
-	char	*args[3] = {"cat", "/dev/random", NULL};
+	char	*args[2] = {"wdsgc", NULL};
 
-	cmd = "/bin/cat";
+	cmd = "dsgs";
 	pid = fork();
 	if (!pid)
 	{
@@ -29,9 +29,9 @@ void	child2(int in)
 	int		pid;
 	int		status;
 	char	*cmd;
-	char	*args[3] = {"ls", NULL};
+	char	*args[3] = {"wc", NULL};
 
-	cmd = "/bin/ls";
+	cmd = "/usr/bin/wc";
 	pid = fork();
 	if (!pid)
 	{
@@ -54,7 +54,7 @@ int main(void)
 	int	fds[2];
 	int	status;
 
-	signal(SIGPIPE, SIG_IGN);
+	signal(SIGPIPE, SIG_DFL);
 	pipe(fds);
 	pid = fork();
 	if (!pid)
