@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 16:29:48 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/04 21:52:12 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/07 16:22:11 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ enum file_type
 
 enum io_type
 {
-	DFTERM, PIPE_IO
+	P_EXEC, C_EXEC, SUB_EXEC
 };
 
 typedef struct s_fdio

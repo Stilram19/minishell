@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 10:05:21 by okhiar            #+#    #+#             */
-/*   Updated: 2023/03/05 21:38:19 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/07 17:01:20 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ char	**dir_entry(void)
 	struct dirent	*dir_entry;
 	DIR				*dir_ptr;
 
-	entry_list = ft_garbage_collector(ALLOCATE, sizeof(char *) * (dir_count() + 1), NULL);
+	entry_list = ft_garbage_collector(ALLOCATE, \
+	sizeof(char *) * (dir_count() + 1), NULL);
 	dir_ptr = opendir(".");
 	i = 0;
 	dir_entry = readdir(dir_ptr);
@@ -77,12 +78,15 @@ t_list	*matched_set(char *pattern)
 	dir_set = dir_entry();
 	while (dir_set[i])
 	{
-		if (pattern_match(pattern, search_replace(dir_set[i], '*', WILDCARD_MASK))
+		if (pattern_match(pattern, \
+			search_replace(dir_set[i], '*', WILDCARD_MASK))
 			&& (dir_set[i][0] != '.' || pattern[0] == '.'))
-			ft_lstadd_back(&head, ft_lstnew(search_replace(dir_set[i], WILDCARD_MASK, '*')));
+			ft_lstadd_back(&head, ft_lstnew(\
+			ft_strdup1(search_replace(dir_set[i], WILDCARD_MASK, '*'))));
 		i++;
 	}
 	if (!head)
-		ft_lstadd_back(&head, ft_lstnew(search_replace(pattern, WILDCARD_MASK, '*')));
+		ft_lstadd_back(&head, ft_lstnew(\
+		ft_strdup1(search_replace(pattern, WILDCARD_MASK, '*'))));
 	return (head);
 }

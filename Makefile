@@ -23,6 +23,7 @@ SRCS=		main.c \
 			./execution/ft_execvp_utils.c \
 			./execution/execute.c \
 			./execution/exec_utils.c \
+			./execution/exec_utils2.c \
 			./execution/buildsin_check.c \
 			./execution/buildins_exec.c \
 			./execution/redirections.c \
@@ -43,7 +44,7 @@ OBJS =		${SRCS:.c=.o}
 NAME =	minishell
 CC = cc 
 CFLAGS = -Wall -Wextra -Werror
-# CFLAGS += -fsanitize=address -g
+CFLAGS += -fsanitize=address -g
 CFLAGS += -I/Users/okhiar/goinfre/brew/opt/readline/include/
 RDLIB = -lreadline -L/Users/okhiar/goinfre/brew/opt/readline/lib/
 RM= rm -f

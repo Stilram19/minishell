@@ -6,11 +6,20 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 16:23:18 by okhiar            #+#    #+#             */
-/*   Updated: 2023/03/07 15:07:27 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/07 16:47:42 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	child_sig(int sig)
+{
+	if (sig == SIGINT)
+	{
+		write(2, "\n", 1);
+		exit(42);// ! will checked
+	}
+}
 
 void	set_exit_status(int status)
 {
@@ -27,30 +36,8 @@ void	ft_dup2(int f1, int f2)
 	if (f1 == f2)
 		return ;
 	if (dup2(f1, f2) == -1)
-	{
-		printf("%d\n", f1);
 		perror("dup2");
-	}
 	close(f1);
-}
-
-int	defaults_io(int in_type, int out_type)
-{
-	if (in_type != PIPE_IO && out_type != PIPE_IO)
-		return (1);
-	return (0);
-}
-
-t_fdio	*set_io_type(int *fds, int type)
-{
-	t_fdio	*fd_io;
-
-	fd_io = ft_garbage_collector(ALLOCATE, sizeof(t_fdio) * 2, NULL);
-	fd_io[0].fd = fds[0];
-	fd_io[0].type = type;
-	fd_io[1].fd = fds[1];
-	fd_io[1].type = type;
-	return (fd_io);
 }
 
 int	check_exit_reason(int status)
@@ -59,5 +46,32 @@ int	check_exit_reason(int status)
 		return (WEXITSTATUS(status));
 	else if (WIFSIGNALED(status))
 		return (WTERMSIG(status) | 0x80);
+	return (status);
+}
+
+int	exec_cmds(t_data *cmds, t_fdio in, t_fdio out)
+{
+	int	pid;
+	int	status;
+
+	cmds->args = wildcards_slice(cmds->args);
+	cmds->cmd = cmds->args[0];
+	if (is_buildin(cmds->cmd) && defaults_io(in.type, out.type))
+		return (exec_buildin(cmds, in, out));
+	pid = fork();
+	signal(SIGINT, SIG_IGN);
+	if (!pid)
+	{
+		sig_def();
+		signal(SIGINT, child_sig);
+		ft_dup2(in.fd, 0);
+		ft_dup2(out.fd, 1);
+		if (is_buildin(cmds->cmd))
+			exit(buildins_brute_force(cmds, 0));
+		if (ft_execvp(cmds->cmd, cmds->args))
+			_ft_putstr_fd("\e[1;31mMinishell:\e[0m command not found\n", 2, 127);
+	}
+	waitpid(pid, &status, 0);
+	status = check_exit_reason(status);
 	return (status);
 }

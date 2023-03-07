@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:08:25 by okhiar            #+#    #+#             */
-/*   Updated: 2023/03/05 21:17:00 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/07 16:48:32 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,6 @@ t_fdio	*init_fdio(t_fdio in, t_fdio out)
 	io_fds[0].type = in.type;
 	io_fds[1].type = out.type;
 	return (io_fds);
-}
-
-int	is_directory(char *path)
-{
-	struct stat	path_stat;
-
-	stat(path, &path_stat);
-	if (S_ISDIR(path_stat.st_mode))
-		return (1);
-	return (0);
 }
 
 int	open_infile(t_file *files, int *prev_ifd)

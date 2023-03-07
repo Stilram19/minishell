@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 15:49:24 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/07 15:19:53 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/07 16:55:57 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,16 +85,18 @@ void	init_session(void);
 int		exec_line(t_node *root);
 int		check_subshell(t_node *root, t_fdio in, t_fdio out, int level);
 int		execute(t_node *root, t_fdio in, t_fdio out);
+int		exec_cmds(t_data *cmds, t_fdio in, t_fdio out);
 int		buildins_brute_force(t_data *cmds, int flag);
-int		exec_buildin(t_data *cmds, int in, int out);
+int		exec_buildin(t_data *cmds, t_fdio in, t_fdio out);
 int		ft_execvp(char *file, char **args);
 void	_ft_putstr_fd(char *str, int fd, int ext);
 int		is_buildin(char *cmd);
 int		ft_strcmp(char *s1, char *s2);
 t_fdio	*io_rect(t_data *data, t_fdio in, t_fdio out);
-void	ft_dup2(int f1, int f2);
+int		is_directory(char *path);
 void	set_exit_status(int status);
 char	**_ft_split(char const *str, char c);
+int		io_subs_type(t_fdio *in, t_fdio *out);
 
 int		envlen(char **env);
 
