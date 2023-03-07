@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 12:54:29 by okhiar            #+#    #+#             */
-/*   Updated: 2023/03/07 20:47:29 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/07 20:50:06 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	check_append(char **env_v, char *v, char *val, int app)
 {
 	char	*tmp;
 
-	if (!val[0] && !app && !ft_strchr(v, '=')) // ! will be validated
+	if (!val[0] && !app && !ft_strchr(v, '='))
 		return ;
 	tmp = *env_v;
 	if (app)
