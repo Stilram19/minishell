@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:37:00 by okhiar            #+#    #+#             */
-/*   Updated: 2023/03/06 16:25:55 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/07 15:19:31 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,12 @@ void	child_sig(int sig)
 	}
 }
 
+void	close_if(int fd, int bool_value)
+{
+	if (bool_value)
+		close(fd);
+}
+
 int	exec_cmds(t_data *cmds, t_fdio in, t_fdio out)
 {
 	int	pid;
@@ -28,8 +34,7 @@ int	exec_cmds(t_data *cmds, t_fdio in, t_fdio out)
 
 	cmds->args = wildcards_slice(cmds->args);
 	cmds->cmd = cmds->args[0];
-	if (is_buildin(cmds->cmd) && !cmds->status
-		&& defaults_io(in.type, out.type))
+	if (is_buildin(cmds->cmd) && defaults_io(in.fd, out.fd))
 		return (exec_buildin(cmds, in.fd, out.fd));
 	pid = fork();
 	signal(SIGINT, SIG_IGN);
@@ -62,14 +67,13 @@ int	pipe_nodes(t_node *root, t_fdio in, t_fdio out)
 	if (!pid)
 	{
 		close(fds[0]);
-		status = execute(root->left, in, fd_io[1]);
+		status = check_subshell(root->left, in, fd_io[1], root->data.status);
 		close(fds[1]);
 		exit(status);
 	}
 	close(fds[1]);
-	// if (in.fd != STDIN_FILENO)
-	// 	close(in.fd); // ! will be validated
-	status = execute(root->right, fd_io[0], out);
+	close_if(in.fd, in.type == PIPE_IO);
+	status = check_subshell(root->right, fd_io[0], out, root->data.status);
 	close(fds[0]);
 	waitpid(pid, 0, 0);
 	return (status);
@@ -105,11 +109,27 @@ int	execute(t_node *root, t_fdio in, t_fdio out)
 		return (pipe_nodes(root, in, out));
 	if (root->data.type == REDIREC)
 		return (redirect_io_node(root, in, out));
-	status = execute(root->left, in, out);
+	status = check_subshell(root->left, in, out, root->data.status);
 	if ((status != 0 && root->data.type == AND) \
 		|| (status == 0 && root->data.type == OR))
 		return (status);
-	status = execute(root->right, in, out);
+	status = check_subshell(root->right, in, out, root->data.status);
+	return (status);
+}
+
+int	check_subshell(t_node *root, t_fdio in, t_fdio out, int level)
+{
+	int	pid;
+	int	status;
+
+	if (level >= root->data.status)
+		return (execute(root, in, out));
+	pid = fork();
+	signal(SIGINT, SIG_IGN);
+	if (!pid)
+		exit(execute(root, in, out));
+	waitpid(pid, &status, 0);
+	status = check_exit_reason(status);
 	return (status);
 }
 
@@ -122,7 +142,7 @@ int	exec_line(t_node *root)
 	io_fd[0].type = DFTERM;
 	io_fd[1].fd = STDOUT_FILENO;
 	io_fd[1].type = DFTERM;
-	status = execute(root, io_fd[0], io_fd[1]);
+	status = check_subshell(root, io_fd[0], io_fd[1], 0);
 	set_exit_status(status);
 	return (status);
 }

@@ -1,5 +1,6 @@
 
 echo blahblah*
+ls | > out
 
 
 false || (sleedfp 3 && ls)

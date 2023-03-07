@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 13:29:52 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/04 14:14:23 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/07 14:44:14 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,11 @@ void	display_command(t_data data)
 	char	**args;
 
 	if (data.status)
-		status = "child";
+		status = "child:";
 	else
 		status = "Parent";
 	args = data.args;
-	printf("cmd:{%s, %s} ", data.cmd, status);
+	printf("cmd:{%s, %s, %d} ", data.cmd, status, data.status);
 	printf("args:{");
 	while (*args)
 	{

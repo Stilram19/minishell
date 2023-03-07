@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 16:23:18 by okhiar            #+#    #+#             */
-/*   Updated: 2023/03/05 21:44:24 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/07 15:07:27 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,10 @@ void	ft_dup2(int f1, int f2)
 	if (f1 == f2)
 		return ;
 	if (dup2(f1, f2) == -1)
+	{
+		printf("%d\n", f1);
 		perror("dup2");
+	}
 	close(f1);
 }
 

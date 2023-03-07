@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 16:39:55 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/04 14:14:23 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/07 14:46:32 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ void	parse_tree(char *str, t_node *root, int status)
 		files_parsing(root, right_str(str, op, 1));
 	}
 	else if (*str == '(')
-		parse_tree(remove_outer_parenth(str), root, 1);
+		parse_tree(remove_outer_parenth(str), root, root->data.status + 1);
 	else
 		cmd_parsing(root, str);
 }
