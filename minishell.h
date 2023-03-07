@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 15:49:24 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/07 15:45:37 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/03/07 17:46:05 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	ft_free(char **tokens);
 void	*queue_pop(t_queue *q);
 void	*ft_min(void *add1, void *add2);
 char	*get_prompt(int exit_status);
-void	heredoc_clean(void);
+void	heredoc_clean(int status);
 int		here_sig(void);
 void	refresh(char *line);
 void	queue_init(t_queue *q);

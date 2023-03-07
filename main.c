@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 14:16:56 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/07 17:25:50 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/03/07 17:46:38 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	main_task(char *line)
 	//if (!(g_global->exit_status))
 		//execution(root);
 	//TODO set exit status in env
-	heredoc_clean();
+	heredoc_clean(g_global->exit_status);
 }
 
 int	main(int argc, char **argv, char **env)

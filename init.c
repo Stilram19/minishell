@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 13:50:46 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/07 15:43:52 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/03/07 17:45:55 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ void	refresh(char *line)
 	ft_garbage_collector(GLOBAL_RELEASE, 0, NULL);
 }
 
-void	heredoc_clean(void)
+void	heredoc_clean(int status)
 {
 	t_file	*heredoc;
 
-	g_global->exit_status = EXIT_FAILURE;
+	g_global->exit_status = status;
 	while (g_global->here_files->len)
 	{
 		heredoc = queue_pop(g_global->here_files);

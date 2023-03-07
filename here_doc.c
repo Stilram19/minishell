@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 20:14:47 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/07 15:25:52 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/03/07 17:46:50 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void	ft_heredoc(int fd, t_queue *limiters, int expand)
 		sig_set();
 		if (!WIFEXITED(status) || WEXITSTATUS(status) == CTRL_C)
 		{
-			heredoc_clean();
+			heredoc_clean(EXIT_FAILURE);
 			return ;
 		}
 		ft_garbage_collector(SINGLE_RELEASE, 0, queue_pop(limiters));
