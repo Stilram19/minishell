@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 20:14:47 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/02 17:38:24 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/03/07 15:25:52 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,6 @@ void	ft_heredoc(int fd, t_queue *limiters, int expand)
 	while (limiters->len)
 	{
 		write_enable = (limiters->len == 1);
-		if (write_enable)
 		(write_enable && (write_enable += expand));
 		signal(SIGINT, SIG_IGN);
 		pid = fork();

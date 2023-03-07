@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 16:33:47 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/03 15:46:44 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/03/07 15:58:36 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	signal_handler(int sig)
 {
 	if (sig == SIGINT)
 	{
-		g->exit_status = EXIT_FAILURE;
+		g_global->exit_status = EXIT_FAILURE;
 		ft_putchar_fd('\n', 1);
 		rl_replace_line("", 0);
 		rl_on_new_line();

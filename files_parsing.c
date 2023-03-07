@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 13:37:32 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/07 11:52:58 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/03/07 16:16:25 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,10 @@ int	give_file_type(char **tokens, t_file *file, int *heredoc)
 		file->type = OUT;
 	if (is_ambiguous_redirect(tokens + 1))
 		file->type = AMBIG;
-	//printf("%p\n", *(tokens + 1));
 	return (1);
 }
 
-void	 give_files_types(char **tokens, t_file *files, int len)
+void	give_files_types(char **tokens, t_file *files, int len)
 {
 	int	i;
 	int	j;
@@ -103,7 +102,8 @@ void	give_files_names(char **tokens, t_file *files, int len)
 	i = 0;
 	while (i < len)
 	{
-		((op = NULL) || (files[i].pathname = NULL));
+		op = NULL;
+		files[i].pathname = NULL;
 		if (files[i].type == HERE && ++i)
 			continue ;
 		((files[i].type == APPEND) && (op = APPEND_STR));
@@ -129,12 +129,12 @@ void	files_parsing(t_node *root, char *str)
 	t_file		*heredoc;
 	char		**tokens;
 
-	if (g->exit_status)
+	if (g_global->exit_status)
 		return ;
 	tokens = produce_tokens(str, mask_generation(str));
 	root->data.f_count = files_count(tokens);
 	root->data.files = ft_garbage_collector(ALLOCATE,
-		sizeof(t_file) * root->data.f_count, NULL);
+			sizeof(t_file) * root->data.f_count, NULL);
 	limiters = get_limiters(tokens, &expand_enable);
 	give_files_types(tokens, root->data.files, root->data.f_count);
 	give_files_names(tokens, root->data.files, root->data.f_count);
@@ -142,7 +142,8 @@ void	files_parsing(t_node *root, char *str)
 	if (!heredoc)
 		return ;
 	heredoc->pathname = random_file_name_generation();
-	heredoc->here_fd = open(heredoc->pathname, O_CREAT | O_RDWR | O_TRUNC, 0666);
-	queue_push(g->here_files, heredoc);
+	heredoc->here_fd = open(heredoc->pathname,
+			O_CREAT | O_RDWR | O_TRUNC, 0666);
+	queue_push(g_global->here_files, heredoc);
 	ft_heredoc(heredoc->here_fd, limiters, expand_enable);
 }

@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 16:29:48 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/06 10:23:34 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/03/07 15:41:17 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,26 @@
 # define VALID_SYNTAX 0
 # define SYNTAX_ERROR 258
 
-#define RED "\e[0;31m"
-#define GRN "\e[0;32m"
-#define reset "\e[0m"
+# define RED "\e[0;31m"
+# define GRN "\e[0;32m"
+# define RESET "\e[0m"
 
-enum data_type
+enum e_data_type
 {
-	AND, OR, PIPE, REDIREC, COMMAND
+	AND,
+	OR,
+	PIPE,
+	REDIREC,
+	COMMAND
 };
 
-enum file_type
+enum e_file_type
 {
-	IN, OUT, HERE, APPEND, AMBIG
+	IN,
+	OUT,
+	HERE,
+	APPEND,
+	AMBIG
 };
 
 typedef struct s_file
@@ -89,6 +97,6 @@ typedef struct s_global
 	t_queue	*here_files;
 }t_global;
 
-t_global	*g;
+t_global	*g_global;
 
 #endif

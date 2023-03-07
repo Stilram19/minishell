@@ -6,12 +6,11 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 12:54:03 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/03 14:42:58 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/03/07 15:32:55 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 int	envlen(char **env)
 {
@@ -24,7 +23,8 @@ int	envlen(char **env)
 }
 
 /**
- * @brief duplicates the environment variable (the third argument of the main function)
+ * @brief duplicates the environment variable
+ * (the third argument of the main function)
  * in the heap.
 */
 char	**env_dup(char **env)
@@ -63,12 +63,12 @@ char	*get_var_value(char *key)
 	env = get_env(NULL);
 	while (env[i])
 	{
-        if (!ft_strncmp(env[i], key, key_len)
+		if (!ft_strncmp(env[i], key, key_len)
 			&& env[i][key_len] == '=')
-        return (ft_strdup(env[i] + (key_len + 1)));
-        i++;
-    }
-    return (NULL);
+			return (ft_strdup(env[i] + (key_len + 1)));
+		i++;
+	}
+	return (NULL);
 }
 
 /**

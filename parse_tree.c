@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 16:39:55 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/03 17:34:56 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/03/07 16:02:06 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,6 @@ char	*first_op_add(char *str, char *op)
 	return (NULL);
 }
 
-/*char	*last_logical_operator(char *str)
-{
-	char	*or;
-	char	*and;
-
-	and = first_op_add(str, AND_STR);
-	or = first_op_add(str, OR_STR);
-	return (ft_min(and, or));
-}*/
-
 char	*last_logical_operator(char *str)
 {
 	int		quotes;
@@ -63,7 +53,7 @@ char	*last_logical_operator(char *str)
 		if (!quotes)
 			open_close_parenth(*str, &parenth);
 		if (!(quotes || parenth) && !(ft_strncmp(str, OR_STR, 2)
-			&& ft_strncmp(str, AND_STR, 2)))
+				&& ft_strncmp(str, AND_STR, 2)))
 			last_op = str;
 		str++;
 	}
@@ -109,7 +99,6 @@ char	*middle_operator(char *str)
 	return (middle_op);
 }
 
-// TODO the input string must be trimed.
 void	parse_tree(char *str, t_node *root, int status)
 {
 	int		op_type;
@@ -134,7 +123,7 @@ void	parse_tree(char *str, t_node *root, int status)
 		files_parsing(root, right_str(str, op, 1));
 	}
 	else if (*str == '(')
-		parse_tree(remove_outer_parenth(str), root, 1);
+		parse_tree(remove_outer_parenth(str), root, root->data.status + 1);
 	else
 		cmd_parsing(root, str);
 }

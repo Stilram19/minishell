@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 16:08:07 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/07 11:53:24 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/03/07 17:16:05 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ int	is_all_blank(char *file_name)
 
 int	is_all_astrisks(char *str)
 {
+	if (!(*str))
+		return (0);
 	while (*str)
 	{
 		if (*str != '*')
@@ -57,19 +59,15 @@ int	split_and_check_ambiguity(char *file_name)
 	i = 0;
 	ret = 0;
 	tokens = produce_tokens(file_name, mask_generation2(file_name));
-	*tokens = ft_strtrim(*tokens, " ");
 	while (*(tokens + i))
 		i++;
-	if (i == 1 && is_all_astrisks(*tokens))
-		return (1);
 	*tokens = remove_quotes(*tokens);
 	token = *tokens;
 	if (i > 1 || !(*token))
-		ret = 1;
+		return (1);
 	ft_free(tokens);
-	return (1);
+	return (0);
 }
-
 
 int	is_ambiguous_redirect(char **ptr_to_file_name)
 {
@@ -83,5 +81,9 @@ int	is_ambiguous_redirect(char **ptr_to_file_name)
 		ret = 1;
 	if (!ret && ft_strchr(file_name, ' '))
 		ret = split_and_check_ambiguity(file_name);
+	file_name = ft_strtrim(file_name, " ");
+	if (!ret)
+		ret = is_all_astrisks(file_name);
+	*ptr_to_file_name = file_name;
 	return (ret);
 }

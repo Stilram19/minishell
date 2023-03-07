@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 15:03:35 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/04 13:14:38 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/03/07 15:45:58 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	cmd_parsing(t_node *root, char *str)
 {
 	char	**args;
 
-	if (g->exit_status)
+	if (g_global->exit_status)
 		return ;
 	expand_if(&str);
 	args = produce_tokens(str, mask_generation2(str));

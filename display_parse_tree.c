@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 13:29:52 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/03 16:53:32 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/03/07 16:00:48 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	display_command(t_data data)
 	else
 		status = "Parent";
 	args = data.args;
-	printf("cmd:{%s, %s} ", data.cmd, status);
+	printf("cmd:{%s, %s, %d} ", data.cmd, status, data.status);
 	printf("args:{");
 	while (*args)
 	{

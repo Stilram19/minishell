@@ -6,26 +6,29 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 18:42:50 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/07 12:04:52 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/03/07 16:12:08 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// traverse the string and check:
-// (*) closed quotes.
-// (*) closed parenthesis
+/*
+traverse the string and check:
+(*) closed quotes.
+(*) closed parenthesis
 
-// split with a new mask generation strategy into tokens
-// and traverse tokens from left to right:
-// (*) false operators. (e.g, |||, &|, <<<, >>>)
-// (*) before (): logical operator, pipe, or nothing.
-// (*) inside (): must not be blank (' ', '\0').
-// (*) after (): logical operator, pipe, or redirec (only files, no arguments are allowed).
-// (*) logical operator and pipe: must not be the first, must not be the last.
-// (*) after redirec: a word (must not be blank).
+split with a new mask generation strategy into tokens
+and traverse tokens from left to right:
+(*) false operators. (e.g, |||, &|, <<<, >>>)
+(*) before (): logical operator, pipe, or nothing.
+(*) inside (): must not be blank (' ', '\0').
+(*) after (): logical operator, pipe, or redirec
+(only files, no arguments are allowed).
+(*) logical operator and pipe: must not be the first, must not be the last.
+(*) after redirec: a word (must not be blank).
 
-//(pwd && ls) | pwd ==> (pwd && ls), |, pwd
+(pwd && ls) | pwd ==> (pwd && ls), |, pwd
+*/
 
 int	operator_test(char **tokens, int i)
 {
@@ -35,35 +38,23 @@ int	operator_test(char **tokens, int i)
 
 	left_token = NULL;
 	right_token = *(tokens + i + 1);
-	if (i)
-		left_token = *(tokens + i - 1);
+	((i) && (left_token = *(tokens + i - 1)));
 	main_token = *(tokens + i);
-	/*if (!right_token || is_meta(right_token))
-		return (SYNTAX_ERROR);
 	if (ft_strlen(main_token) >= 3)
 		return (SYNTAX_ERROR);
-	if (*main_token == '<' || *main_token == '>')
-		return (VALID_SYNTAX);
-	if (!left_token || is_meta(left_token))
-		return (SYNTAX_ERROR);
-	if (!(*main_token == '&'
-		&& *(main_token + 1) == '\0'))
-		return (SYNTAX_ERROR);*/
 	if (!right_token)
 		return (SYNTAX_ERROR);
 	if (ft_strchr("<>", *main_token))
 	{
 		if (is_meta(right_token))
 			return (SYNTAX_ERROR);
-		if (left_token && ft_strchr("<>" ,*left_token))
+		if (left_token && ft_strchr("<>", *left_token))
 			return (SYNTAX_ERROR);
 		return (VALID_SYNTAX);
 	}
 	if (!left_token)
 		return (SYNTAX_ERROR);
-	if (ft_strchr("&|", *right_token))
-		return (SYNTAX_ERROR);
-	if (is_meta(left_token))
+	if (ft_strchr("&|", *right_token) || is_meta(left_token))
 		return (SYNTAX_ERROR);
 	return (VALID_SYNTAX);
 }
@@ -137,8 +128,6 @@ int	preliminary_syntax_test(char *str)
 		return (SYNTAX_ERROR);
 	return (VALID_SYNTAX);
 }
-
-void	ft_display(char **tokens);
 
 int	syntax_test(char *str)
 {

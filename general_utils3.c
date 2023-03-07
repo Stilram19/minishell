@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 18:34:17 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/07 10:35:34 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/03/07 15:43:13 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,6 @@ char	*join_tokens(char **tokens)
 char	*get_prompt(int exit_status)
 {
 	if (exit_status)
-		return (RED"➜ "reset"minishell$ ");
-	return (GRN"➜ "reset"minishell$ ");
+		return (RED"➜ "RESET"minishell$ ");
+	return (GRN"➜ "RESET"minishell$ ");
 }

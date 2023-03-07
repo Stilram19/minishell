@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 15:49:24 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/06 20:04:49 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/03/07 15:45:37 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int		operator_type(char *op);
 int		is_there_middle_operator(char *str);
 void	queue_push(t_queue *q, void *data);
 void	node_init(t_node *root, int status);
-int		add_history(const char *);
+int		add_history(const char *str);
 void	*queue_first(t_queue *q);
 void	ft_free(char **tokens);
 void	*queue_pop(t_queue *q);

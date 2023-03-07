@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 10:37:00 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/28 17:37:08 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/03/07 15:28:25 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	single_release(t_list **ptr_to_head, void *to_free)
 		if (temp1->next->content == to_free)
 		{
 			temp2 = temp1->next->next;
-			ft_lstdelone(temp1->next, free); 
+			ft_lstdelone(temp1->next, free);
 			temp1->next = temp2;
 			return ;
 		}

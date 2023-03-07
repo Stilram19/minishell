@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 16:21:59 by obednaou          #+#    #+#             */
-/*   Updated: 2023/02/12 12:49:08 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/03/07 15:48:33 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,11 @@ typedef struct s_list
 	struct s_list	*next;
 }					t_list;
 
-
-enum gc_options
+enum e_gc_options
 {
-	ALLOCATE, SINGLE_RELEASE, GLOBAL_RELEASE
+	ALLOCATE,
+	SINGLE_RELEASE,
+	GLOBAL_RELEASE
 };
 
 int		ft_isalpha(int c);
