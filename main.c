@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 14:16:56 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/07 18:51:28 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/07 19:04:13 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,8 @@ t_node	*parsing(char *line)
 	}
 	new_line = ft_strdup(line);
 	new_line = args_files_separation(new_line);
-	// ! printf("After rearrangement: %s\n", new_line);
 	root = ft_garbage_collector(ALLOCATE, sizeof(t_node), NULL);
 	parse_tree(new_line, root, 0);
-	display_tree(root, 0);
 	return (root);
 }
 
@@ -53,10 +51,10 @@ void	main_task(char *line)
 	t_node	*root;
 
 	root = parsing(line);
-	// sleep(50);
 	if (!(g_global->exit_status))
 		execution(root);
 	//TODO set exit status in env
+	set_exit_status(g_global->exit_status);
 	heredoc_clean(g_global->exit_status);
 }
 
@@ -83,6 +81,3 @@ int	main(int argc, char **argv, char **env)
 	}
 	return (0);
 }
-
-
-// ! cat << l<<l1| cat << k

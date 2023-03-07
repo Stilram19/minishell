@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:37:00 by okhiar            #+#    #+#             */
-/*   Updated: 2023/03/07 18:47:00 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/07 19:03:17 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ int	execution(t_node *root)
 	io_fd[1].fd = STDOUT_FILENO;
 	io_fd[1].type = P_EXEC;
 	status = check_subshell(root, io_fd[0], io_fd[1], 0);
-	set_exit_status(status);
+	// set_exit_status(status);
+	g_global->exit_status = status;
 	return (status);
 }
