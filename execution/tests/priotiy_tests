@@ -22,6 +22,9 @@ exit 9223372036854775808
 
 export "x=gh"=10
 
+export x=as
+export x  // shouldn't update x value
+
 ls | exit > out < Makefile ?? IMPORTANT
 
 ************
