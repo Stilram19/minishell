@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 16:29:48 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/07 18:24:42 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/07 22:10:54 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 # define VALID_SYNTAX 0
 # define SYNTAX_ERROR 258
 
+# define RED_BOLD "\e[1;31m"
 # define RED "\e[0;31m"
 # define GRN "\e[0;32m"
 # define RESET "\e[0m"

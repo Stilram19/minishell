@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 14:19:26 by okhiar            #+#    #+#             */
-/*   Updated: 2023/03/07 18:32:38 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/07 22:11:08 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	ft_strcmp(char *s1, char *s2)
 
 void	error_msg(char *msg)
 {
-	ft_putstr_fd(RED, 2);
+	ft_putstr_fd(RED_BOLD, 2);
 	ft_putstr_fd("Minishell: ", 2);
 	ft_putstr_fd(RESET, 2);
 	ft_putstr_fd(msg, 2);
