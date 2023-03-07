@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 16:08:07 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/05 16:27:26 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/03/07 11:53:24 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 // var=" ", >""$var, >$var"" --> ambiguous redirection
 // >""$empty, >$empty"" --> no such file or directory
 // >$empty --> ambiguous redirection
+// > ?, > *********************
 
 int	is_all_blank(char *file_name)
 {
@@ -35,6 +36,17 @@ int	is_all_blank(char *file_name)
 	return (1);
 }
 
+int	is_all_astrisks(char *str)
+{
+	while (*str)
+	{
+		if (*str != '*')
+			return (0);
+		str++;
+	}
+	return (1);
+}
+
 int	split_and_check_ambiguity(char *file_name)
 {
 	int		i;
@@ -45,22 +57,20 @@ int	split_and_check_ambiguity(char *file_name)
 	i = 0;
 	ret = 0;
 	tokens = produce_tokens(file_name, mask_generation2(file_name));
-	token = *tokens;
 	*tokens = ft_strtrim(*tokens, " ");
+	while (*(tokens + i))
+		i++;
+	if (i == 1 && is_all_astrisks(*tokens))
+		return (1);
 	*tokens = remove_quotes(*tokens);
+	token = *tokens;
 	if (i > 1 || !(*token))
 		ret = 1;
-	while (*token)
-	{
-		if (*token != '*')
-			return (ret);
-		token++;
-	}
 	ft_free(tokens);
 	return (1);
 }
 
-// "a"$space
+
 int	is_ambiguous_redirect(char **ptr_to_file_name)
 {
 	int		ret;
@@ -75,5 +85,3 @@ int	is_ambiguous_redirect(char **ptr_to_file_name)
 		ret = split_and_check_ambiguity(file_name);
 	return (ret);
 }
-//"$a"
-//a="a b"

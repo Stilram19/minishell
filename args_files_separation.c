@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 10:24:50 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/06 19:04:50 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/03/07 11:53:41 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ void	rearrange_tokens(char **tokens)
 	}
 }
 
+//void	ft_display(char **tokens);
+
 char	*args_files_separation(char *str)
 {
 	char	*ret;
@@ -79,6 +81,8 @@ char	*args_files_separation(char *str)
 
 	tokens = produce_tokens(str, mask_generation4(str, "()<>&|"));
 	rearrange_tokens(tokens);
+	//ft_display(tokens);
+	//return (0);
 	temp = join_tokens(tokens);
 	ret = ft_strtrim(temp, " ");
 	ft_garbage_collector(SINGLE_RELEASE, 0, temp);

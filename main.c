@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 14:16:56 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/06 22:22:50 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/03/07 12:05:47 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,9 +97,10 @@ void	ft_display(char **tokens)
 	printf("}\n");
 }
 
-void	task(char *line)
+void	parsing(char *line)
 {
 	char	*new_line;
+	t_node	*root;
 
 	g->exit_status = EXIT_SUCCESS;
 	new_line = ft_strdup(line);
@@ -110,8 +111,16 @@ void	task(char *line)
 		ft_putendl_fd("minishell: Syntax error!", 2);
 		return ;
 	}
+	new_line = ft_strdup(line);
 	new_line = args_files_separation(new_line);
-	printf("After rearrangement: %s\n", new_line);
+	//printf("After rearrangement: %s\n", new_line);
+
+}
+
+void	task(char *line)
+{
+	
+	parsing(line);
  	/*char *mask;
  	char	**tokens;
 
@@ -138,6 +147,7 @@ int	main(int argc, char **argv, char **env)
 			continue ;
 		}
 		add_history(line);
+		//printf("%d\n", *line);
 		task(line);
 		refresh(line);
 	}

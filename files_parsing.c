@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 13:37:32 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/03 15:36:02 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/03/07 11:52:58 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,14 +106,10 @@ void	give_files_names(char **tokens, t_file *files, int len)
 		((op = NULL) || (files[i].pathname = NULL));
 		if (files[i].type == HERE && ++i)
 			continue ;
-		if (files[i].type == APPEND)
-			op = APPEND_STR;
-		else if (files[i].type == OUT)
-			op = OUT_STR;
-		else if (files[i].type == IN)
-			op = IN_STR;
-		else if (files[i].type == AMBIG)
-		 	tokens += 2;
+		((files[i].type == APPEND) && (op = APPEND_STR));
+		((files[i].type == OUT) && (op = OUT_STR));
+		((files[i].type == IN) && (op = IN_STR));
+		((files[i].type == AMBIG) && (tokens += 2));
 		while (op && *tokens)
 		{
 			if (ft_strncmp(op, *tokens, ft_strlen(op) + 1) && tokens++)
