@@ -6,7 +6,7 @@
 /*   By: obednaou <obednaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 18:42:50 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/07 16:12:08 by obednaou         ###   ########.fr       */
+/*   Updated: 2023/03/07 18:26:54 by obednaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	operator_test(char **tokens, int i)
 			return (SYNTAX_ERROR);
 		return (VALID_SYNTAX);
 	}
-	if (!left_token)
+	if (!left_token || (*main_token == '&' && *(main_token + 1) == 0))
 		return (SYNTAX_ERROR);
 	if (ft_strchr("&|", *right_token) || is_meta(left_token))
 		return (SYNTAX_ERROR);
@@ -80,6 +80,17 @@ int	is_argument_after_parenth(char **tokens)
 	return (VALID_SYNTAX);
 }
 
+int	is_empty_parenth(char *str)
+{
+	while (*str)
+	{
+		if (!ft_strchr("()", *str) && !is_blank(*str))
+			return (VALID_SYNTAX);
+		str++;
+	}
+	return (SYNTAX_ERROR);
+}
+
 int	parenth_test(char **tokens, int i)
 {
 	char	*main_token;
@@ -98,13 +109,6 @@ int	parenth_test(char **tokens, int i)
 	if (right_token)
 		return (is_argument_after_parenth(tokens + i + 1));
 	return (VALID_SYNTAX);
-	while (*main_token)
-	{
-		if (!ft_strchr("()", *main_token) && !is_blank(*main_token))
-			return (VALID_SYNTAX);
-		main_token++;
-	}
-	return (SYNTAX_ERROR);
 }
 
 int	preliminary_syntax_test(char *str)
@@ -137,8 +141,7 @@ int	syntax_test(char *str)
 
 	i = 0;
 	ret = VALID_SYNTAX;
-	if (preliminary_syntax_test(str))
-		return (SYNTAX_ERROR);
+	(preliminary_syntax_test(str) && (ret = SYNTAX_ERROR));
 	tokens = produce_tokens(str, mask_generation3(str, "<>&|"));
 	while (!ret && *(tokens + i))
 	{
@@ -146,6 +149,8 @@ int	syntax_test(char *str)
 			ret = operator_test(tokens, i);
 		else if (ft_strchr(*(tokens + i), '(') == *(tokens + i))
 		{
+			if (is_empty_parenth(*(tokens + i)))
+				return (SYNTAX_ERROR);
 			ret = syntax_test(remove_outer_parenth2(*(tokens + i)));
 			if (!ret)
 				ret = parenth_test(tokens, i);
