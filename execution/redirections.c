@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:08:25 by okhiar            #+#    #+#             */
-/*   Updated: 2023/03/08 16:35:51 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/08 19:02:47 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,12 @@ int	open_infile(t_file *files, int *prev_ifd)
 	else
 		infile = open(files->pathname, O_RDONLY);
 	if (infile == -1)
-		error_msg(ft_strjoin(files->pathname, ": No such file or directory\n"));
+	{
+		if (!access(files->pathname, F_OK))
+			error_msg(ft_strjoin(files->pathname, ": Permission denied\n"));
+		else
+			error_msg(ft_strjoin(files->pathname, ": No such file or directory\n"));
+	}
 	*prev_ifd = infile;
 	return (infile);
 }
@@ -56,6 +61,8 @@ int	open_outfile(t_file *files, int *prev_ofd)
 		outfile = open(files->pathname, O_CREAT | O_APPEND | O_WRONLY, 0666);
 	else
 		outfile = open(files->pathname, O_CREAT | O_TRUNC | O_WRONLY, 0666);
+	if (outfile == -1 && !access(files->pathname, F_OK))
+		error_msg(ft_strjoin(files->pathname, ": Permission denied\n"));
 	*prev_ofd = outfile;
 	return (outfile);
 }
