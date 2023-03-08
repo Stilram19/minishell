@@ -6,23 +6,11 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:08:25 by okhiar            #+#    #+#             */
-/*   Updated: 2023/03/08 19:02:47 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/08 19:10:02 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-t_fdio	*init_fdio(t_fdio in, t_fdio out)
-{
-	t_fdio	*io_fds;
-
-	io_fds = ft_garbage_collector(ALLOCATE, sizeof(t_fdio) * 2, NULL);
-	io_fds[0].fd = in.fd;
-	io_fds[1].fd = out.fd;
-	io_fds[0].type = in.type;
-	io_fds[1].type = out.type;
-	return (io_fds);
-}
 
 int	open_infile(t_file *files, int *prev_ifd)
 {
@@ -35,12 +23,7 @@ int	open_infile(t_file *files, int *prev_ifd)
 	else
 		infile = open(files->pathname, O_RDONLY);
 	if (infile == -1)
-	{
-		if (!access(files->pathname, F_OK))
-			error_msg(ft_strjoin(files->pathname, ": Permission denied\n"));
-		else
-			error_msg(ft_strjoin(files->pathname, ": No such file or directory\n"));
-	}
+		open_file_error(files->pathname);
 	*prev_ifd = infile;
 	return (infile);
 }
@@ -61,18 +44,10 @@ int	open_outfile(t_file *files, int *prev_ofd)
 		outfile = open(files->pathname, O_CREAT | O_APPEND | O_WRONLY, 0666);
 	else
 		outfile = open(files->pathname, O_CREAT | O_TRUNC | O_WRONLY, 0666);
-	if (outfile == -1 && !access(files->pathname, F_OK))
-		error_msg(ft_strjoin(files->pathname, ": Permission denied\n"));
+	if (outfile == -1)
+		open_file_error(files->pathname);
 	*prev_ofd = outfile;
 	return (outfile);
-}
-
-void	clean_up_of(int *io)
-{
-	if (io[0] != -1)
-		close(io[0]);
-	if (io[1] != -1)
-		close(io[1]);
 }
 
 t_fdio	*io_rect(t_data *data, t_fdio in, t_fdio out)

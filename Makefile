@@ -31,6 +31,7 @@ SRCS=		main.c \
 			./execution/buildsin_check.c \
 			./execution/buildins_exec.c \
 			./execution/redirections.c \
+			./execution/redirection_utils.c \
 			./execution/global_utils.c \
 			./execution/wildcards.c \
 			./execution/apply_wildcards.c \
