@@ -6,11 +6,24 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 13:50:46 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/07 18:22:26 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/08 10:25:51 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	set_shell_level(void)
+{
+	char	*shlvl;
+	int		int_val;
+	
+	shlvl = get_var_value("SHLVL");
+	if (!shlvl)
+		return ;
+	int_val = ft_atoi(shlvl);
+	int_val++;
+	ft_set_var(get_env(NULL), ft_strjoin("SHLVL=", ft_itoa(int_val)), 0);
+}
 
 void	global_init(int argc, char **argv, char **env)
 {
@@ -22,6 +35,7 @@ void	global_init(int argc, char **argv, char **env)
 	g_global->exit_status = EXIT_SUCCESS;
 	g_global->here_files = malloc(sizeof(t_queue));
 	queue_init(g_global->here_files);
+	set_shell_level();
 }
 
 void	refresh(char *line)

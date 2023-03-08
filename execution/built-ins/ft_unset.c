@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 16:19:07 by okhiar            #+#    #+#             */
-/*   Updated: 2023/03/05 21:22:49 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/08 11:41:38 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ void	unset_var_env(char **env, char *name)
 			new_env[j++] = env[i];
 		i++;
 	}
-	// ! free env[index], env
+	free(env[index]);
+	free(env);
 	new_env[j] = NULL;
 	get_env(new_env);
 }
@@ -43,18 +44,18 @@ void	unset_var_env(char **env, char *name)
 int	ft_unset(char **args)
 {
 	int	i;
+	int	status;
 
 	i = 0;
+	status = EXIT_SUCCESS;
 	while (args[i])
 	{
 		if (valid_arg(args[i], NULL))
 			unset_var_env(get_env(NULL), args[i]);
 		else
-		{
-			ft_putstr_fd("\e[1;31munset:\e[0m invalid identifier\n", 2);
-			return (EXIT_FAILURE);
-		}
+			status = (ft_putstr_fd("\e[1;31munset:\e[0m invalid identifier\n", 2), \
+			1);
 		i++;
 	}
-	return (EXIT_SUCCESS);
+	return (status);
 }
