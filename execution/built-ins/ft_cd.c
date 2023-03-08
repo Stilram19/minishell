@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 10:30:31 by okhiar            #+#    #+#             */
-/*   Updated: 2023/03/08 19:00:37 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/08 21:31:01 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,11 @@ int	ft_cd(char **args)
 	old_working_dir = getcwd(NULL, 0);
 	dir = check_dir(args[0]);
 	if (!dir)
+	{
+		if (old_working_dir)
+			free(old_working_dir);
 		return (EXIT_FAILURE);
+	}
 	if (chdir(dir))
 	{
 		ft_putstr_fd(ft_strjoin(ft_strjoin("cd: ", dir), \

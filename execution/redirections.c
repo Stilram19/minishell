@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:08:25 by okhiar            #+#    #+#             */
-/*   Updated: 2023/03/08 19:10:02 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/08 23:42:02 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ int	open_outfile(t_file *files, int *prev_ofd)
 		return (-1);
 	}
 	if (files->type == APPEND)
-		outfile = open(files->pathname, O_CREAT | O_APPEND | O_WRONLY, 0666);
+		outfile = open(files->pathname, O_CREAT | O_APPEND | O_WRONLY, 0644);
 	else
-		outfile = open(files->pathname, O_CREAT | O_TRUNC | O_WRONLY, 0666);
+		outfile = open(files->pathname, O_CREAT | O_TRUNC | O_WRONLY, 0644);
 	if (outfile == -1)
 		open_file_error(files->pathname);
 	*prev_ofd = outfile;

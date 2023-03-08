@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 12:54:29 by okhiar            #+#    #+#             */
-/*   Updated: 2023/03/07 20:50:06 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/08 23:39:57 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,15 +59,39 @@ void	ft_set_var(char **env, char *var, int append)
 	get_env(new_env);
 }
 
-void	ft_print_set(char **env)
+int	id_len(char *str)
 {
 	int	i;
 
 	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '=')
+			return (i);
+		i++;
+	}
+	return (i);
+}
+
+void	ft_print_set(char **env)
+{
+	char	*identifier;
+	char	*value;
+	int		i;
+	int		len;
+
+	i = 0;
 	while (env[i])
 	{
-		ft_putstr_fd(env[i], 1);
-		write(1, "\n", 1);
+		len = id_len(env[i]);
+		identifier = ft_substr(env[i], 0, id_len(env[i]));
+		if (env[i][len] == '=')
+		{
+			value = ft_substr(env[i], id_len(env[i]) + 1, ft_strlen(env[i]));
+			printf("%s=\"%s\"\n", identifier, value);
+		}
+		else
+			ft_putendl_fd(env[i], 1);
 		i++;
 	}
 }

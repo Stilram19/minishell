@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 16:31:54 by okhiar            #+#    #+#             */
-/*   Updated: 2023/03/08 19:17:38 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/08 22:48:22 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,9 @@ int	defaults_io(int in_type, int out_type)
 
 void	check_fail_reason(int fail, char *file)
 {
-	if (is_directory(file))
+	if (!access(file, X_OK) && file[0] == '.')
+		exit(0);
+	if (is_directory(file) && ft_strchr(file, '/'))
 	{
 		error_msg(ft_strjoin(file, ": is a directory\n"));
 		exit(126);
@@ -60,6 +62,9 @@ void	check_fail_reason(int fail, char *file)
 		error_msg(ft_strjoin(file, ": Permission denied\n"));
 		exit(126);
 	}
-	error_msg(ft_strjoin(file, ": command not found\n"));
+	if (ft_strchr(file, '/'))
+		error_msg(ft_strjoin(file, ": No such file or directory\n"));
+	else
+		error_msg(ft_strjoin(file, ": command not found\n"));
 	exit(127);
 }

@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 14:25:27 by okhiar            #+#    #+#             */
-/*   Updated: 2023/03/04 14:58:39 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/08 22:51:54 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,6 @@ int	ft_is_whitespace(int c)
 	return ((c >= 9 && c <= 13) || c == 32);
 }
 
-char	*remove_whitespaces(char *str)
-{
-	int		i;
-	int		end;
-	char	*nbr;
-
-	i = 0;
-	end = ft_strlen(str) - 1;
-	while (ft_is_whitespace(str[i]))
-		i++;
-	while (ft_is_whitespace(str[end]))
-		end--;
-	nbr = ft_substr(str, i, end - i + 1);
-	return (nbr);
-}
-
 int	all_digits(char	*str)
 {
 	int		i;
@@ -41,7 +25,9 @@ int	all_digits(char	*str)
 	i = 0;
 	if (!str[0])
 		return (0);
-	nbr = remove_whitespaces(str);// TODO:: use strtrim function instead
+	nbr = ft_strtrim(str, " ");
+	if (!nbr[0])
+		return (0);
 	if (nbr[0] == '-' || nbr[0] == '+')
 		i++;
 	while (nbr[i])
@@ -75,7 +61,7 @@ int	ft_exit(char **args, int flag)
 		ft_putstr_fd("minishel: exit\n", 2);
 	if (args[0] && args[1])
 	{
-		ft_putstr_fd("exit: too many arguments\n", 2); // ! Should be after "minishell: exit" printed
+		ft_putstr_fd("exit: too many arguments\n", 2);
 		return (EXIT_FAILURE);
 	}
 	exit_with_status(args[0]);

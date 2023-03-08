@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:37:00 by okhiar            #+#    #+#             */
-/*   Updated: 2023/03/08 17:58:04 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/08 22:55:50 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ int	execution(t_node *root)
 	int		status;
 	t_fdio	io_fd[2];
 
+	set_exit_status(EXIT_SUCCESS);
 	io_fd[0].fd = STDIN_FILENO;
 	io_fd[0].type = P_EXEC;
 	io_fd[1].fd = STDOUT_FILENO;

@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 14:00:52 by okhiar            #+#    #+#             */
-/*   Updated: 2023/03/08 19:20:34 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/08 23:26:50 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,28 @@ static char	*ft_pathjoin(char *file, char *path)
 	return (ret);
 }
 
+// int	check_if_on_cwd(char *path)
+// {
+// 	struct dirent	*dir_entry;
+// 	DIR				*dir_ptr;
+
+// 	dir_ptr = opendir(".");
+// 	if (!dir_ptr)
+// 		return (0);
+// 	dir_entry = readdir(dir_ptr);
+// 	while (dir_entry)
+// 	{
+// 		if (!ft_strcmp(dir_entry->d_name, path))
+// 		{
+// 			closedir(dir_ptr);
+// 			return (1);
+// 		}
+// 		dir_entry = readdir(dir_ptr);
+// 	}
+// 	closedir(dir_ptr);
+// 	return (0);
+// }
+
 static char	**free_all(char **strs)
 {
 	int	i;
@@ -37,6 +59,32 @@ static char	**free_all(char **strs)
 	free(strs);
 	strs = NULL;
 	return (NULL);
+}
+
+int	check_exist_bin(char *file, char *path)
+{
+	int		i;
+	char	**paths;
+	char	*file_path;
+
+	if (!path)
+		return (1);
+	paths = _ft_split(path, ':');
+	i = 0;
+	while (paths[i])
+	{
+		file_path = ft_pathjoin(file, paths[i]);
+		if (!access(file_path, X_OK))
+		{
+			free_all(paths);
+			free(file_path);
+			return (0);
+		}
+		free(file_path);
+		i++;
+	}
+	free_all(paths);
+	return (1);
 }
 
 /**
@@ -56,7 +104,7 @@ static char	*valid_cmd(char *file, char *path)
 	char	*file_path;
 
 	i = 0;
-	if (!access(file, X_OK))
+	if (!access(file, X_OK) && (check_exist_bin(file, path) || file[0] == '.'))
 		return (ft_strdup1(file));
 	if (!path)
 		return (0);
