@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 15:49:24 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/07 18:31:47 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/08 18:44:03 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ t_list	*matched_set(char *pattern);
 char	**wildcards_slice(char **args);
 void	ft_dup2(int f1, int f2);
 void	error_msg(char *msg);
+void	check_fail_reason(int fail, char *file);
 int		defaults_io(int in_type, int out_type);
 int		check_exit_reason(int status);
 t_fdio	*set_io_type(int *fds, int type);

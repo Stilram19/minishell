@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 14:00:52 by okhiar            #+#    #+#             */
-/*   Updated: 2023/03/05 13:20:09 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/08 18:48:23 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,9 @@ int	ft_execvp(char *file, char **args)
 
 	path = get_var_value("PATH");
 	cmd = valid_cmd(file, path);
+	if (!cmd && !access(file, F_OK) \
+		&& access(file, X_OK) && file[0] == '.')
+		return (-2);
 	if (!cmd)
 		return (-1);
 	if (execve(cmd, args, get_env(NULL)))

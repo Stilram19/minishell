@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 16:31:54 by okhiar            #+#    #+#             */
-/*   Updated: 2023/03/07 16:48:43 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/08 18:45:56 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,20 @@ int	defaults_io(int in_type, int out_type)
 	if (in_type != C_EXEC && out_type != C_EXEC)
 		return (1);
 	return (0);
+}
+
+void	check_fail_reason(int fail, char *file)
+{
+	if (is_directory(file))
+	{
+		error_msg(ft_strjoin(file, ": is a directory\n"));
+		exit(126);
+	}
+	else if (fail == -2)
+	{
+		error_msg(ft_strjoin(file, ": Permission denied\n"));
+		exit(126);
+	}
+	error_msg(ft_strjoin(file, ": command not found\n"));
+	exit(127);
 }

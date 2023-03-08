@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 16:23:18 by okhiar            #+#    #+#             */
-/*   Updated: 2023/03/08 13:33:46 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/08 18:38:35 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int	exec_cmds(t_data *cmds, t_fdio in, t_fdio out)
 {
 	int	pid;
 	int	status;
+	int	exec_ret;
 
 	cmds->args = wildcards_slice(cmds->args);
 	cmds->cmd = cmds->args[0];
@@ -68,8 +69,9 @@ int	exec_cmds(t_data *cmds, t_fdio in, t_fdio out)
 		ft_dup2(out.fd, 1);
 		if (is_buildin(cmds->cmd))
 			exit(buildins_brute_force(cmds, 0));
-		if (ft_execvp(cmds->cmd, cmds->args))
-			(error_msg(ft_strjoin(cmds->cmd, ": command not found\n")), exit(127));
+		exec_ret = ft_execvp(cmds->cmd, cmds->args);
+		if (exec_ret)
+			check_fail_reason(exec_ret, cmds->cmd);
 	}
 	waitpid(pid, &status, 0);
 	status = check_exit_reason(status);
