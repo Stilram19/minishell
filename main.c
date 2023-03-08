@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 14:16:56 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/07 19:04:13 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/08 17:45:32 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	main_task(char *line)
 	t_node	*root;
 
 	root = parsing(line);
+	// display_tree(root, 0);
 	if (!(g_global->exit_status))
 		execution(root);
 	//TODO set exit status in env

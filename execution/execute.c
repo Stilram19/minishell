@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:37:00 by okhiar            #+#    #+#             */
-/*   Updated: 2023/03/07 22:07:07 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/08 17:58:04 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	redirect_io_node(t_node *root, t_fdio in, t_fdio out)
 	io_fd = io_rect(&root->data, in, out);
 	if (!io_fd)
 		return (1);
-	status = execute(root->left, io_fd[0], io_fd[1]);
+	status = check_subshell(root->left, io_fd[0], io_fd[1], root->data.status);
 	if (io_fd[0].fd != in.fd)
 		close(io_fd[0].fd);
 	if (io_fd[1].fd != out.fd)
@@ -80,7 +80,7 @@ int	check_subshell(t_node *root, t_fdio in, t_fdio out, int level)
 	int	pid;
 	int	status;
 
-	if (level >= root->data.status)
+	if (level == root->data.status)
 		return (execute(root, in, out));
 	pid = fork();
 	signal(SIGINT, SIG_IGN);

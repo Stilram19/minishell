@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:08:25 by okhiar            #+#    #+#             */
-/*   Updated: 2023/03/07 18:50:46 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/08 16:35:51 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	open_infile(t_file *files, int *prev_ifd)
 	else
 		infile = open(files->pathname, O_RDONLY);
 	if (infile == -1)
-		error_msg(ft_strjoin(files->pathname, " No such file or directory\n"));
+		error_msg(ft_strjoin(files->pathname, ": No such file or directory\n"));
 	*prev_ifd = infile;
 	return (infile);
 }
@@ -48,7 +48,7 @@ int	open_outfile(t_file *files, int *prev_ofd)
 		close(*prev_ofd);
 	if (is_directory(files->pathname))
 	{
-		error_msg(ft_strjoin(files->pathname, " is a directory\n"));
+		error_msg(ft_strjoin(files->pathname, ": is a directory\n"));
 		*prev_ofd = -1;
 		return (-1);
 	}
