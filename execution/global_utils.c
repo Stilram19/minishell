@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 14:19:26 by okhiar            #+#    #+#             */
-/*   Updated: 2023/03/07 22:11:08 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/09 02:45:29 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,12 @@ void	error_msg(char *msg)
 	ft_putstr_fd("Minishell: ", 2);
 	ft_putstr_fd(RESET, 2);
 	ft_putstr_fd(msg, 2);
+}
+
+int	is_signaled(int status)
+{
+	if (WIFEXITED(status) && WEXITSTATUS(status) >= 129
+		&& WEXITSTATUS(status) <= 159 && WEXITSTATUS(status) != 141)
+		return (1);
+	return (0);
 }

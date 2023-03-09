@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 14:16:56 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/09 00:56:49 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/09 01:34:24 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,10 @@ int	main(int argc, char **argv, char **env)
 		prompt = get_prompt(g_global->exit_status);
 		line = readline(prompt);
 		if (!line)
+		{
+			printf("exit\n");
 			return (0);
+		}
 		if (is_all_blank(line))
 		{
 			free(line);

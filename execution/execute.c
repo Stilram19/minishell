@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:37:00 by okhiar            #+#    #+#             */
-/*   Updated: 2023/03/09 01:02:10 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/09 02:44:37 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,7 @@ int	pipe_nodes(t_node *root, t_fdio in, t_fdio out)
 	status = check_subshell(root->right, fd_io[0], out, root->data.status);
 	close(fds[0]);
 	waitpid(pid, &left_status, 0);
-	if (WIFEXITED(left_status) && WEXITSTATUS(left_status) >= 129
-		&& WEXITSTATUS(left_status) <= 159)
+	if (is_signaled(left_status))
 		g_global->sig_flag = 1;
 	return (status);
 }

@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 14:25:27 by okhiar            #+#    #+#             */
-/*   Updated: 2023/03/08 22:51:54 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/09 01:38:42 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	ft_exit(char **args, int flag)
 {
 	if (flag)
 		ft_putstr_fd("minishel: exit\n", 2);
-	if (args[0] && args[1])
+	if (args[0] && args[1] && all_digits(args[0]))
 	{
 		ft_putstr_fd("exit: too many arguments\n", 2);
 		return (EXIT_FAILURE);

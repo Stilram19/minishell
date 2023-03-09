@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 15:49:24 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/09 01:04:53 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/09 02:46:03 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,7 @@ void	error_msg(char *msg);
 void	check_fail_reason(int fail, char *file);
 int		defaults_io(int in_type, int out_type);
 int		check_exit_reason(int status);
+int		is_signaled(int status);
 t_fdio	*set_io_type(int *fds, int type);
 t_fdio	*init_fdio(t_fdio in, t_fdio out);
 void	clean_up_of(int *io);
