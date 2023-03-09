@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 12:43:52 by okhiar            #+#    #+#             */
-/*   Updated: 2023/03/08 16:52:19 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/09 02:58:07 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	ft_env(void)
 	i = 0;
 	while (env[i])
 	{
-		if (ft_strchr(env[i], '='))
+		if (ft_strchr(env[i], '=') && env[i][0] != '?')
 			printf("%s\n", env[i]);
 		i++;
 	}

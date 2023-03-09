@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 12:54:29 by okhiar            #+#    #+#             */
-/*   Updated: 2023/03/08 23:39:57 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/09 02:59:25 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ void	ft_print_set(char **env)
 	i = 0;
 	while (env[i])
 	{
+		if (env[i][0] == '?' && i++)
+			continue ;
 		len = id_len(env[i]);
 		identifier = ft_substr(env[i], 0, id_len(env[i]));
 		if (env[i][len] == '=')
