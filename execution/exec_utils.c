@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 16:23:18 by okhiar            #+#    #+#             */
-/*   Updated: 2023/03/08 22:32:02 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/09 01:01:27 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ void	child_sig(int sig)
 {
 	if (sig == SIGINT)
 	{
-		write(2, "\n", 1);
-		exit(CTRL_C);// ! will checked
+		write(1, "\n", 1);
+		exit(CTRL_C);
 	}
 }
 
@@ -45,7 +45,10 @@ int	check_exit_reason(int status)
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	else if (WIFSIGNALED(status))
+	{
+		g_global->sig_flag = 1;
 		return (WTERMSIG(status) | 0x80);
+	}
 	return (status);
 }
 

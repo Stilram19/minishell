@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 18:34:17 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/07 18:22:26 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/09 01:04:16 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,15 @@ char	*get_prompt(int exit_status)
 	if (exit_status)
 		return (RED"➜ "RESET"minishell$ ");
 	return (GRN"➜ "RESET"minishell$ ");
+}
+
+int	is_empty_parenth(char *str)
+{
+	while (*str)
+	{
+		if (!ft_strchr("()", *str) && !is_blank(*str))
+			return (VALID_SYNTAX);
+		str++;
+	}
+	return (SYNTAX_ERROR);
 }

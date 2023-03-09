@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 16:33:47 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/07 18:22:26 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/09 00:54:42 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	signal_handler(int sig)
 	if (sig == SIGINT)
 	{
 		g_global->exit_status = EXIT_FAILURE;
+		set_exit_status(g_global->exit_status);
 		ft_putchar_fd('\n', 1);
 		rl_replace_line("", 0);
 		rl_on_new_line();
@@ -47,6 +48,6 @@ void	sig_set(void)
 
 void	sig_def(void)
 {
+	signal(SIGTSTP, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
-	signal(SIGINT, SIG_DFL);
 }

@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 18:42:50 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/07 18:57:38 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/09 01:05:03 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,17 +78,6 @@ int	is_argument_after_parenth(char **tokens)
 		i += 2;
 	}
 	return (VALID_SYNTAX);
-}
-
-int	is_empty_parenth(char *str)
-{
-	while (*str)
-	{
-		if (!ft_strchr("()", *str) && !is_blank(*str))
-			return (VALID_SYNTAX);
-		str++;
-	}
-	return (SYNTAX_ERROR);
 }
 
 int	parenth_test(char **tokens, int i)

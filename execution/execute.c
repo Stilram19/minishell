@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:37:00 by okhiar            #+#    #+#             */
-/*   Updated: 2023/03/08 22:55:50 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/09 01:02:10 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	pipe_nodes(t_node *root, t_fdio in, t_fdio out)
 {
 	int		pid;
 	int		status;
+	int		left_status;
 	t_fdio	*fd_io;
 	int		fds[2];
 
@@ -33,7 +34,10 @@ int	pipe_nodes(t_node *root, t_fdio in, t_fdio out)
 	(in.type == C_EXEC && close(in.fd));
 	status = check_subshell(root->right, fd_io[0], out, root->data.status);
 	close(fds[0]);
-	waitpid(pid, 0, 0);
+	waitpid(pid, &left_status, 0);
+	if (WIFEXITED(left_status) && WEXITSTATUS(left_status) >= 129
+		&& WEXITSTATUS(left_status) <= 159)
+		g_global->sig_flag = 1;
 	return (status);
 }
 
@@ -103,5 +107,7 @@ int	execution(t_node *root)
 	io_fd[1].type = P_EXEC;
 	status = check_subshell(root, io_fd[0], io_fd[1], 0);
 	g_global->exit_status = status;
+	if (g_global->sig_flag)
+		write(2, "\n", 1);
 	return (status);
 }

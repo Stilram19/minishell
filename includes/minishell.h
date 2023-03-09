@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 15:49:24 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/08 19:09:26 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/09 01:04:53 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	sig_set(void);
 void	sig_def(void);
 int		is_blank(char c);
 int		is_meta(char *str);
+int		is_all_blank(char *file_name);
 void	heredoc_sig_handler(int sig);
 int		var_name_len(char *var);
 int		is_redirect(char *c);
@@ -43,6 +44,7 @@ char	*join_tokens(char **tokens);
 char	*args_files_separation(char *str);
 char	*random_file_name_generation(void);
 char	*right_str(char *str, char *op, int with_op);
+int		is_empty_parenth(char *str);
 void	set_env(char **my_env, char *name, char *value);
 void	*ft_garbage_collector(int option, int size, void *to_free);
 void	ft_heredoc(int fd, t_queue *limiters, int expand);

@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 16:29:48 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/07 22:10:54 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/09 01:02:39 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ enum e_file_type
 	AMBIG
 };
 
-enum io_type
+enum e_io_type
 {
 	P_EXEC,
 	C_EXEC,
@@ -107,6 +107,7 @@ typedef struct s_queue{
 
 typedef struct s_global
 {
+	int		sig_flag;
 	int		exit_status;
 	t_queue	*here_files;
 }t_global;

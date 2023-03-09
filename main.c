@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 14:16:56 by obednaou          #+#    #+#             */
-/*   Updated: 2023/03/08 17:45:32 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/09 00:56:49 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ t_node	*parsing(char *line)
 	g_global->exit_status = syntax_test(new_line);
 	if (g_global->exit_status)
 	{
-		// TODO set exit status in env
 		ft_putendl_fd("minishell: Syntax error!", 2);
 		return (NULL);
 	}
@@ -51,10 +50,8 @@ void	main_task(char *line)
 	t_node	*root;
 
 	root = parsing(line);
-	// display_tree(root, 0);
 	if (!(g_global->exit_status))
 		execution(root);
-	//TODO set exit status in env
 	set_exit_status(g_global->exit_status);
 	heredoc_clean(g_global->exit_status);
 }
@@ -67,11 +64,12 @@ int	main(int argc, char **argv, char **env)
 	global_init(argc, argv, env);
 	while (1)
 	{
+		sig_set();
 		prompt = get_prompt(g_global->exit_status);
 		line = readline(prompt);
 		if (!line)
 			return (0);
-		if (!(*line))
+		if (is_all_blank(line))
 		{
 			free(line);
 			continue ;

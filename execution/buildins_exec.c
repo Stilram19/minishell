@@ -6,7 +6,7 @@
 /*   By: okhiar <okhiar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 14:14:31 by okhiar            #+#    #+#             */
-/*   Updated: 2023/03/07 16:47:17 by okhiar           ###   ########.fr       */
+/*   Updated: 2023/03/09 01:00:54 by okhiar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	exec_buildin(t_data *cmds, t_fdio in, t_fdio out)
 
 	tmp_io[0] = dup(0);
 	tmp_io[1] = dup(1);
-	dup2(in.fd, 0);// ! attention Broo
+	dup2(in.fd, 0);
 	dup2(out.fd, 1);
 	status = buildins_brute_force(cmds, \
 	(in.type == P_EXEC && out.type == P_EXEC));
