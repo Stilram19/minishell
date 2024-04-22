@@ -106,10 +106,14 @@ void	give_files_names(char **tokens, t_file *files, int len)
 		files[i].pathname = NULL;
 		if (files[i].type == HERE && ++i)
 			continue ;
-		((files[i].type == APPEND) && (op = APPEND_STR));
-		((files[i].type == OUT) && (op = OUT_STR));
-		((files[i].type == IN) && (op = IN_STR));
-		((files[i].type == AMBIG) && (tokens += 2));
+		if (files[i].type == APPEND)
+			op = APPEND_STR;
+		if (files[i].type == OUT)
+			op = OUT_STR;
+		if (files[i].type == IN)
+			op = IN_STR;
+		if (files[i].type == AMBIG)
+			tokens += 2;
 		while (op && *tokens)
 		{
 			if (ft_strncmp(op, *tokens, ft_strlen(op) + 1) && tokens++)

@@ -23,7 +23,10 @@
 # include <sys/stat.h>
 # include <termios.h>
 # include "defined_types.h"
-# include "readline/readline.h"
+# include "libft.h"
+// # include "readline/readline.h"
+#include <readline/readline.h>
+#include <readline/history.h>
 
 void	sig_set(void);
 void	sig_def(void);
@@ -75,7 +78,7 @@ int		operator_type(char *op);
 int		is_there_middle_operator(char *str);
 void	queue_push(t_queue *q, void *data);
 void	node_init(t_node *root, int status);
-int		add_history(const char *str);
+// int		add_history(const char *str);
 void	*queue_first(t_queue *q);
 void	ft_free(char **tokens);
 void	*queue_pop(t_queue *q);

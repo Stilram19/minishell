@@ -15,6 +15,7 @@
 
 # include <unistd.h>
 # include <stdlib.h>
+# include <stdint.h>
 
 # define LONG_LONG_MAX_STR "9223372036854775807"
 

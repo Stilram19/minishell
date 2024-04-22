@@ -63,12 +63,13 @@ static char	*ft_make_str(char const *str, char c)
 
 static char	**free_all(char **strs, size_t i)
 {
-	i--;
-	while (i >= 0)
+	int j = i;
+	j--;
+	while (j >= 0)
 	{
-		free(strs[i]);
-		strs[i] = 0;
-		i--;
+		free(strs[j]);
+		strs[j] = 0;
+		j--;
 	}
 	free(strs);
 	strs = 0;

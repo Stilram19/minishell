@@ -31,7 +31,10 @@ int	pipe_nodes(t_node *root, t_fdio in, t_fdio out)
 		exit(status);
 	}
 	close(fds[1]);
-	(in.type == C_EXEC && close(in.fd));
+	// (in.type == C_EXEC && close(in.fd));
+	if (in.type == C_EXEC) {
+		close(in.fd);
+	}
 	status = check_subshell(root->right, fd_io[0], out, root->data.status);
 	close(fds[0]);
 	waitpid(pid, &left_status, 0);

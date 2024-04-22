@@ -54,11 +54,20 @@ CFLAGS = -Wall -Wextra -Werror
 # CFLAGS += -I/Users/obednaou/brew/opt/readline/include/
 # RDLIB = -lreadline -L/Users/obednaou/brew/opt/readline/lib/
 # ? OUSSAMA
-CFLAGS += -I/Users/okhiar/goinfre/brew/opt/readline/include/
-RDLIB = -lreadline -L/Users/okhiar/goinfre/brew/opt/readline/lib/
+# CFLAGS += -I/Users/okhiar/goinfre/brew/opt/readline/include/
+# RDLIB = -lreadline -L/Users/okhiar/goinfre/brew/opt/readline/lib/
 RM= rm -f
 LIBFT = make -C ./libft
-LIBAR = ./libft/libft.a
+# LIBAR = ./libft/libft.a
+
+# Path to the Readline library and include directory
+# READLINE_INCLUDE_DIR = /usr/include/readline
+# READLINE_LIB_DIR = /usr/lib/x86_64-linux-gnu
+
+# Compiler flags
+CFLAGS += -Ilibft
+# Linker flags
+LDFLAGS += -lreadline -lft -Llibft
 
 %.o: %.c
 	@${CC} ${CFLAGS} -c $^ -o $@
@@ -67,7 +76,7 @@ all: ${NAME}
 
 ${NAME}: ${OBJS}
 	@${LIBFT}
-	@${CC} ${CFLAGS} ${RDLIB} ${LIBAR} ${OBJS} -o ${NAME}
+	@${CC} ${CFLAGS} ${OBJS} ${LDFLAGS} -o ${NAME}
 
 clean:
 	@make clean -C ./libft

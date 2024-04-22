@@ -94,7 +94,9 @@ void	ft_heredoc(int fd, t_queue *limiters, int expand)
 	while (limiters->len)
 	{
 		write_enable = (limiters->len == 1);
-		(write_enable && (write_enable += expand));
+		if (write_enable) {
+			write_enable += expand;
+		}
 		signal(SIGINT, SIG_IGN);
 		pid = fork();
 		if (!pid && here_sig())

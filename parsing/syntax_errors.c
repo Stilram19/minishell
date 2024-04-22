@@ -38,7 +38,9 @@ int	operator_test(char **tokens, int i)
 
 	left_token = NULL;
 	right_token = *(tokens + i + 1);
-	((i) && (left_token = *(tokens + i - 1)));
+	if (i != 0) {
+		left_token = *(tokens + i - 1);
+	}
 	main_token = *(tokens + i);
 	if (ft_strlen(main_token) >= 3)
 		return (SYNTAX_ERROR);
@@ -82,12 +84,10 @@ int	is_argument_after_parenth(char **tokens)
 
 int	parenth_test(char **tokens, int i)
 {
-	char	*main_token;
 	char	*left_token;
 	char	*right_token;
 
 	left_token = NULL;
-	main_token = *(tokens + i);
 	if (i)
 		left_token = *(tokens + i - 1);
 	right_token = *(tokens + i + 1);

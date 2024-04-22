@@ -12,6 +12,9 @@
 
 #include "includes/minishell.h"
 
+// declaring it once for all the app, to prevent liking issues
+t_global	*g_global;
+
 void	ft_display(char **tokens)
 {
 	printf("tokens: {");

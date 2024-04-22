@@ -13,8 +13,6 @@
 #ifndef DEFINED_TYPES_H
 # define DEFINED_TYPES_H
 
-# include "../libft/libft.h"
-
 # define SUCCESS 0
 
 # define OR_STR "||"
@@ -112,6 +110,6 @@ typedef struct s_global
 	t_queue	*here_files;
 }t_global;
 
-t_global	*g_global;
+extern t_global	*g_global;
 
 #endif

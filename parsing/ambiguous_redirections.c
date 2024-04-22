@@ -20,11 +20,6 @@
 
 int	is_all_blank(char *file_name)
 {
-	int	ret;
-	int	quotes;
-
-	ret = 0;
-	quotes = 0;
 	if (!(*file_name))
 		return (1);
 	while (*file_name)
@@ -52,12 +47,10 @@ int	is_all_astrisks(char *str)
 int	split_and_check_ambiguity(char *file_name)
 {
 	int		i;
-	int		ret;
 	char	*token;
 	char	**tokens;
 
 	i = 0;
-	ret = 0;
 	tokens = produce_tokens(file_name, mask_generation2(file_name));
 	while (*(tokens + i))
 		i++;
