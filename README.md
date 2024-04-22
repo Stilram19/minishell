@@ -69,6 +69,8 @@ https://github.com/Stilram19/minishell/assets/115463108/8ede38ca-a32a-4c61-abe4-
    make run
    ```
 
+   and start using the shell (See minishell preview video above)
+
 ## Resources (for students):
 
 [manual](https://pubs.opengroup.org/onlinepubs/009695399/utilities/xcu_chap02.html)
