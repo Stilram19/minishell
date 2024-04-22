@@ -1,9 +1,0 @@
-{
-	"files.associations": {
-		"minishell.h": "c",
-		"defined_types.h": "c",
-		"libft.h": "c",
-		"stdio.h": "c",
-		"unistd.h": "c"
-	}
-}
