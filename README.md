@@ -35,7 +35,7 @@ During the development of this project, We've learned several important concepts
 
 ## Minishell Preview:
 
-
+https://github.com/Stilram19/minishell/assets/115463108/8ede38ca-a32a-4c61-abe4-3dd6c4b6a69d
 
 # Our_42_project
 
