@@ -51,19 +51,19 @@ https://github.com/Stilram19/minishell/assets/115463108/8ede38ca-a32a-4c61-abe4-
     sudo apt-get install libreadline-dev
     ```
 
-1. Clone the repository to your local machine:
+2. Clone the repository to your local machine:
 
    ```bash
    git clone git@github.com:Stilram19/minishell.git
    ```
 
-2. Navigate to the repository's directory:
+3. Navigate to the repository's directory:
 
     ```bash
     cd minishell
     ```
 
-3. Compile and Run the program:
+4. Compile and Run the program:
 
    ``` bash
    make run
